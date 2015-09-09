@@ -35,3 +35,5 @@ elseif (file_exists($compiledPath = __DIR__.'/../storage/framework/compiled.php'
 {
 	require $compiledPath;
 }
+
+require __DIR__.'/../app/Libraries/functions.php';

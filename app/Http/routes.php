@@ -11,11 +11,16 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
+    Route::controllers([
+        'enterprise' => 'AdminEnterpriseController',
+        'personnel' => 'AdminPersonnelController',
+        '/' => 'AdminIndexController'
+    ]);
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
+    '/' => 'HomeController'
 ]);
