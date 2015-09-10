@@ -6,4 +6,10 @@ class AdminPersonnelController extends AdminController
     {
         return view('admin.personnel.index');
     }
+
+    public function getPersonnelJson()
+    {
+        $users = Personnel::select('id', 'name', 'email', 'mobile')->paginate(2);
+        return $users->toJson();
+    }
 }

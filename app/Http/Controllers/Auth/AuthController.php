@@ -33,10 +33,7 @@ class AuthController extends Controller {
 	 */
 	public function __construct(Guard $auth, Registrar $registrar)
 	{
-		$this->auth = $auth;
-		$this->registrar = $registrar;
 
-		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
 	public function getIndex()
@@ -56,9 +53,9 @@ class AuthController extends Controller {
 			'password' => ['required', 'regex:/^[\S]{6,16}$/'],
 		]);
 
-		$admin = DB::table('admin')->whereRaw('email = ? AND password = ?', [Request::input('email'), password(Request::input('password'))])->first();
-		if ($admin) {
-			Session::put('user', $admin);
+		$user = DB::table('user')->whereRaw('email = ? AND password = ?', [Request::input('email'), password(Request::input('password'))])->first();
+		if ($user) {
+			Session::put('user', (array)$user);
 			return redirect('admin');
 		} else {
 			return redirect()->back()->withErrors(['用户名或密码错误']);

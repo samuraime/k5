@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Sep 09, 2015 at 01:21 PM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Host: 127.0.0.1
+-- Generation Time: Sep 11, 2015 at 12:21 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,40 +23,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
---
-
-CREATE TABLE IF NOT EXISTS `admin` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `nickname` varchar(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` char(32) NOT NULL,
-  `permission` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`name`,`email`),
-  KEY `nickname` (`nickname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `name`, `nickname`, `email`, `password`, `permission`) VALUES
-(1, 'admin', 'admin', 'samurai7@foxmail.com', '136ce21f6272f0bc7caebc9e96e074ef', '');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `article`
 --
 
 CREATE TABLE IF NOT EXISTS `article` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `title` varchar(100) NOT NULL,
-  `content` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -65,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `article` (
 --
 
 CREATE TABLE IF NOT EXISTS `enterprise` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `registration_number` char(15) NOT NULL,
   `name` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
@@ -76,11 +50,8 @@ CREATE TABLE IF NOT EXISTS `enterprise` (
   `operation_start` date NOT NULL,
   `operation_end` date NOT NULL,
   `business_scope` varchar(200) NOT NULL,
-  `registration_authority` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `registration_number` (`registration_number`),
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `registration_authority` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -89,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `enterprise` (
 --
 
 CREATE TABLE IF NOT EXISTS `personnel` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `gender` enum('other','male','female') NOT NULL DEFAULT 'other',
   `birth_date` date NOT NULL,
@@ -102,11 +73,8 @@ CREATE TABLE IF NOT EXISTS `personnel` (
   `nationality` varchar(100) NOT NULL,
   `enterprise_id` int(10) unsigned NOT NULL,
   `height` int(11) NOT NULL,
-  `weight` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`,`mobile`,`email`),
-  KEY `enterprise_id` (`enterprise_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1001 ;
+  `weight` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `personnel`
@@ -1116,6 +1084,82 @@ INSERT INTO `personnel` (`id`, `name`, `gender`, `birth_date`, `permanent _addre
 (999, '尚龙飞', 'male', '1993-11-15', '', '洛阳市孟津县', '18220857320', '2691174602@qq.com', '', 'single', '', 0, 169, 128),
 (1000, '段法朴', 'male', '1993-07-29', '', '安阳市市 区', '18291836219', '315170130@qq.com', '', 'single', '', 0, 172, 74);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+`id` int(10) unsigned NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `nickname` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `password` char(32) NOT NULL,
+  `permission` varchar(200) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `nickname`, `email`, `mobile`, `password`, `permission`) VALUES
+(1, 'admin', 'admin', 'admin@k5.com', '10086', '136ce21f6272f0bc7caebc9e96e074ef', ''),
+(2, 'samuraime', 'samuraime', 'samuraime@k5.com', '10010', '136ce21f6272f0bc7caebc9e96e074ef', '');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `article`
+--
+ALTER TABLE `article`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `enterprise`
+--
+ALTER TABLE `enterprise`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `registration_number` (`registration_number`), ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `personnel`
+--
+ALTER TABLE `personnel`
+ ADD PRIMARY KEY (`id`), ADD KEY `name` (`name`,`mobile`,`email`), ADD KEY `enterprise_id` (`enterprise_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`name`,`email`), ADD KEY `nickname` (`nickname`), ADD KEY `mobile` (`mobile`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `article`
+--
+ALTER TABLE `article`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `enterprise`
+--
+ALTER TABLE `enterprise`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `personnel`
+--
+ALTER TABLE `personnel`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1001;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

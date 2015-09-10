@@ -32,10 +32,10 @@
         </button>
         <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-                <li class="am-header-information am-text-secondary">xxx欢迎您登陆</li>
+                <li class="am-header-information am-text-secondary"> 欢迎您登陆</li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        <span class="am-icon-users"></span> 管理员
+                        <span class="am-icon-users"></span> {{ Session::get('user.name') }}
                         <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
