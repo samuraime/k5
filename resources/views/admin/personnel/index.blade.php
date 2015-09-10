@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', '企业列表')
+@section('title', '人才列表')
 
 @section('content')
 <div class="am-cf am-padding border-bottom">

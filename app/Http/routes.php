@@ -13,8 +13,13 @@
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
     Route::controllers([
+        'summary' => 'AdminSummaryController',
         'enterprise' => 'AdminEnterpriseController',
         'personnel' => 'AdminPersonnelController',
+        'message' => 'AdminMessageController',
+        'log' => 'AdminLogController',
+        'manage' => 'AdminManageController',
+        'account' => 'AdminAccountController',
         '/' => 'AdminIndexController'
     ]);
 });

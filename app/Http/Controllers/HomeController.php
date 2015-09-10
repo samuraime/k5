@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use Log;
+
 class HomeController extends Controller {
 
 	/*
