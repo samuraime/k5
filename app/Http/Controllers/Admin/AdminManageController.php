@@ -11,7 +11,7 @@ class AdminManageController extends AdminController
 
     public function getUserJson(\Illuminate\Http\Request $request)
     {
-        $users = User::select('id', 'name', 'email', 'mobile')->paginate(2);
+        $users = User::select('id', 'name', 'email', 'mobile')->paginate(10);
         return $users->toJson();
     }
 
