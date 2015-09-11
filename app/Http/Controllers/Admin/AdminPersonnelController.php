@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use Request;
+use HttpRequest;
 use App\Models\Personnel;
 
 class AdminPersonnelController extends AdminController
@@ -10,7 +11,7 @@ class AdminPersonnelController extends AdminController
         return view('admin.personnel.index');
     }
 
-    public function getPersonnelJson(\Illuminate\Http\Request $request)
+    public function getList(HttpRequest $request)
     {
         $this->validate($request, [
             'page' => 'integer',
@@ -24,10 +25,10 @@ class AdminPersonnelController extends AdminController
         return $users->toJson();
     }
 
-    public function postIndex(\Illuminate\Http\Request $request)
+    public function postIndex(HttpRequest $request)
     {
         $this->validate($request, [
-
+            'name' => 'required'
         ]);
 
         $personnel = new Personnel;
