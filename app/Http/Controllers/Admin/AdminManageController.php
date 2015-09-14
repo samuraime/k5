@@ -3,7 +3,6 @@
 use App\Models\User;
 use Request;
 use HttpRequest;
-use User;
 use Article;
 
 class AdminManageController extends AdminController
