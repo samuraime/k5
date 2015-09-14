@@ -1,0 +1,24 @@
+请求方法说明
+    查, 增, 删, 改 对应 GET, POST, PUT, DELETE
+    在不支持PUT, DELETE的环境中, 需添加 _method 字段进行方法欺骗
+
+接口列表
+    员工列表
+    获取列表: GET /admin/personnel/list
+        params: page int 请求的页码
+                perPage int 每页显示的条目
+        return: 先拿结果直接看吧
+    新增员工信息: POST /admin/personnel
+        params: ... 基本和获取列表返回的字段一样
+        return: 员工信息
+    修改单个员工信息: PUT /admin/personnel
+        params: id int 要修改的员工id
+                ... 可以修改的字段
+        return: 修改后的员工信息
+    删除单个员工信息: DELETE /admin/personnel
+        params: id int 要删除的员工id
+        return: affectedRows int 删除的数量
+    删除多个员工信息: DELETE /admin/personnel/list
+        params: ids array 要删除的id的数组
+        return: affectedRows int 删除的数量
+
