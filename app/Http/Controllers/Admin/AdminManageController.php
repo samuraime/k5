@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Article;
 use Request;
 use HttpRequest;
-use Article;
 
 class AdminManageController extends AdminController
 {
@@ -63,6 +63,15 @@ class AdminManageController extends AdminController
 
         $inputs = Request::all();
         $user = User::find($inputs['id']);
+        if (isset($inputs['email'])) {
+            $user->email = $inputs['email'];
+        }
+        if (isset($inputs['password'])) {
+            $user->password = $inputs['password'];
+        }
+        $user->save();
+
+        return $user->toJson();
     }
 
     public function deleteUser(HttpRequest $request)
@@ -71,7 +80,21 @@ class AdminManageController extends AdminController
             'id' => 'required|exists:user,id',
         ]);
 
+        $affectedRows = User::destroy(Request::input('id')); 
 
+        return response()->json(['affectedRows' => $affectedRows]);
+    }
+
+    public function deleteUsers(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'ids' => 'required',
+        ]);
+
+        $ids = Request::input('ids');
+        $affectedRows = User::destroy($ids);
+        
+        return $response->json(['affectedRows' => $affectedRows]);
     }
 
     public function getArticle()
@@ -79,13 +102,80 @@ class AdminManageController extends AdminController
         return view('admin.manage.article');
     }
 
+    public function getArticleById(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:article,id',
+        ]);
+
+        $article = Article::find(Request::get('id'));
+
+        return $article->toJson();
+    }
+
+    public function getArticleList()
+    {
+        $this->validate($request, [
+            'page' => 'integer',
+            'perPage' => 'integer',
+        ]);
+
+        $inputs = Request::all();
+        $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
+        $articles = Article::select('id', 'title', 'email', 'mobile')->paginate($perPage);
+
+        return $articles->toJson();
+    }
+
     public function postArticle(HttpRequest $request)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
 
+        $inputs = Request::all();
+        $article = Article::create($inputs);
+
+        return $article->toJson();
     }
 
     public function putArticle(HttpRequest $request)
     {
+        $this->validate($request, [
+            'id' => 'exists|article,id',
+            'title' => 'required',
+            'content' => 'required',
+        ]);
 
+        $article = Article::find($inputs['id']);
+        $article->title = $inputs['title'];
+        $article->content = $inputs['content'];
+        $article->save();
+
+        return $article->toJson();
+    }
+
+    public function deleteArticle(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:user,id',
+        ]);
+
+        $affectedRows = Article::destroy(Request::input('id')); 
+
+        return response()->json(['affectedRows' => $affectedRows]);
+    }
+
+    public function deleteArticles(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'ids' => 'required',
+        ]);
+
+        $ids = Request::input('ids');
+        $affectedRows = Article::destroy($ids);
+        
+        return $response->json(['affectedRows' => $affectedRows]);
     }
 }

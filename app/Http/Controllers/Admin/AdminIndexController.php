@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use Session;
+use App\Models\User;
 
 class AdminIndexController extends AdminController
 {

@@ -1,0 +1,17 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   app/Http/Controllers/Admin/AdminManageController.php
+#	modified:   config/database.php
+#	modified:   notes/k5.sql
+#	modified:   resources/views/admin/layout.blade.php
+#
+# Changes not staged for commit:
+#	deleted:    app/Enterprise.php
+#	deleted:    app/Models/Admin.php
+#
+
