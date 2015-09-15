@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/css/admin.css">
     <script src="/js/jquery.js"></script>
     <script src="/js/ajax.js"></script>
+    @yield('head-assets')
     <!--[if lte IE 9]>
     <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a> 以获得更好的体验！</p>
     <![endif]-->
@@ -162,33 +163,7 @@
     <!--<![endif]-->
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/app.js"></script>
-    <script>
-    $(function() {
-      $('.delebutton').on('click', function(e) {
-        e.preventDefault();
-        var $confirm = $('#my-confirm');
-        var confirm = $confirm.data('am.modal');
-        var onConfirm = function() {
-            alert('你确定删除 ');
-          };
-        var onCancel = function() {
-            alert('你不想删除 ');
-          }
-
-        if (confirm) {
-          confirm.options.onConfirm =  onConfirm;
-          confirm.options.onCancel =  onCancel;
-          confirm.toggle(this);
-        } else {
-          $confirm.modal({
-            relatedElement: this,
-            onConfirm: onConfirm,
-            onCancel: onCancel
-          });
-        }
-      });
-    });
-  </script>
+    @yield('foot-assets')
 </body>
 
 </html>
