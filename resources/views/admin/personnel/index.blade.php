@@ -2,6 +2,10 @@
 
 @section('title', '人才列表')
 
+@section('head-assets')
+
+@stop
+
 @section('content')
 <div class="am-cf am-padding border-bottom">
     <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">数据列表</strong> / <small>企业列表</small></div>
@@ -114,4 +118,8 @@
         </form>
     </div>
 </div>
+@stop
+
+@section('foot-assets')
+<script src="/js/ajax.js"></script>
 @stop
