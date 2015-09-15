@@ -17,6 +17,11 @@ class Authenticate {
 		if (!Session::has('user')) {
 			return redirect('/');
 		}
+
+        $path = explode('/', $_SERVER['REQUEST_URI'], 4)[2];
+        if (strstr(Session::get('user')['permissions'], $path) == null) {
+            abort(401);
+        }
 		return $next($request);
 	}
 }

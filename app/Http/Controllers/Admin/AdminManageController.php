@@ -69,6 +69,19 @@ class AdminManageController extends AdminController
         if (isset($inputs['password'])) {
             $user->password = $inputs['password'];
         }
+        $permission = ['summary', 'enterprise', 'personnel', 'manage', 'log', 'index', 'account'];
+        $user->permission = $permission;
+        $user->save();
+
+        return $user->toJson();
+    }
+
+    public function getAddUserPermission()
+    {
+        $inputs = Request::all();
+        $user = User::find($inputs['id']);
+        $permission = ['summary', 'enterprise', 'personnel', 'manage', 'log', 'index', 'account'];
+        $user->permission = json_encode($permission);
         $user->save();
 
         return $user->toJson();
