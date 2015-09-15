@@ -162,6 +162,33 @@
     <!--<![endif]-->
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/app.js"></script>
+    <script>
+    $(function() {
+      $('.delebutton').on('click', function(e) {
+        e.preventDefault();
+        var $confirm = $('#my-confirm');
+        var confirm = $confirm.data('am.modal');
+        var onConfirm = function() {
+            alert('你确定删除 ');
+          };
+        var onCancel = function() {
+            alert('你不想删除 ');
+          }
+
+        if (confirm) {
+          confirm.options.onConfirm =  onConfirm;
+          confirm.options.onCancel =  onCancel;
+          confirm.toggle(this);
+        } else {
+          $confirm.modal({
+            relatedElement: this,
+            onConfirm: onConfirm,
+            onCancel: onCancel
+          });
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
