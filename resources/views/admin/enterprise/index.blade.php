@@ -28,6 +28,7 @@
             <br>3000</a>
     </li>
 </ul>
+
 <div class="am-g">
     <div class="am-u-sm-12 am-u-md-6">
         <div class="am-btn-toolbar">
@@ -56,7 +57,7 @@
             <input type="text" class="am-form-field">
             <span class="am-input-group-btn">
               <button class="am-btn am-btn-default" type="button">搜索</button>
-            </span>   
+            </span>
         </div>
     </div>
 </div>
