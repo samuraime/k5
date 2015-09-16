@@ -55,6 +55,7 @@ class AuthController extends Controller {
 
 		$user = DB::table('user')->whereRaw('email = ? AND password = ?', [Request::input('email'), password(Request::input('password'))])->first();
 		if ($user) {
+			$user->permission = json_decode($user->permission);
 			Session::put('user', (array)$user);
 			return redirect('admin');
 		} else {

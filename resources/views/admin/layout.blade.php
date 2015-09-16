@@ -69,21 +69,27 @@
             <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
                     <ul class="am-list admin-sidebar-list">
+                        @if (in_array('summary', Session::get('user.permission')))
                         <li>
                             <a class="am-cf" href="/admin/summary">
                                 <span class="am-icon-area-chart"></span> 数据列表
                                 <span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>
                             </a>
                         </li>
+                        @endif
+                        @if (in_array('enterprise', Session::get('user.permission')))
                         <li>
                             <a href="/admin/enterprise" class="am-cf">
                                 <span class="am-icon-check am-icon-file-text"></span> 企业列表</a>
                         </li>
+                        @endif
+                        @if (in_array('personnel', Session::get('user.permission')))
                         <li>
                             <a href="/admin/personnel">
                                 <span class="am-icon-file"></span> 人才列表</a>
                         </li>
-                        </li>
+                        @endif
+                        @if (in_array('log', Session::get('user.permission')))
                         <li class="admin-parent">
                             <a data-am-collapse="{target: '#collapse-nav1'}">
                                 <span class="am-icon-calendar"></span> 日志记录
@@ -96,10 +102,14 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
+                        @if (in_array('message', Session::get('user.permission')))
                         <li>
                             <a href="/admin/message">
                                 <span class="am-icon-pencil-square-o"></span> 留言板管理</a>
                         </li>
+                        @endif
+                        @if (in_array('manage', Session::get('user.permission')))
                         <li class="#">
                             <a data-am-collapse="{target: '#collapse-nav2'}">
                                 <span class="am-icon-puzzle-piece"></span> 系统管理
@@ -116,6 +126,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
                     </ul>
                     <div class="am-panel am-panel-default admin-sidebar-panel">
                         <div class="am-panel-bd">

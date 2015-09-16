@@ -18,9 +18,9 @@ class Authenticate {
 			return redirect('/');
 		}
 
-        $path = explode('/', $_SERVER['REQUEST_URI'], 4)[2];
-        if (strstr(Session::get('user')['permissions'], $path) == null) {
-            abort(401);
+        $paths = explode('/', $_SERVER['REQUEST_URI'], 4);
+        if (isset($paths[2]) && (!in_array($paths[2], Session::get('user.permission')))) {
+            abort(403, 'Forbidden');
         }
 		return $next($request);
 	}

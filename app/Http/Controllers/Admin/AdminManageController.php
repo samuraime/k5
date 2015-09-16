@@ -76,11 +76,11 @@ class AdminManageController extends AdminController
         return $user->toJson();
     }
 
-    public function getAddUserPermission()
+    public function getEditUserPermission()
     {
         $inputs = Request::all();
         $user = User::find($inputs['id']);
-        $permission = ['summary', 'enterprise', 'personnel', 'manage', 'log', 'index', 'account'];
+        $permission = ['summary', 'enterprise', 'personnel', 'manage', 'index', 'account', 'log', 'message'];
         $user->permission = json_encode($permission);
         $user->save();
 
