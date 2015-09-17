@@ -154,7 +154,7 @@
     </div>
 
 
-
+<!--删除弹框-->
   <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
   <div class="am-modal-dialog">
     <div class="am-modal-hd">Amaze UI</div>
@@ -163,7 +163,116 @@
     </div>
     <div class="am-modal-footer">
       <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+      <span class="am-modal-btn" data-am-modal-confirm id="determine-delete">确定</span>
+    </div>
+  </div>
+</div>
+<!--编辑弹框 -->
+  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm-edit">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">Amaze UI</div>
+    <div class="am-modal-bd">
+  <form class="am-form am-form-horizontal am-scoller">
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">姓名</label>
+    <div class="am-u-sm-10">
+      <input type="text" id="doc-ipt-3" placeholder="输入您的姓名">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">邮箱</label>
+    <div class="am-u-sm-10">
+      <input type="email" id="doc-ipt-3" placeholder="输入你的电子邮件">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">电话</label>
+    <div class="am-u-sm-10">
+      <input type="tel" id="doc-ipt-3" placeholder="输入您的电话号码">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">修改日期</label>
+    <div class="am-u-sm-10">
+      <input type="date" id="doc-ipt-3">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label am-text-sm am-left-none">密码</label>
+    <div class="am-u-sm-10">
+      <input type="password" id="doc-ipt-pwd-2" placeholder="输入您的密码">
+    </div>
+  </div>
+</form>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm id="determine-delete">保存</span>
+    </div>
+  </div>
+</div>
+<!--删除弹框-->
+  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">Amaze UI</div>
+    <div class="am-modal-bd">
+      确定删除吗？
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm id="determine-delete">确定</span>
+    </div>
+  </div>
+</div>
+<!--全局新添加内容-->
+  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm-add">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">Amaze UI</div>
+    <div class="am-modal-bd">
+   <form class="am-form am-form-horizontal am-scoller" id="all-new-list">
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">姓名</label>
+    <div class="am-u-sm-10">
+      <input type="text" id="doc-ipt-3" placeholder="输入您的姓名">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">邮箱</label>
+    <div class="am-u-sm-10">
+      <input type="email" id="doc-ipt-3" placeholder="输入你的电子邮件">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">电话</label>
+    <div class="am-u-sm-10">
+      <input type="tel" id="doc-ipt-3" placeholder="输入您的电话号码">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label am-text-sm am-left-none">修改日期</label>
+    <div class="am-u-sm-10">
+      <input type="date" id="doc-ipt-3">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label am-text-sm am-left-none">密码</label>
+    <div class="am-u-sm-10">
+      <input type="password" id="doc-ipt-pwd-2" placeholder="输入您的密码">
+    </div>
+  </div>
+</form>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm id="determine-delete">保存</span>
     </div>
   </div>
 </div>
