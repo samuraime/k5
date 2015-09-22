@@ -11,6 +11,17 @@ class AdminPersonnelController extends AdminController
         return view('admin.personnel.index');
     }
 
+    public function getById(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:personnel,id'
+        ]);
+
+        $personnel = Personnel::find(Request::input('id'));
+
+        return $personnel->toJson();
+    }
+
     public function getList(HttpRequest $request)
     {
         $this->validate($request, [

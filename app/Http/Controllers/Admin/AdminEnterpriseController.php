@@ -20,7 +20,7 @@ class AdminEnterpriseController extends AdminController
 
         $inputs = Request::all();
         $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
-        $enterprises = Enterprise::select('id', 'name', 'email', 'mobile', 'birth_date as birthDate', 'height', 'weight')->paginate($perPage);
+        $enterprises = Enterprise::select('id', 'registration_number AS regNumber', 'name', 'type', 'representative', 'capital', 'registration_date AS regDate', 'address', 'business_scope AS businessScope', 'registration_authority AS regAuthority')->paginate($perPage);
 
         return $enterprises->toJson();
     }

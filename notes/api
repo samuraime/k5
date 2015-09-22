@@ -4,6 +4,9 @@
 
 接口列表
     员工列表
+    根据ID获取单个人才: GET /admin/personnel/by-id
+        params: id int 人才id
+        return: 暂时返回所有字段
     获取列表: GET /admin/personnel/list
         params: page int 请求的页码
                 perPage int 每页显示的条目
