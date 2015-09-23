@@ -12,6 +12,14 @@ class AdminAccountController extends AdminController
         return view('admin.account.index');
     }
 
+    public function getSession()
+    {
+        $user = Session::get('user');
+        unset($user['password']);
+        
+        return response()->json(['user' => $user]);
+    }
+
     public function getProfile()
     {
         return view('admin.account.index');
