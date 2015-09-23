@@ -10,4 +10,9 @@ class AdminIndexController extends AdminController
     {
         return redirect('admin/summary');
     }
+
+    public function getReact()
+    {
+        return view('admin.react-index');
+    }
 }
