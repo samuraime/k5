@@ -136,7 +136,7 @@
 	            )
 	        );
 	    }
-	), document.getElementById('root'));
+	), document.body);
 
 /***/ },
 /* 2 */
@@ -28861,8 +28861,16 @@
 	        'div',
 	        null,
 	        _react2['default'].createElement(_componentsHeader2['default'], { user: this.props.app.user }),
-	        _react2['default'].createElement(_componentsLeftNavBar2['default'], { permissions: this.props.app.user.permission }),
-	        this.props.children,
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'w1200 mt20' },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'am-cf admin-main' },
+	            _react2['default'].createElement(_componentsLeftNavBar2['default'], { permissions: this.props.app.user.permission }),
+	            this.props.children
+	          )
+	        ),
 	        _react2['default'].createElement(_componentsFooter2['default'], null)
 	      );
 	    }
@@ -28888,21 +28896,21 @@
 /* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(185);
 
@@ -28914,19 +28922,114 @@
 	    function Header() {
 	        _classCallCheck(this, Header);
 
-	        _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Header.prototype), "constructor", this).apply(this, arguments);
 	    }
 
 	    _createClass(Header, [{
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
 	            var user = this.props.user;
 
-	            return _react2['default'].createElement(
-	                'header',
-	                null,
-	                '这是header ',
-	                user.name
+	            return _react2["default"].createElement(
+	                "header",
+	                { className: "am-topbar admin-header" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "am-topbar-brand" },
+	                    _react2["default"].createElement(
+	                        "strong",
+	                        null,
+	                        "公司名称"
+	                    ),
+	                    _react2["default"].createElement(
+	                        "small",
+	                        null,
+	                        "后台管理模板"
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "button",
+	                    { className: "am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only", "data-am-collapse": "{target: '#topbar-collapse'}" },
+	                    _react2["default"].createElement(
+	                        "span",
+	                        { className: "am-sr-only" },
+	                        "导航切换"
+	                    ),
+	                    _react2["default"].createElement("span", { className: "am-icon-bars" })
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "am-collapse am-topbar-collapse", id: "topbar-collapse" },
+	                    _react2["default"].createElement(
+	                        "ul",
+	                        { className: "am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list" },
+	                        _react2["default"].createElement(
+	                            "li",
+	                            { className: "am-header-information am-text-secondary" },
+	                            " 欢迎您登录"
+	                        ),
+	                        _react2["default"].createElement(
+	                            "li",
+	                            { className: "am-dropdown", "data-am-dropdown": true },
+	                            _react2["default"].createElement(
+	                                "a",
+	                                { className: "am-dropdown-toggle", "data-am-dropdown-toggle": true, href: "javascript:;" },
+	                                _react2["default"].createElement("span", { className: "am-icon-users" }),
+	                                " ",
+	                                user.name,
+	                                _react2["default"].createElement("span", { className: "am-icon-caret-down" })
+	                            ),
+	                            _react2["default"].createElement(
+	                                "ul",
+	                                { className: "am-dropdown-content" },
+	                                _react2["default"].createElement(
+	                                    "li",
+	                                    null,
+	                                    _react2["default"].createElement(
+	                                        "a",
+	                                        { href: "/admin/account/profile" },
+	                                        _react2["default"].createElement("span", { className: "am-icon-user" }),
+	                                        " 个人资料"
+	                                    )
+	                                ),
+	                                _react2["default"].createElement(
+	                                    "li",
+	                                    null,
+	                                    _react2["default"].createElement(
+	                                        "a",
+	                                        { href: "/admin/account/password" },
+	                                        _react2["default"].createElement("span", { className: "am-icon-cog" }),
+	                                        " 修改密码"
+	                                    )
+	                                ),
+	                                _react2["default"].createElement(
+	                                    "li",
+	                                    null,
+	                                    _react2["default"].createElement(
+	                                        "a",
+	                                        { href: "/auth/logout" },
+	                                        _react2["default"].createElement("span", { className: "am-icon-power-off" }),
+	                                        " 退出登录"
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2["default"].createElement(
+	                            "li",
+	                            { className: "am-hide-sm-only" },
+	                            _react2["default"].createElement(
+	                                "a",
+	                                { href: "javascript:;", id: "admin-fullscreen" },
+	                                _react2["default"].createElement("span", { className: "am-icon-arrows-alt" }),
+	                                _react2["default"].createElement(
+	                                    "span",
+	                                    { className: "admin-fullText" },
+	                                    "开启全屏"
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -28934,16 +29037,15 @@
 	    return Header;
 	})(_react.Component);
 
-	exports['default'] = Header;
+	exports["default"] = Header;
 
 	Header.propTypes = {
 	    user: _react.PropTypes.shape({
-	        id: _react.PropTypes.string,
-	        name: _react.PropTypes.string.isRequired,
-	        nickname: _react.PropTypes.string.isRequired
+	        id: _react.PropTypes.number,
+	        name: _react.PropTypes.string.isRequired
 	    }).isRequired
 	};
-	module.exports = exports['default'];
+	module.exports = exports["default"];
 
 /***/ },
 /* 407 */
@@ -29038,23 +29140,70 @@
 	            var visiblePermissions = ['index', 'summary', 'enterprise', 'personnel', 'log', 'message', 'manage'];
 
 	            return _react2['default'].createElement(
-	                'ul',
-	                null,
-	                permissions.filter(function (permission) {
-	                    return visiblePermissions.find(function (visiblePermission) {
-	                        return visiblePermission == permission;
-	                    });
-	                }).map(function (permission) {
-	                    return _react2['default'].createElement(
-	                        'li',
-	                        null,
+	                'div',
+	                { className: 'admin-sidebar am-offcanvas', id: 'admin-offcanvas' },
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: 'am-offcanvas-bar admin-offcanvas-bar' },
+	                    _react2['default'].createElement(
+	                        'ul',
+	                        { className: 'am-list admin-sidebar-list' },
+	                        permissions.filter(function (permission) {
+	                            return visiblePermissions.find(function (visiblePermission) {
+	                                return visiblePermission == permission;
+	                            });
+	                        }).map(function (permission) {
+	                            return _react2['default'].createElement(
+	                                'li',
+	                                null,
+	                                _react2['default'].createElement(
+	                                    _reactRouter.Link,
+	                                    { to: '/' + permission, classNameName: 'am-cf' },
+	                                    _react2['default'].createElement('span', { className: 'am-icon-check am-icon-file-text' }),
+	                                    permission
+	                                )
+	                            );
+	                        })
+	                    ),
+	                    _react2['default'].createElement(
+	                        'div',
+	                        { className: 'am-panel am-panel-default admin-sidebar-panel' },
 	                        _react2['default'].createElement(
-	                            _reactRouter.Link,
-	                            { to: '/' + permission },
-	                            permission
+	                            'div',
+	                            { className: 'am-panel-bd' },
+	                            _react2['default'].createElement(
+	                                'p',
+	                                null,
+	                                _react2['default'].createElement('span', { className: 'am-icon-bookmark' }),
+	                                ' 公告'
+	                            ),
+	                            _react2['default'].createElement(
+	                                'p',
+	                                null,
+	                                '时光静好，与君语；细水流年，与君同。'
+	                            )
 	                        )
-	                    );
-	                })
+	                    ),
+	                    _react2['default'].createElement(
+	                        'div',
+	                        { className: 'am-panel am-panel-default admin-sidebar-panel' },
+	                        _react2['default'].createElement(
+	                            'div',
+	                            { className: 'am-panel-bd' },
+	                            _react2['default'].createElement(
+	                                'p',
+	                                null,
+	                                _react2['default'].createElement('span', { className: 'am-icon-tag' }),
+	                                ' wiki'
+	                            ),
+	                            _react2['default'].createElement(
+	                                'p',
+	                                null,
+	                                'Welcome to the Amaze UI wiki!'
+	                            )
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -30714,21 +30863,21 @@
 /* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(185);
 
@@ -30740,16 +30889,16 @@
 	    function Personnel() {
 	        _classCallCheck(this, Personnel);
 
-	        _get(Object.getPrototypeOf(Personnel.prototype), 'constructor', this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Personnel.prototype), "constructor", this).apply(this, arguments);
 	    }
 
 	    _createClass(Personnel, [{
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
-	            return _react2['default'].createElement(
-	                'div',
-	                null,
-	                'Personnel'
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "admin-content" },
+	                "Personnel"
 	            );
 	        }
 	    }]);
@@ -30757,8 +30906,8 @@
 	    return Personnel;
 	})(_react.Component);
 
-	exports['default'] = Personnel;
-	module.exports = exports['default'];
+	exports["default"] = Personnel;
+	module.exports = exports["default"];
 
 /***/ },
 /* 415 */

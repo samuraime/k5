@@ -18,8 +18,12 @@ class App extends Component {
     return (
       <div>
         <Header user={ this.props.app.user }/>
-        <LeftNavBar permissions={ this.props.app.user.permission } />
-        {this.props.children}
+          <div className="w1200 mt20">
+            <div className="am-cf admin-main">
+              <LeftNavBar permissions={ this.props.app.user.permission } />
+              {this.props.children}
+            </div>
+          </div>
         <Footer />
       </div>
       );
