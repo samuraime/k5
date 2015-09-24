@@ -20,6 +20,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
         'log' => 'AdminLogController',
         'manage' => 'AdminManageController',
         'account' => 'AdminAccountController',
+        'index' => 'AdminIndexController',
         '/' => 'AdminIndexController'
     ]);
 });

@@ -3,11 +3,20 @@ import { Link } from 'react-router';
 
 export default class LeftNavBar extends Component {
     render() {
+        const { permissions } = this.props;
+        const visiblePermissions = ['index', 'summary', 'enterprise', 'personnel', 'log', 'message', 'manage'];
+
         return (
             <ul>
-                <li><Link to="/">index</Link></li>
-                <li><Link to="/summary">summary</Link></li>
-                <li><Link to="/manage">manage</Link></li>
+            { 
+                permissions.filter(permission => 
+                    visiblePermissions.find(visiblePermission => 
+                        visiblePermission == permission
+                    )
+                ).map(permission => {
+                    return (<li><Link to={ '/' + permission }>{ permission }</Link></li>)
+                })
+            }
             </ul>
         );
     }
