@@ -10,7 +10,7 @@ import * as AppActions from '../actions/app';
 class App extends Component {
   constructor(props) {
     super();
-    props.renderInitData();
+    props.initAppData();
   }
 
   render() {

@@ -1,14 +1,15 @@
 import * as ActionTypes from '../constants/ActionTypes';
 import jQuery from 'jquery';
 
-export function initData(user) {
-  return { type: ActionTypes.RENDER_INIT_DATA , user };
+function initApp(user) {
+  return { type: ActionTypes.INIT_APP_DATA , user };
 }
 
-export function renderInitData() {
+export function initAppData() {
     return (dispatch, getState) => {
         jQuery.get('/admin/account/session', function(data) {
-          dispatch(initData(data));
+          dispatch(initApp(data));
         });
     };
 }
+

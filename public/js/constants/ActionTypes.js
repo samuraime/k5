@@ -1,4 +1,6 @@
-export const RENDER_INIT_DATA = 'RENDER_INIT_DATA';
+export const INIT_APP_DATA = 'INIT_APP_DATA';
+
+export const INIT_PERSONNEL_DATA = 'INIT_PERSONNEL_DATA';
 
 export const ADD_ITEM = 'ADD_ITEM';
 export const VIEW_ITEM = 'VIEW_ITEM';
