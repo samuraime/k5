@@ -12,7 +12,7 @@ export default class LeftNavBar extends Component {
                     <List className="admin-sidebar-list">
                         <ListItem className={ permissions.indexOf('summary') != -1 ? '' : 'am-hide' }>
                             <Link to="/summary">
-                                <span className="am-icon-area-chart"> 数据汇总</span>
+                                   <span className="am-icon-area-chart"> 数据汇总</span>
                             </Link>
                         </ListItem>
                         <ListItem className={ permissions.indexOf('enterprise') != -1 ? '' : 'am-hide' }>

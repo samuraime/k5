@@ -1,21 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Pagination } from 'amazeui-react';
 import * as PersonnelActions from '../actions/personnel';
 import { PersonnelTable } from '../components/Personnel';
+import CommonPagination from '../components/CommonPagination';
 
 class Personnel extends Component {
     constructor(props) {
-        super();
+        super(props);
         props.initPersonnelData();
+    }
+
+    refreshPage() {
     }
 
     render() {
         return (
             <div className="admin-content">
                 <PersonnelTable data={ this.props.personnel.data } />
-                <Pagination data={ this.props.personnel } />
+                <CommonPagination refreshPage={ this.refreshPage } data={ this.props.personnel } />
             </div>
         );
     }

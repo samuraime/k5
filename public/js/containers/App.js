@@ -10,6 +10,7 @@ import * as AppActions from '../actions/app';
 class App extends Component {
   constructor(props) {
     super();
+    console.log(props);
     props.initAppData();
   }
 
