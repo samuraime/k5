@@ -17,11 +17,11 @@ class AdminSummaryController extends AdminController
     public function getPersonnelByGenderMonth()
     {
         $data = DB::table('personnel')
-            ->select(DB::raw('COUNT(id) AS num, gender, DATE_FORMAT(birth, "%m") AS month'))
+            ->select(DB::raw('COUNT(id) AS num, gender, DATE_FORMAT(birth_date, "%m") AS month'))
             ->groupBy('gender')
-            ->groupBy(DB::raw('DATE_FORMAT(birth, "%m")'))
+            ->groupBy(DB::raw('DATE_FORMAT(birth_date, "%m")'))
             ->orderBy('gender')
-            ->orderBy(DB::raw('DATE_FORMAT(birth, "%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(birth_date, "%m")'))
             ->get();
 
         $maleData = [];
