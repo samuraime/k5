@@ -31,7 +31,7 @@ class AdminPersonnelController extends AdminController
 
         $inputs = Request::all();
         $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
-        $personnels = Personnel::select('id', 'name', 'email', 'mobile', 'birth_date as birthDate', 'height', 'weight')->paginate($perPage);
+        $personnels = Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight')->paginate($perPage);
         
         return response()->json($personnels);
     }
