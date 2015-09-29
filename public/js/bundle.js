@@ -28868,7 +28868,7 @@
 	    if (state === undefined) state = appState;
 
 	    switch (action.type) {
-	        case ActionTypes.INIT_APP_DATA:
+	        case ActionTypes.APP_INIT_DATA_COMPLETED:
 	            return Object.assign({}, appState, action.user);
 
 	        default:
@@ -28887,20 +28887,17 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	var INIT_APP_DATA = 'INIT_APP_DATA';
+	var APP_INIT_DATA_COMPLETED = 'APP_INIT_DATA_COMPLETED';
 
-	exports.INIT_APP_DATA = INIT_APP_DATA;
-	var INIT_PERSONNEL_DATA = 'INIT_PERSONNEL_DATA';
-
-	exports.INIT_PERSONNEL_DATA = INIT_PERSONNEL_DATA;
-	var ADD_ITEM = 'ADD_ITEM';
-	exports.ADD_ITEM = ADD_ITEM;
-	var VIEW_ITEM = 'VIEW_ITEM';
-	exports.VIEW_ITEM = VIEW_ITEM;
-	var EDIT_ITEM = 'EDIT_ITEM';
-	exports.EDIT_ITEM = EDIT_ITEM;
-	var DELETE_ITEM = 'DELETE_ITEM';
-	exports.DELETE_ITEM = DELETE_ITEM;
+	exports.APP_INIT_DATA_COMPLETED = APP_INIT_DATA_COMPLETED;
+	var PERSONNEL_INIT_DATA_COMPLETED = 'PERSONNEL_INIT_DATA_COMPLETED';
+	exports.PERSONNEL_INIT_DATA_COMPLETED = PERSONNEL_INIT_DATA_COMPLETED;
+	var PERSONNEL_LOAD_DATA_COMPLETED = 'PERSONNEL_LOAD_DATA_COMPLETED';
+	exports.PERSONNEL_LOAD_DATA_COMPLETED = PERSONNEL_LOAD_DATA_COMPLETED;
+	var PERSONNEL_DELETE_ITEM_COMPLETED = 'PERSONNEL_DELETE_ITEM_COMPLETED';
+	exports.PERSONNEL_DELETE_ITEM_COMPLETED = PERSONNEL_DELETE_ITEM_COMPLETED;
+	var PERSONNEL_DELETE_ITEM_ERROR = 'PERSONNEL_DELETE_ITEM_ERROR';
+	exports.PERSONNEL_DELETE_ITEM_ERROR = PERSONNEL_DELETE_ITEM_ERROR;
 
 /***/ },
 /* 410 */
@@ -28927,8 +28924,14 @@
 	    if (state === undefined) state = personnelState;
 
 	    switch (action.type) {
-	        case ActionTypes.INIT_PERSONNEL_DATA:
-	            return Object.assign({}, personnelState, action.data);
+	        case ActionTypes.PERSONNEL_INIT_DATA_COMPLETED:
+	        case ActionTypes.PERSONNEL_LOAD_DATA_COMPLETED:
+	            return Object.assign({}, state, action.data);
+
+	        case ActionTypes.PERSONNEL_DELETE_ITEM_COMPLETED:
+	            return Object.assign({}, state, { data: state.data.filter(function (item) {
+	                    return item.id != action.id;
+	                }) });
 
 	        default:
 	            return state;
@@ -37454,7 +37457,7 @@
 	var _jquery2 = _interopRequireDefault(_jquery);
 
 	function initApp(user) {
-	  return { type: ActionTypes.INIT_APP_DATA, user: user };
+	  return { type: ActionTypes.APP_INIT_DATA_COMPLETED, user: user };
 	}
 
 	function initAppData() {
@@ -39108,11 +39111,13 @@
 
 	var PersonnelActions = _interopRequireWildcard(_actionsPersonnel);
 
-	var _componentsPersonnel = __webpack_require__(507);
+	var _componentsDataTable = __webpack_require__(507);
 
-	var _componentsCommonPagination = __webpack_require__(508);
+	var _componentsDataTable2 = _interopRequireDefault(_componentsDataTable);
 
-	var _componentsCommonPagination2 = _interopRequireDefault(_componentsCommonPagination);
+	var _componentsPagination = __webpack_require__(508);
+
+	var _componentsPagination2 = _interopRequireDefault(_componentsPagination);
 
 	var Personnel = (function (_Component) {
 	    _inherits(Personnel, _Component);
@@ -39122,19 +39127,33 @@
 
 	        _get(Object.getPrototypeOf(Personnel.prototype), 'constructor', this).call(this, props);
 	        props.initPersonnelData();
+	        this.handleGoPage = this.handleGoPage.bind(this);
+	        this.handleDeleteItem = this.handleDeleteItem.bind(this);
 	    }
 
 	    _createClass(Personnel, [{
-	        key: 'refreshPage',
-	        value: function refreshPage() {}
+	        key: 'handleGoPage',
+	        value: function handleGoPage(pageInfo) {
+	            this.props.handleGoPage(pageInfo);
+	        }
+	    }, {
+	        key: 'handleDeleteItem',
+	        value: function handleDeleteItem(id) {
+	            this.props.handleDeleteItem(id);
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var header = { id: 'ID', name: '姓名', mobile: '电话', email: '邮箱', birth: '生日', height: 'Height', weight: 'Weight', _action: '操作' };
+
 	            return _react2['default'].createElement(
 	                'div',
 	                { className: 'admin-content' },
-	                _react2['default'].createElement(_componentsPersonnel.PersonnelTable, { data: this.props.personnel.data }),
-	                _react2['default'].createElement(_componentsCommonPagination2['default'], { refreshPage: this.refreshPage, data: this.props.personnel })
+	                _react2['default'].createElement(_componentsDataTable2['default'], {
+	                    header: header,
+	                    data: this.props.personnel.data,
+	                    handleDeleteItem: this.handleDeleteItem }),
+	                _react2['default'].createElement(_componentsPagination2['default'], { right: true, handleGoPage: this.handleGoPage, data: this.props.personnel })
 	            );
 	        }
 	    }]);
@@ -39165,6 +39184,8 @@
 	    value: true
 	});
 	exports.initPersonnelData = initPersonnelData;
+	exports.handleGoPage = handleGoPage;
+	exports.handleDeleteItem = handleDeleteItem;
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -39172,14 +39193,46 @@
 
 	var ActionTypes = _interopRequireWildcard(_constantsActionTypes);
 
-	function initPersonnel(data) {
-	    return { type: ActionTypes.INIT_PERSONNEL_DATA, data: data };
+	function initDataCompleted(data) {
+	    return { type: ActionTypes.PERSONNEL_INIT_DATA_COMPLETED, data: data };
 	}
 
 	function initPersonnelData() {
 	    return function (dispatch) {
 	        jQuery.get('/admin/personnel/list', function (data) {
-	            dispatch(initPersonnel(data));
+	            dispatch(initDataCompleted(data));
+	        });
+	    };
+	}
+
+	function loadDataCompleted(data) {
+	    return { type: ActionTypes.PERSONNEL_LOAD_DATA_COMPLETED, data: data };
+	}
+
+	function handleGoPage(pageInfo) {
+	    return function (dispatch) {
+	        jQuery.get('/admin/personnel/list', pageInfo, function (data) {
+	            dispatch(loadDataCompleted(data));
+	        });
+	    };
+	}
+
+	function deleteItemComplete(id) {
+	    return { type: ActionTypes.PERSONNEL_DELETE_ITEM_COMPLETED, id: id };
+	}
+
+	function handleDeleteItem(id) {
+	    return function (dispatch) {
+	        jQuery.ajax({
+	            type: 'DELETE',
+	            url: '/admin/personnel',
+	            data: { _method: 'DELETE', id: id },
+	            success: function success(data) {
+	                dispatch(deleteItemComplete(id));
+	            },
+	            error: function error() {
+	                dispatch({ type: ActionTypes.PERSONNEL_DELETE_ITEM_ERROR });
+	            }
 	        });
 	    };
 	}
@@ -39210,124 +39263,199 @@
 
 	var _amazeuiReact = __webpack_require__(415);
 
-	var PersonnelTable = (function (_Component) {
-	    _inherits(PersonnelTable, _Component);
+	var Thead = (function (_Component) {
+	    _inherits(Thead, _Component);
 
-	    function PersonnelTable() {
-	        _classCallCheck(this, PersonnelTable);
+	    function Thead() {
+	        _classCallCheck(this, Thead);
 
-	        _get(Object.getPrototypeOf(PersonnelTable.prototype), 'constructor', this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Thead.prototype), 'constructor', this).apply(this, arguments);
 	    }
 
-	    _createClass(PersonnelTable, [{
-	        key: 'renderBody',
-	        value: function renderBody() {
-	            return this.props.data.map(function (item) {
-	                return _react2['default'].createElement(
-	                    'tr',
+	    _createClass(Thead, [{
+	        key: 'renderThs',
+	        value: function renderThs() {
+	            var ths = [];
+	            for (var key in this.props.header) {
+	                ths.push(_react2['default'].createElement(
+	                    'th',
 	                    null,
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        _react2['default'].createElement('input', { type: 'checkbox' })
-	                    ),
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        item.id
-	                    ),
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        item.name
-	                    ),
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        item.enterprise_id
-	                    ),
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        item.mobile
-	                    ),
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        item.email
-	                    ),
-	                    _react2['default'].createElement(
-	                        'td',
-	                        null,
-	                        item.created_at
-	                    ),
-	                    _react2['default'].createElement('td', null)
-	                );
-	            });
+	                    this.props.header[key]
+	                ));
+	            }
+
+	            return ths;
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2['default'].createElement(
-	                _amazeuiReact.Table,
+	                'thead',
 	                null,
 	                _react2['default'].createElement(
-	                    'thead',
+	                    'tr',
 	                    null,
 	                    _react2['default'].createElement(
 	                        'th',
 	                        null,
 	                        _react2['default'].createElement('input', { type: 'checkbox' })
 	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        'ID'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        '姓名'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        '工作单位'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        '电话'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        '邮箱'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        '创建日期'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'th',
-	                        null,
-	                        '操作'
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'tbody',
-	                    null,
-	                    this.renderBody()
+	                    this.renderThs()
 	                )
 	            );
 	        }
 	    }]);
 
-	    return PersonnelTable;
+	    return Thead;
 	})(_react.Component);
 
-	exports.PersonnelTable = PersonnelTable;
+	var Tr = (function (_Component2) {
+	    _inherits(Tr, _Component2);
+
+	    function Tr() {
+	        _classCallCheck(this, Tr);
+
+	        _get(Object.getPrototypeOf(Tr.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(Tr, [{
+	        key: 'renderTds',
+	        value: function renderTds() {
+	            if (this.props.header._action) {
+	                delete this.props.header._action;
+	            }
+
+	            var tds = [];
+	            for (var key in this.props.header) {
+	                tds.push(_react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    this.props.data[key]
+	                ));
+	            }
+
+	            return tds;
+	        }
+	    }, {
+	        key: 'deleteItem',
+	        value: function deleteItem() {
+	            this.props.handleDeleteItem(this.props.data.id);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'tr',
+	                null,
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement('input', { type: 'checkbox' })
+	                ),
+	                this.renderTds(),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        _amazeuiReact.ButtonGroup,
+	                        null,
+	                        _react2['default'].createElement(
+	                            _amazeuiReact.Button,
+	                            { amSize: 'xs' },
+	                            _react2['default'].createElement(
+	                                'span',
+	                                { className: 'am-text-secondary am-icon-pencil-square-o' },
+	                                ' 编辑'
+	                            )
+	                        ),
+	                        _react2['default'].createElement(
+	                            _amazeuiReact.Button,
+	                            { amSize: 'xs' },
+	                            _react2['default'].createElement(
+	                                'span',
+	                                { className: 'am-icon-copy' },
+	                                ' 复制'
+	                            )
+	                        ),
+	                        _react2['default'].createElement(
+	                            _amazeuiReact.Button,
+	                            { amSize: 'xs', onClick: this.deleteItem.bind(this) },
+	                            _react2['default'].createElement(
+	                                'span',
+	                                { className: 'am-text-danger am-icon-trash-o' },
+	                                ' 删除'
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Tr;
+	})(_react.Component);
+
+	var Tbody = (function (_Component3) {
+	    _inherits(Tbody, _Component3);
+
+	    function Tbody() {
+	        _classCallCheck(this, Tbody);
+
+	        _get(Object.getPrototypeOf(Tbody.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(Tbody, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'tbody',
+	                null,
+	                this.props.children
+	            );
+	        }
+	    }]);
+
+	    return Tbody;
+	})(_react.Component);
+
+	var DataTable = (function (_Component4) {
+	    _inherits(DataTable, _Component4);
+
+	    function DataTable() {
+	        _classCallCheck(this, DataTable);
+
+	        _get(Object.getPrototypeOf(DataTable.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(DataTable, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this = this;
+
+	            return _react2['default'].createElement(
+	                _amazeuiReact.Table,
+	                null,
+	                _react2['default'].createElement(Thead, { header: this.props.header }),
+	                _react2['default'].createElement(
+	                    Tbody,
+	                    null,
+	                    this.props.data.map(function (item) {
+	                        return _react2['default'].createElement(Tr, { data: item, header: _this.props.header, handleDeleteItem: _this.props.handleDeleteItem });
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return DataTable;
+	})(_react.Component);
+
+	exports['default'] = DataTable;
+
+	DataTable.Thead = Thead;
+	DataTable.Tbody = Tbody;
+	DataTable.Tr = Tr;
+	module.exports = exports['default'];
 
 /***/ },
 /* 508 */
@@ -39353,21 +39481,53 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _amazeuiReact = __webpack_require__(415);
+	var Item = (function (_Component) {
+	    _inherits(Item, _Component);
 
-	var CommonPagination = (function (_Component) {
-	    _inherits(CommonPagination, _Component);
+	    function Item() {
+	        _classCallCheck(this, Item);
 
-	    function CommonPagination() {
-	        _classCallCheck(this, CommonPagination);
-
-	        _get(Object.getPrototypeOf(CommonPagination.prototype), 'constructor', this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Item.prototype), 'constructor', this).apply(this, arguments);
 	    }
 
-	    _createClass(CommonPagination, [{
-	        key: 'refreshPage',
-	        value: function refreshPage() {}
+	    _createClass(Item, [{
+	        key: 'goPage',
+	        value: function goPage(event) {
+	            // console.log(event);
+	            event.preventDefault();
+	            if (!(this.props.active || this.props.disabled)) {
+	                this.props.handleGoPage(this.props.pageInfo);
+	            }
+	        }
 	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'li',
+	                { onClick: this.goPage.bind(this),
+	                    className: (this.props.active ? 'am-active' : '') + (this.props.disabled ? 'am-disabled' : '') },
+	                _react2['default'].createElement(
+	                    'a',
+	                    null,
+	                    this.props.children
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Item;
+	})(_react.Component);
+
+	var Pagination = (function (_Component2) {
+	    _inherits(Pagination, _Component2);
+
+	    function Pagination() {
+	        _classCallCheck(this, Pagination);
+
+	        _get(Object.getPrototypeOf(Pagination.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(Pagination, [{
 	        key: 'render',
 	        value: function render() {
 	            var _props$data = this.props.data;
@@ -39381,10 +39541,10 @@
 	            var to = _props$data.to;
 
 	            var show_page_count = 10;
+	            var left_offset = Math.floor((show_page_count - 1) / 2);
+	            var right_offset = Math.ceil(show_page_count / 2);
 	            var start_page = undefined,
 	                end_page = undefined;
-	            var left_offset = Math.floor(show_page_count - 1) / 2;
-	            var right_offset = Math.ceil(show_page_count / 2);
 
 	            if (last_page > show_page_count) {
 	                if (current_page - left_offset <= 0) {
@@ -39405,34 +39565,42 @@
 	            var mainPagination = [];
 	            for (var i = start_page; i <= end_page; i++) {
 	                mainPagination.push(_react2['default'].createElement(
-	                    _amazeuiReact.Pagination.Item,
-	                    { active: i == current_page, onClick: this.refreshPage },
+	                    Pagination.Item,
+	                    { active: i == current_page, pageInfo: { page: i }, handleGoPage: this.props.handleGoPage },
 	                    i
 	                ));
 	            }
 
 	            return _react2['default'].createElement(
-	                _amazeuiReact.Pagination,
-	                { right: 'true' },
+	                'ul',
+	                { className: 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') },
 	                _react2['default'].createElement(
-	                    _amazeuiReact.Pagination.Item,
-	                    { disabled: current_page == 1 },
+	                    Pagination.Item,
+	                    {
+	                        disabled: current_page == 1,
+	                        pageInfo: { page: current_page - 1 },
+	                        handleGoPage: this.props.handleGoPage },
 	                    '«'
 	                ),
 	                mainPagination,
 	                _react2['default'].createElement(
-	                    _amazeuiReact.Pagination.Item,
-	                    { disabled: current_page == last_page },
+	                    Pagination.Item,
+	                    {
+	                        disabled: current_page == last_page,
+	                        pageInfo: { page: current_page + 1 },
+	                        handleGoPage: this.props.handleGoPage },
 	                    '»'
 	                )
 	            );
 	        }
 	    }]);
 
-	    return CommonPagination;
+	    return Pagination;
 	})(_react.Component);
 
-	exports['default'] = CommonPagination;
+	exports['default'] = Pagination;
+
+	Pagination.Item = Item;
 	module.exports = exports['default'];
 
 /***/ },

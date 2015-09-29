@@ -18,11 +18,11 @@ class App extends Component {
     // console.log(this.props);
     return (
       <div>
-        <Header user={ this.props.app.user }/>
+        <Header user={ this.props.app.user } />
           <div className="w1200 mt20">
             <div className="am-cf admin-main">
               <LeftNavBar permissions={ this.props.app.user.permission } />
-              {this.props.children}
+              { this.props.children }
             </div>
           </div>
         <Footer />

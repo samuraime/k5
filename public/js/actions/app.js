@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 import jQuery from 'jquery';
 
 function initApp(user) {
-  return { type: ActionTypes.INIT_APP_DATA , user };
+  return { type: ActionTypes.APP_INIT_DATA_COMPLETED , user };
 }
 
 export function initAppData() {
