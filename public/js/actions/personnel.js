@@ -6,8 +6,11 @@ function initDataCompleted(data) {
 
 export function initPersonnelData() {
     return (dispatch) => {
-        jQuery.get('/admin/personnel/list', function(data) {
-            dispatch(initDataCompleted(data));
+        jQuery.ajax({
+            type: 'GET',
+            url: '/admin/personnel/list',
+            success: data => dispatch(initDataCompleted(data)),
+            error: dispatch({ type: ActionTypes.PERSONNEL_INIT_DATA_ERROR })
         })
     }
 }
@@ -17,14 +20,18 @@ function loadDataCompleted(data) {
 }
 
 export function handleGoPage(pageInfo) {
-    return (dispatch) => {
-        jQuery.get('/admin/personnel/list', pageInfo, function(data) {
-            dispatch(loadDataCompleted(data));
+    return dispatch => {
+        jQuery.ajax({
+            type: 'GET',
+            url: '/admin/personnel/list',
+            data: pageInfo,
+            success: data => dispatch(loadDataCompleted(data)),
+            error: dispatch({ type: ActionTypes.PERSONNEL_LOAD_DATA_ERROR })
         })
     }
 }
 
-function deleteItemComplete(id) {
+function deleteItemCompleted(id) {
     return { type: ActionTypes.PERSONNEL_DELETE_ITEM_COMPLETED, id };
 }
 
@@ -34,12 +41,24 @@ export function handleDeleteItem(id) {
             type: 'DELETE',
             url: '/admin/personnel',
             data: {_method: 'DELETE', id: id},
-            success: data => {
-                dispatch(deleteItemComplete(id));
-            },
-            error: () => {
-                dispatch({type: ActionTypes.PERSONNEL_DELETE_ITEM_ERROR});
-            }
+            success: data => dispatch(deleteItemCompleted(id)),
+            error: () => dispatch({type: ActionTypes.PERSONNEL_DELETE_ITEM_ERROR})
+        })
+    }
+}
+
+function searchCompleted(data) {
+    return { type: ActionTypes.PERSONNEL_SEARCH_COMPLETED, data };
+}
+
+export function handleSearch(pageInfo) {
+    return dispatch => {
+        jQuery.ajax({
+            type: 'GET',
+            url: '/admin/personnel',
+            data: pageInfo,
+            success: data => dispatch(searchCompleted(data)),
+            error: () => dispatch({type: ActionTypes.PERSONNEL_SEARCH_ERROR})
         })
     }
 }

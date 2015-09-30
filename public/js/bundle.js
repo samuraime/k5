@@ -89,19 +89,19 @@
 
 	var _containersPersonnel2 = _interopRequireDefault(_containersPersonnel);
 
-	var _containersMessage = __webpack_require__(509);
+	var _containersMessage = __webpack_require__(510);
 
 	var _containersMessage2 = _interopRequireDefault(_containersMessage);
 
-	var _containersLog = __webpack_require__(510);
+	var _containersLog = __webpack_require__(511);
 
 	var _containersLog2 = _interopRequireDefault(_containersLog);
 
-	var _containersManage = __webpack_require__(511);
+	var _containersManage = __webpack_require__(512);
 
 	var _containersManage2 = _interopRequireDefault(_containersManage);
 
-	var _containersManageUser = __webpack_require__(512);
+	var _containersManageUser = __webpack_require__(513);
 
 	var _containersManageUser2 = _interopRequireDefault(_containersManageUser);
 
@@ -28861,7 +28861,7 @@
 	var ActionTypes = _interopRequireWildcard(_constantsActionTypes);
 
 	var appState = {
-	    user: { name: 'username', permission: [] }
+	    user: { name: '', permission: [] }
 	};
 
 	function app(state, action) {
@@ -28888,16 +28888,26 @@
 	  value: true
 	});
 	var APP_INIT_DATA_COMPLETED = 'APP_INIT_DATA_COMPLETED';
-
 	exports.APP_INIT_DATA_COMPLETED = APP_INIT_DATA_COMPLETED;
+	var APP_INIT_DATA_ERROR = 'APP_INIT_DATA_ERROR';
+
+	exports.APP_INIT_DATA_ERROR = APP_INIT_DATA_ERROR;
 	var PERSONNEL_INIT_DATA_COMPLETED = 'PERSONNEL_INIT_DATA_COMPLETED';
 	exports.PERSONNEL_INIT_DATA_COMPLETED = PERSONNEL_INIT_DATA_COMPLETED;
+	var PERSONNEL_INIT_DATA_ERROR = 'PERSONNEL_INIT_DATA_ERROR';
+	exports.PERSONNEL_INIT_DATA_ERROR = PERSONNEL_INIT_DATA_ERROR;
 	var PERSONNEL_LOAD_DATA_COMPLETED = 'PERSONNEL_LOAD_DATA_COMPLETED';
 	exports.PERSONNEL_LOAD_DATA_COMPLETED = PERSONNEL_LOAD_DATA_COMPLETED;
+	var PERSONNEL_LOAD_DATA_ERROR = 'PERSONNEL_LOAD_DATA_ERROR';
+	exports.PERSONNEL_LOAD_DATA_ERROR = PERSONNEL_LOAD_DATA_ERROR;
 	var PERSONNEL_DELETE_ITEM_COMPLETED = 'PERSONNEL_DELETE_ITEM_COMPLETED';
 	exports.PERSONNEL_DELETE_ITEM_COMPLETED = PERSONNEL_DELETE_ITEM_COMPLETED;
 	var PERSONNEL_DELETE_ITEM_ERROR = 'PERSONNEL_DELETE_ITEM_ERROR';
 	exports.PERSONNEL_DELETE_ITEM_ERROR = PERSONNEL_DELETE_ITEM_ERROR;
+	var PERSONNEL_SEARCH_COMPLETED = 'PERSONNEL_SEARCH_COMPLETED';
+	exports.PERSONNEL_SEARCH_COMPLETED = PERSONNEL_SEARCH_COMPLETED;
+	var PERSONNEL_SEARCH_ERROR = 'PERSONNEL_SEARCH_ERROR';
+	exports.PERSONNEL_SEARCH_ERROR = PERSONNEL_SEARCH_ERROR;
 
 /***/ },
 /* 410 */
@@ -37440,7 +37450,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
-	  value: true
+	    value: true
 	});
 	exports.initAppData = initAppData;
 
@@ -37457,15 +37467,20 @@
 	var _jquery2 = _interopRequireDefault(_jquery);
 
 	function initApp(user) {
-	  return { type: ActionTypes.APP_INIT_DATA_COMPLETED, user: user };
+	    return { type: ActionTypes.APP_INIT_DATA_COMPLETED, user: user };
 	}
 
 	function initAppData() {
-	  return function (dispatch, getState) {
-	    _jquery2['default'].get('/admin/account/session', function (data) {
-	      dispatch(initApp(data));
-	    });
-	  };
+	    return function (dispatch, getState) {
+	        _jquery2['default'].ajax({
+	            type: 'GET',
+	            url: '/admin/account/session',
+	            success: function success(data) {
+	                return dispatch(initApp(data));
+	            },
+	            error: dispatch({ type: ActionTypes.APP_INIT_DATA_ERROR })
+	        });
+	    };
 	}
 
 /***/ },
@@ -39119,6 +39134,10 @@
 
 	var _componentsPagination2 = _interopRequireDefault(_componentsPagination);
 
+	var _componentsSearchBox = __webpack_require__(509);
+
+	var _componentsSearchBox2 = _interopRequireDefault(_componentsSearchBox);
+
 	var Personnel = (function (_Component) {
 	    _inherits(Personnel, _Component);
 
@@ -39127,33 +39146,90 @@
 
 	        _get(Object.getPrototypeOf(Personnel.prototype), 'constructor', this).call(this, props);
 	        props.initPersonnelData();
-	        this.handleGoPage = this.handleGoPage.bind(this);
-	        this.handleDeleteItem = this.handleDeleteItem.bind(this);
 	    }
 
 	    _createClass(Personnel, [{
-	        key: 'handleGoPage',
-	        value: function handleGoPage(pageInfo) {
-	            this.props.handleGoPage(pageInfo);
-	        }
-	    }, {
-	        key: 'handleDeleteItem',
-	        value: function handleDeleteItem(id) {
-	            this.props.handleDeleteItem(id);
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var header = { id: 'ID', name: '姓名', mobile: '电话', email: '邮箱', birth: '生日', height: 'Height', weight: 'Weight', _action: '操作' };
+	            var category = header;
+	            delete category.id;
+	            delete category._action;
 
 	            return _react2['default'].createElement(
 	                'div',
 	                { className: 'admin-content' },
-	                _react2['default'].createElement(_componentsDataTable2['default'], {
-	                    header: header,
-	                    data: this.props.personnel.data,
-	                    handleDeleteItem: this.handleDeleteItem }),
-	                _react2['default'].createElement(_componentsPagination2['default'], { right: true, handleGoPage: this.handleGoPage, data: this.props.personnel })
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: 'am-cf am-padding border-bottom' },
+	                    _react2['default'].createElement(
+	                        'div',
+	                        { className: 'am-fl am-cf' },
+	                        _react2['default'].createElement(
+	                            'strong',
+	                            { className: 'am-text-primary am-text-lg' },
+	                            '数据列表'
+	                        ),
+	                        ' / ',
+	                        _react2['default'].createElement(
+	                            'small',
+	                            null,
+	                            '企业列表'
+	                        )
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: 'am-g' },
+	                    _react2['default'].createElement(
+	                        'div',
+	                        { className: 'am-u-sm-12 am-u-md-6' },
+	                        _react2['default'].createElement(
+	                            'div',
+	                            { className: 'am-btn-toolbar' },
+	                            _react2['default'].createElement(
+	                                'div',
+	                                { className: 'am-btn-group am-btn-group-md' },
+	                                _react2['default'].createElement(
+	                                    'button',
+	                                    { type: 'button', className: 'am-btn am-btn-primary' },
+	                                    _react2['default'].createElement('span', { className: 'am-icon-plus' }),
+	                                    ' 新增'
+	                                ),
+	                                _react2['default'].createElement(
+	                                    'button',
+	                                    { type: 'button', className: 'am-btn am-btn-primary' },
+	                                    _react2['default'].createElement('span', { className: 'am-icon-save' }),
+	                                    ' 保存'
+	                                ),
+	                                _react2['default'].createElement(
+	                                    'button',
+	                                    { type: 'button', className: 'am-btn am-btn-primary' },
+	                                    _react2['default'].createElement('span', { className: 'am-icon-trash-o' }),
+	                                    ' 删除'
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2['default'].createElement(_componentsSearchBox2['default'], { category: category, handleSearch: this.props.handleSearch })
+	                ),
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: 'am-g' },
+	                    _react2['default'].createElement(
+	                        'div',
+	                        { className: 'am-u-sm-12' },
+	                        _react2['default'].createElement(
+	                            'form',
+	                            { className: 'am-form' },
+	                            _react2['default'].createElement(_componentsDataTable2['default'], {
+	                                header: header,
+	                                data: this.props.personnel.data,
+	                                handleDeleteItem: this.props.handleDeleteItem }),
+	                            _react2['default'].createElement(_componentsPagination2['default'], { goto: true, next: true, last: true, right: true, handleGoPage: this.props.handleGoPage, data: this.props.personnel })
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -39186,6 +39262,7 @@
 	exports.initPersonnelData = initPersonnelData;
 	exports.handleGoPage = handleGoPage;
 	exports.handleDeleteItem = handleDeleteItem;
+	exports.handleSearch = handleSearch;
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -39199,8 +39276,13 @@
 
 	function initPersonnelData() {
 	    return function (dispatch) {
-	        jQuery.get('/admin/personnel/list', function (data) {
-	            dispatch(initDataCompleted(data));
+	        jQuery.ajax({
+	            type: 'GET',
+	            url: '/admin/personnel/list',
+	            success: function success(data) {
+	                return dispatch(initDataCompleted(data));
+	            },
+	            error: dispatch({ type: ActionTypes.PERSONNEL_INIT_DATA_ERROR })
 	        });
 	    };
 	}
@@ -39211,13 +39293,19 @@
 
 	function handleGoPage(pageInfo) {
 	    return function (dispatch) {
-	        jQuery.get('/admin/personnel/list', pageInfo, function (data) {
-	            dispatch(loadDataCompleted(data));
+	        jQuery.ajax({
+	            type: 'GET',
+	            url: '/admin/personnel/list',
+	            data: pageInfo,
+	            success: function success(data) {
+	                return dispatch(loadDataCompleted(data));
+	            },
+	            error: dispatch({ type: ActionTypes.PERSONNEL_LOAD_DATA_ERROR })
 	        });
 	    };
 	}
 
-	function deleteItemComplete(id) {
+	function deleteItemCompleted(id) {
 	    return { type: ActionTypes.PERSONNEL_DELETE_ITEM_COMPLETED, id: id };
 	}
 
@@ -39228,10 +39316,30 @@
 	            url: '/admin/personnel',
 	            data: { _method: 'DELETE', id: id },
 	            success: function success(data) {
-	                dispatch(deleteItemComplete(id));
+	                return dispatch(deleteItemCompleted(id));
 	            },
 	            error: function error() {
-	                dispatch({ type: ActionTypes.PERSONNEL_DELETE_ITEM_ERROR });
+	                return dispatch({ type: ActionTypes.PERSONNEL_DELETE_ITEM_ERROR });
+	            }
+	        });
+	    };
+	}
+
+	function searchCompleted(data) {
+	    return { type: ActionTypes.PERSONNEL_SEARCH_COMPLETED, data: data };
+	}
+
+	function handleSearch(pageInfo) {
+	    return function (dispatch) {
+	        jQuery.ajax({
+	            type: 'GET',
+	            url: '/admin/personnel',
+	            data: pageInfo,
+	            success: function success(data) {
+	                return dispatch(searchCompleted(data));
+	            },
+	            error: function error() {
+	                return dispatch({ type: ActionTypes.PERSONNEL_SEARCH_ERROR });
 	            }
 	        });
 	    };
@@ -39481,6 +39589,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _amazeuiReact = __webpack_require__(415);
+
 	var Item = (function (_Component) {
 	    _inherits(Item, _Component);
 
@@ -39489,6 +39599,18 @@
 
 	        _get(Object.getPrototypeOf(Item.prototype), 'constructor', this).apply(this, arguments);
 	    }
+
+	    /**
+	     * 分页就是分页
+	     * @prop total bool 是否显示总条目个数
+	     * @prop goto bool 是否显示跳转指定页
+	     * @prop next bool 是否显示上下页
+	     * @prop last bool 是否显示首尾页
+	     * @prop blockCount int default 5 分页块显示的个数 
+	     * @prop centered bool 居中对齐
+	     * @prop right bool 右对齐
+	     * @prop title object{ first, last, next, prev, goto } 文本信息呗
+	     */
 
 	    _createClass(Item, [{
 	        key: 'goPage',
@@ -39502,9 +39624,13 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this = this;
+
 	            return _react2['default'].createElement(
 	                'li',
-	                { onClick: this.goPage.bind(this),
+	                { onClick: function () {
+	                        return _this.goPage();
+	                    },
 	                    className: (this.props.active ? 'am-active' : '') + (this.props.disabled ? 'am-disabled' : '') },
 	                _react2['default'].createElement(
 	                    'a',
@@ -39528,8 +39654,20 @@
 	    }
 
 	    _createClass(Pagination, [{
+	        key: 'handleGoPage',
+	        value: function handleGoPage() {
+	            var page = this.refs.goPage.getDOMNode().value.trim();
+	            if (page >= 1 && page <= this.props.data.last_page) {
+	                this.props.handleGoPage({ page: page });
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
+	            var defaultTitle = { first: '第一页', last: '最末页', next: '下一页', prev: '上一页', goto: '转到' };
+	            var title = Object.assign({}, defaultTitle, this.props.title);
 	            var _props$data = this.props.data;
 	            var total = _props$data.total;
 	            var per_page = _props$data.per_page;
@@ -39540,9 +39678,9 @@
 	            var from = _props$data.from;
 	            var to = _props$data.to;
 
-	            var show_page_count = 10;
+	            var show_page_count = this.props.blockCount || 5;
 	            var left_offset = Math.floor((show_page_count - 1) / 2);
-	            var right_offset = Math.ceil(show_page_count / 2);
+	            var right_offset = Math.floor(show_page_count / 2);
 	            var start_page = undefined,
 	                end_page = undefined;
 
@@ -39573,24 +39711,57 @@
 
 	            return _react2['default'].createElement(
 	                'ul',
-	                { className: 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') },
-	                _react2['default'].createElement(
+	                { className: 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') + (this.props.centered ? ' am-pagination-centered' : '') },
+	                this.props.goto ? _react2['default'].createElement(
+	                    'li',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'label',
+	                        { className: 'am-form-label' },
+	                        defaultTitle.goto
+	                    ),
+	                    _react2['default'].createElement('input', { type: 'text', ref: 'goPage' }),
+	                    _react2['default'].createElement(
+	                        _amazeuiReact.Button,
+	                        { onClick: function () {
+	                                return _this2.handleGoPage();
+	                            } },
+	                        'Go'
+	                    )
+	                ) : '',
+	                this.props.last ? _react2['default'].createElement(
+	                    Pagination.Item,
+	                    {
+	                        disabled: current_page == 1,
+	                        pageInfo: { page: 1 },
+	                        handleGoPage: this.props.handleGoPage },
+	                    defaultTitle.first
+	                ) : '',
+	                this.props.next ? _react2['default'].createElement(
 	                    Pagination.Item,
 	                    {
 	                        disabled: current_page == 1,
 	                        pageInfo: { page: current_page - 1 },
 	                        handleGoPage: this.props.handleGoPage },
-	                    '«'
-	                ),
+	                    defaultTitle.prev
+	                ) : '',
 	                mainPagination,
-	                _react2['default'].createElement(
+	                this.props.next ? _react2['default'].createElement(
 	                    Pagination.Item,
 	                    {
 	                        disabled: current_page == last_page,
 	                        pageInfo: { page: current_page + 1 },
 	                        handleGoPage: this.props.handleGoPage },
-	                    '»'
-	                )
+	                    defaultTitle.next
+	                ) : '',
+	                this.props.last ? _react2['default'].createElement(
+	                    Pagination.Item,
+	                    {
+	                        disabled: current_page == last_page,
+	                        pageInfo: { page: last_page },
+	                        handleGoPage: this.props.handleGoPage },
+	                    defaultTitle.last
+	                ) : ''
 	            );
 	        }
 	    }]);
@@ -39605,6 +39776,115 @@
 
 /***/ },
 /* 509 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(190);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	/**
+	 * @prop category array
+	 */
+
+	var SearchBox = (function (_Component) {
+	    _inherits(SearchBox, _Component);
+
+	    function SearchBox() {
+	        _classCallCheck(this, SearchBox);
+
+	        _get(Object.getPrototypeOf(SearchBox.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(SearchBox, [{
+	        key: "search",
+	        value: function search() {
+	            var category = this.refs.searchCategory.getDOMNode().value;
+	            var value = this.refs.searchValue.getDOMNode().value.trim();
+	            if (category && value) {
+	                this.props.handleSearch(_defineProperty({}, category, value));
+	            }
+	        }
+	    }, {
+	        key: "renderOptions",
+	        value: function renderOptions() {
+	            var cates = [];
+	            for (var key in this.props.category) {
+	                cates.push(_react2["default"].createElement(
+	                    "option",
+	                    { value: key },
+	                    this.props.category[key]
+	                ));
+	            }
+	            return cates;
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _this = this;
+
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "am-u-sm-12 am-u-md-3" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "am-form-group" },
+	                    _react2["default"].createElement(
+	                        "select",
+	                        { ref: "searchCategory", "data-am-selected": "{btnSize: 'sm'}" },
+	                        _react2["default"].createElement(
+	                            "option",
+	                            { value: "all" },
+	                            "所有类别"
+	                        ),
+	                        this.renderOptions()
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "am-input-group am-input-group-sm" },
+	                    _react2["default"].createElement("input", { type: "text", ref: "searchValue", className: "am-form-field" }),
+	                    _react2["default"].createElement(
+	                        "span",
+	                        { className: "am-input-group-btn" },
+	                        _react2["default"].createElement(
+	                            "button",
+	                            { onClick: function () {
+	                                    return _this.search();
+	                                }, className: "am-btn am-btn-default", type: "button" },
+	                            "搜索"
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SearchBox;
+	})(_react.Component);
+
+	exports["default"] = SearchBox;
+	module.exports = exports["default"];
+
+/***/ },
+/* 510 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39654,7 +39934,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 510 */
+/* 511 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39704,7 +39984,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 511 */
+/* 512 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39755,7 +40035,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 512 */
+/* 513 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

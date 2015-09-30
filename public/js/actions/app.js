@@ -7,9 +7,12 @@ function initApp(user) {
 
 export function initAppData() {
     return (dispatch, getState) => {
-        jQuery.get('/admin/account/session', function(data) {
-          dispatch(initApp(data));
-        });
+        jQuery.ajax({
+            type: 'GET',
+            url: '/admin/account/session',
+            success: data => dispatch(initApp(data)),
+            error: dispatch({ type: ActionTypes.APP_INIT_DATA_ERROR })
+        })
     };
 }
 
