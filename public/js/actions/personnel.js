@@ -55,9 +55,13 @@ export function handleSearch(pageInfo) {
     return dispatch => {
         jQuery.ajax({
             type: 'GET',
-            url: '/admin/personnel',
+            url: '/admin/personnel/list',
             data: pageInfo,
-            success: data => dispatch(searchCompleted(data)),
+            success: data => {
+                data.searchKey = pageInfo.searchKey;
+                data.searchValue = pageInfo.searchValue;
+                dispatch(searchCompleted(data));
+            },
             error: () => dispatch({type: ActionTypes.PERSONNEL_SEARCH_ERROR})
         })
     }

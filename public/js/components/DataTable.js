@@ -1,5 +1,5 @@
 import React, { Component, Proptypes } from 'react';
-import { Table, Button, ButtonGroup } from 'amazeui-react';
+import { Table, Button, ButtonGroup, Modal, ModalTrigger, Icon } from 'amazeui-react';
 
 class Thead extends Component {
     renderThs() {
@@ -41,6 +41,14 @@ class Tr extends Component {
         this.props.handleDeleteItem(this.props.data.id);
     }
 
+    renderDeleteModal() {
+        return (
+            <Modal type="confirm" title="删除确认">
+            你确定删除此条记录吗?
+            </Modal>
+        );
+    }
+
     render() {
         return (
             <tr>
@@ -50,7 +58,9 @@ class Tr extends Component {
                     <ButtonGroup>
                         <Button amSize="xs"><span className="am-text-secondary am-icon-pencil-square-o"> 编辑</span></Button>
                         <Button amSize="xs"><span className="am-icon-copy"> 复制</span></Button>
-                        <Button amSize="xs" onClick={ this.deleteItem.bind(this) }><span className="am-text-danger am-icon-trash-o"> 删除</span></Button>
+                        <ModalTrigger modal={ this.renderDeleteModal() } onConfirm={ () => this.deleteItem() }>
+                            <Button amSize="xs"><span className="am-text-danger am-icon-trash-o"> 删除</span></Button>
+                        </ModalTrigger>
                     </ButtonGroup>
                 </td>
             </tr>

@@ -1,5 +1,5 @@
 import React, { Component, Proptypes } from 'react';
-import { Button } from 'amazeui-react';
+import { Button, Form, Input } from 'amazeui-react';
 
 class Item extends Component {
     goPage(event) {
@@ -12,7 +12,7 @@ class Item extends Component {
     
     render() {
         return (
-            <li onClick={ () => this.goPage(event) } 
+            <li onClick={ this.goPage.bind(this) } 
                 className={ (this.props.active ? 'am-active' : '') + (this.props.disabled ? 'am-disabled' : '') }>
                 <a>
                 { this.props.children }
@@ -37,7 +37,7 @@ export default class Pagination extends Component {
     handleGoPage() {
         let page = this.refs.goPage.getDOMNode().value.trim();
         if (page >= 1 && page <= this.props.data.last_page) {
-            this.props.handleGoPage({page: page});
+            this.props.handleGoPage({page: page, searchKey: this.props.data.searchKey, searchValue: this.props.data.searchValue});
         }
     }
 
@@ -69,18 +69,20 @@ export default class Pagination extends Component {
         let mainPagination = [];
         for (let i = start_page; i <= end_page; i++) {
             mainPagination.push(
-                <Pagination.Item active={ i == current_page } pageInfo={ {page: i} } handleGoPage={ this.props.handleGoPage }>{ i }</Pagination.Item>
+                <Pagination.Item active={ i == current_page } pageInfo={ {page: i, searchKey: this.props.data.searchKey, searchValue: this.props.data.searchValue} } handleGoPage={ this.props.handleGoPage }>{ i }</Pagination.Item>
             );
         } 
 
         return(
             <ul className={ 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') + (this.props.centered ? ' am-pagination-centered' : '')}>
-                {
-                    this.props.goto ? 
+                <li>
+                    { `共  ${total}  条记录, 当前 ${current_page} / ${last_page}  页` }
+                </li>
+                { this.props.goto ? 
                     <li>
-                        <label className="am-form-label">{ defaultTitle.goto }</label>
+                        <label>{ defaultTitle.goto }</label>
                         <input type="text" ref="goPage" />
-                        <Button onClick={ () => this.handleGoPage() }>Go</Button>
+                        <Button amStyle="primary" onClick={ () => this.handleGoPage() }>Go</Button>
                     </li> : ''
                 }
                 { this.props.last ? 

@@ -10,6 +10,12 @@ class Personnel extends Component {
     constructor(props) {
         super(props);
         props.initPersonnelData();
+        this.goPageWithInfo = this.goPageWithInfo.bind(this);
+    }
+
+    goPageWithInfo(pageInfo) {
+        pageInfo = Object.assign({}, pageInfo, {searchKey: this.props.personnel.searchKey, searchValue: this.props.personnel.searchValue});
+        this.props.handleGoPage(pageInfo);
     }
 
     render() {
@@ -37,13 +43,11 @@ class Personnel extends Component {
                 </div>
                 <div className="am-g">
                     <div className="am-u-sm-12">
-                        <form className="am-form">
-                            <DataTable 
-                                header={ header } 
-                                data={ this.props.personnel.data }
-                                handleDeleteItem={ this.props.handleDeleteItem } />
-                            <Pagination goto={ true } next={ true } last={ true } right={ true } handleGoPage={ this.props.handleGoPage } data={ this.props.personnel } />
-                        </form>
+                        <DataTable 
+                            header={ header } 
+                            data={ this.props.personnel.data }
+                            handleDeleteItem={ this.props.handleDeleteItem } />
+                        <Pagination goto={ true } next={ true } last={ true } right={ true } handleGoPage={ this.goPageWithInfo } data={ this.props.personnel } />
                     </div>
                 </div>
             </div>

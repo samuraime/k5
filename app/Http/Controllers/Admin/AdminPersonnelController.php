@@ -31,7 +31,11 @@ class AdminPersonnelController extends AdminController
 
         $inputs = Request::all();
         $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
-        $personnels = Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight')->paginate($perPage);
+        $personnels = Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight');
+        if (isset($inputs['searchKey']) && $inputs['searchKey'] && isset($inputs['searchValue'])&& $inputs['searchValue']) {
+            $personnels = $personnels->where($inputs['searchKey'], 'LIKE', "%{$inputs['searchValue']}%");
+        }
+        $personnels = $personnels->paginate($perPage);
         
         return response()->json($personnels);
     }

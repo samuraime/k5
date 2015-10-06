@@ -28938,6 +28938,9 @@
 	        case ActionTypes.PERSONNEL_LOAD_DATA_COMPLETED:
 	            return Object.assign({}, state, action.data);
 
+	        case ActionTypes.PERSONNEL_SEARCH_COMPLETED:
+	            return Object.assign({}, state, action.data);
+
 	        case ActionTypes.PERSONNEL_DELETE_ITEM_COMPLETED:
 	            return Object.assign({}, state, { data: state.data.filter(function (item) {
 	                    return item.id != action.id;
@@ -39146,9 +39149,16 @@
 
 	        _get(Object.getPrototypeOf(Personnel.prototype), 'constructor', this).call(this, props);
 	        props.initPersonnelData();
+	        this.goPageWithInfo = this.goPageWithInfo.bind(this);
 	    }
 
 	    _createClass(Personnel, [{
+	        key: 'goPageWithInfo',
+	        value: function goPageWithInfo(pageInfo) {
+	            pageInfo = Object.assign({}, pageInfo, { searchKey: this.props.personnel.searchKey, searchValue: this.props.personnel.searchValue });
+	            this.props.handleGoPage(pageInfo);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var header = { id: 'ID', name: '姓名', mobile: '电话', email: '邮箱', birth: '生日', height: 'Height', weight: 'Weight', _action: '操作' };
@@ -39219,15 +39229,11 @@
 	                    _react2['default'].createElement(
 	                        'div',
 	                        { className: 'am-u-sm-12' },
-	                        _react2['default'].createElement(
-	                            'form',
-	                            { className: 'am-form' },
-	                            _react2['default'].createElement(_componentsDataTable2['default'], {
-	                                header: header,
-	                                data: this.props.personnel.data,
-	                                handleDeleteItem: this.props.handleDeleteItem }),
-	                            _react2['default'].createElement(_componentsPagination2['default'], { goto: true, next: true, last: true, right: true, handleGoPage: this.props.handleGoPage, data: this.props.personnel })
-	                        )
+	                        _react2['default'].createElement(_componentsDataTable2['default'], {
+	                            header: header,
+	                            data: this.props.personnel.data,
+	                            handleDeleteItem: this.props.handleDeleteItem }),
+	                        _react2['default'].createElement(_componentsPagination2['default'], { goto: true, next: true, last: true, right: true, handleGoPage: this.goPageWithInfo, data: this.props.personnel })
 	                    )
 	                )
 	            );
@@ -39333,10 +39339,12 @@
 	    return function (dispatch) {
 	        jQuery.ajax({
 	            type: 'GET',
-	            url: '/admin/personnel',
+	            url: '/admin/personnel/list',
 	            data: pageInfo,
 	            success: function success(data) {
-	                return dispatch(searchCompleted(data));
+	                data.searchKey = pageInfo.searchKey;
+	                data.searchValue = pageInfo.searchValue;
+	                dispatch(searchCompleted(data));
 	            },
 	            error: function error() {
 	                return dispatch({ type: ActionTypes.PERSONNEL_SEARCH_ERROR });
@@ -39450,8 +39458,19 @@
 	            this.props.handleDeleteItem(this.props.data.id);
 	        }
 	    }, {
+	        key: 'renderDeleteModal',
+	        value: function renderDeleteModal() {
+	            return _react2['default'].createElement(
+	                _amazeuiReact.Modal,
+	                { type: 'confirm', title: '删除确认' },
+	                '你确定删除此条记录吗?'
+	            );
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this = this;
+
 	            return _react2['default'].createElement(
 	                'tr',
 	                null,
@@ -39486,12 +39505,18 @@
 	                            )
 	                        ),
 	                        _react2['default'].createElement(
-	                            _amazeuiReact.Button,
-	                            { amSize: 'xs', onClick: this.deleteItem.bind(this) },
+	                            _amazeuiReact.ModalTrigger,
+	                            { modal: this.renderDeleteModal(), onConfirm: function () {
+	                                    return _this.deleteItem();
+	                                } },
 	                            _react2['default'].createElement(
-	                                'span',
-	                                { className: 'am-text-danger am-icon-trash-o' },
-	                                ' 删除'
+	                                _amazeuiReact.Button,
+	                                { amSize: 'xs' },
+	                                _react2['default'].createElement(
+	                                    'span',
+	                                    { className: 'am-text-danger am-icon-trash-o' },
+	                                    ' 删除'
+	                                )
 	                            )
 	                        )
 	                    )
@@ -39538,7 +39563,7 @@
 	    _createClass(DataTable, [{
 	        key: 'render',
 	        value: function render() {
-	            var _this = this;
+	            var _this2 = this;
 
 	            return _react2['default'].createElement(
 	                _amazeuiReact.Table,
@@ -39548,7 +39573,7 @@
 	                    Tbody,
 	                    null,
 	                    this.props.data.map(function (item) {
-	                        return _react2['default'].createElement(Tr, { data: item, header: _this.props.header, handleDeleteItem: _this.props.handleDeleteItem });
+	                        return _react2['default'].createElement(Tr, { data: item, header: _this2.props.header, handleDeleteItem: _this2.props.handleDeleteItem });
 	                    })
 	                )
 	            );
@@ -39624,13 +39649,9 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this = this;
-
 	            return _react2['default'].createElement(
 	                'li',
-	                { onClick: function () {
-	                        return _this.goPage();
-	                    },
+	                { onClick: this.goPage.bind(this),
 	                    className: (this.props.active ? 'am-active' : '') + (this.props.disabled ? 'am-disabled' : '') },
 	                _react2['default'].createElement(
 	                    'a',
@@ -39658,13 +39679,13 @@
 	        value: function handleGoPage() {
 	            var page = this.refs.goPage.getDOMNode().value.trim();
 	            if (page >= 1 && page <= this.props.data.last_page) {
-	                this.props.handleGoPage({ page: page });
+	                this.props.handleGoPage({ page: page, searchKey: this.props.data.searchKey, searchValue: this.props.data.searchValue });
 	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
+	            var _this = this;
 
 	            var defaultTitle = { first: '第一页', last: '最末页', next: '下一页', prev: '上一页', goto: '转到' };
 	            var title = Object.assign({}, defaultTitle, this.props.title);
@@ -39704,7 +39725,7 @@
 	            for (var i = start_page; i <= end_page; i++) {
 	                mainPagination.push(_react2['default'].createElement(
 	                    Pagination.Item,
-	                    { active: i == current_page, pageInfo: { page: i }, handleGoPage: this.props.handleGoPage },
+	                    { active: i == current_page, pageInfo: { page: i, searchKey: this.props.data.searchKey, searchValue: this.props.data.searchValue }, handleGoPage: this.props.handleGoPage },
 	                    i
 	                ));
 	            }
@@ -39712,19 +39733,24 @@
 	            return _react2['default'].createElement(
 	                'ul',
 	                { className: 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') + (this.props.centered ? ' am-pagination-centered' : '') },
+	                _react2['default'].createElement(
+	                    'li',
+	                    null,
+	                    '共  ' + total + '  条记录, 当前 ' + current_page + ' / ' + last_page + '  页'
+	                ),
 	                this.props.goto ? _react2['default'].createElement(
 	                    'li',
 	                    null,
 	                    _react2['default'].createElement(
 	                        'label',
-	                        { className: 'am-form-label' },
+	                        null,
 	                        defaultTitle.goto
 	                    ),
 	                    _react2['default'].createElement('input', { type: 'text', ref: 'goPage' }),
 	                    _react2['default'].createElement(
 	                        _amazeuiReact.Button,
-	                        { onClick: function () {
-	                                return _this2.handleGoPage();
+	                        { amStyle: 'primary', onClick: function () {
+	                                return _this.handleGoPage();
 	                            } },
 	                        'Go'
 	                    )
@@ -39790,8 +39816,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -39818,9 +39842,7 @@
 	        value: function search() {
 	            var category = this.refs.searchCategory.getDOMNode().value;
 	            var value = this.refs.searchValue.getDOMNode().value.trim();
-	            if (category && value) {
-	                this.props.handleSearch(_defineProperty({}, category, value));
-	            }
+	            this.props.handleSearch({ searchKey: category, searchValue: value });
 	        }
 	    }, {
 	        key: "renderOptions",
@@ -39842,34 +39864,40 @@
 
 	            return _react2["default"].createElement(
 	                "div",
-	                { className: "am-u-sm-12 am-u-md-3" },
+	                { className: "am-u-sm-12 am-u-md-6" },
 	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "am-form-group" },
+	                    "form",
+	                    { onSubmit: function () {
+	                            return _this.search();
+	                        } },
 	                    _react2["default"].createElement(
-	                        "select",
-	                        { ref: "searchCategory", "data-am-selected": "{btnSize: 'sm'}" },
+	                        "div",
+	                        { className: "am-form-group am-u-md-6" },
 	                        _react2["default"].createElement(
-	                            "option",
-	                            { value: "all" },
-	                            "所有类别"
-	                        ),
-	                        this.renderOptions()
-	                    )
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "am-input-group am-input-group-sm" },
-	                    _react2["default"].createElement("input", { type: "text", ref: "searchValue", className: "am-form-field" }),
+	                            "select",
+	                            { ref: "searchCategory", "data-am-selected": "{btnSize: 'sm'}" },
+	                            _react2["default"].createElement(
+	                                "option",
+	                                { value: "all" },
+	                                "所有类别"
+	                            ),
+	                            this.renderOptions()
+	                        )
+	                    ),
 	                    _react2["default"].createElement(
-	                        "span",
-	                        { className: "am-input-group-btn" },
+	                        "div",
+	                        { className: "am-input-group am-u-md-6 am-input-group-sm" },
+	                        _react2["default"].createElement("input", { type: "text", ref: "searchValue", className: "am-form-field" }),
 	                        _react2["default"].createElement(
-	                            "button",
-	                            { onClick: function () {
-	                                    return _this.search();
-	                                }, className: "am-btn am-btn-default", type: "button" },
-	                            "搜索"
+	                            "span",
+	                            { className: "am-input-group-btn" },
+	                            _react2["default"].createElement(
+	                                "button",
+	                                { onClick: function () {
+	                                        return _this.search();
+	                                    }, className: "am-btn am-btn-default", type: "button" },
+	                                "搜索"
+	                            )
 	                        )
 	                    )
 	                )
