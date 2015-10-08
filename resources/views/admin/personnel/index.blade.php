@@ -70,7 +70,7 @@
                 <thead>
                     <tr>
                         <th class="table-check am-text-middle">
-                            <input type="checkbox" id="delete-all"/>
+                            <input type="checkbox" id="checkAll" />
                         </th>
                         <th class="table-id">ID</th>
                         <th class="table-title">姓名</th>

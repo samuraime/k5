@@ -332,4 +332,9 @@ gallery.html css
   z-index: 1600;
 }
 /*弹框样式*/
+.am-scoller{overflow: auto;}
+.am-left-none{padding-left:0;}
+/*首页样式*/
+.am-background-color{background:#fff;}
+.am-center-header{text-align:center;}
 
