@@ -1,20 +1,20 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\Log;
+use App\Models\Article;
 use Request;
 use HttpRequest;
 
-class AdminLogController extends AdminController
+class AdminArticleController extends AdminController
 {
     public function getIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:log,id',
+            'id' => 'required|exists:article,id',
         ]);
 
-        $log = Log::find(Request::get('id'));
+        $article = Article::find(Request::input('id'));
 
-        return response()->json($log);
+        return response()->json($article);
     }
 
     public function getList()
@@ -24,9 +24,9 @@ class AdminLogController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        $logs = parent::pagination(Log::select('id', 'title', 'email', 'mobile'));
+        $articles = parent::pagination(Article::select('id', 'title', 'email', 'mobile'));
 
-        return response()->json($log);
+        return response()->json($articles);
     }
 
     public function postIndex(HttpRequest $request)
@@ -37,25 +37,23 @@ class AdminLogController extends AdminController
         ]);
 
         $inputs = Request::all();
-        $log = Log::create($inputs);
+        $article = Article::create($inputs);
 
-        return response()->json($log);
+        return response()->json($article);
     }
 
     public function putIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'exists|log,id',
+            'id' => 'exists|article,id',
             'title' => 'required',
             'content' => 'required',
         ]);
 
-        $log = Log::find($inputs['id']);
-        $log->title = $inputs['title'];
-        $log->content = $inputs['content'];
-        $log->save();
+        $article = Article::find($inputs['id']);
+        $article->update(Request::all());
 
-        return response()->json($log);
+        return response()->json($article);
     }
 
     public function deleteIndex(HttpRequest $request)
@@ -64,7 +62,7 @@ class AdminLogController extends AdminController
             'id' => 'required|exists:user,id',
         ]);
 
-        $affectedRows = Log::destroy(Request::input('id')); 
+        $affectedRows = Article::destroy(Request::input('id')); 
 
         return response()->json(['affectedRows' => $affectedRows]);
     }
@@ -76,7 +74,7 @@ class AdminLogController extends AdminController
         ]);
 
         $ids = Request::input('ids');
-        $affectedRows = Log::destroy($ids);
+        $affectedRows = Article::destroy($ids);
         
         return $response->json(['affectedRows' => $affectedRows]);
     }

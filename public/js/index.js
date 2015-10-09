@@ -11,7 +11,7 @@ import Personnel from './containers/Personnel';
 import Message from './containers/Message';
 import Log from './containers/Log';
 import Manage from './containers/Manage';
-import ManageUser from './containers/ManageUser';
+import Account from './containers/Account';
 
 const store = configureStore();
 
@@ -32,7 +32,7 @@ React.render(
                 <Route path="/log" component={Log} />
                 <Route path="/message" component={Message} />
                 <Route path="/manage" component={Manage}>
-                    <Route path="/manage/user" component={ManageUser} />
+                    <Route path="/manage/account" component={Account} />
                 </Route>
             </Route>
         </Router>

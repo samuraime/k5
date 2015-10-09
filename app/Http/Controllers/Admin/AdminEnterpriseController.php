@@ -18,11 +18,7 @@ class AdminEnterpriseController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        $inputs = Request::all();
-        $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
-        $enterprises = Enterprise::select('id', 'registration_number AS regNumber', 'name', 'type', 'representative', 'capital', 'registration_date AS regDate', 'address', 'business_scope AS businessScope', 'registration_authority AS regAuthority')->paginate($perPage);
-
-        return $enterprises->toJson();
+        return parent::pagination(Enterprise::select('*'));
     }
 
     public function postIndex(HttpRequest $request)
@@ -34,7 +30,7 @@ class AdminEnterpriseController extends AdminController
 
         $enterprise = Enterprise::create(Request::all());
 
-        return $enterprise->toJson();
+        return response()->json($enterprise);
     }
 
     public function putIndex(HttpRequest $request)
@@ -43,11 +39,10 @@ class AdminEnterpriseController extends AdminController
             'id' => 'required|exists:enterprise,id',
         ]);
 
-        $inputs = Request::all();
         $enterprise = Enterprise::find($inputs['id']);
-        $enterprise->update($inputs);
+        $enterprise->update(Request::all());
 
-        return $enterprise->toJson();
+        return response()->json($enterprise);
     }
 
     public function deleteIndex(HttpRequest $request)

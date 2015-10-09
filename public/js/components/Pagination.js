@@ -80,9 +80,11 @@ export default class Pagination extends Component {
                 </li>
                 { this.props.goto ? 
                     <li>
+                        <form onSubmit={ () => this.handleGoPage() }>
                         <label>{ defaultTitle.goto }</label>
                         <input type="text" ref="goPage" />
                         <Button amStyle="primary" onClick={ () => this.handleGoPage() }>Go</Button>
+                        </form>
                     </li> : ''
                 }
                 { this.props.last ? 

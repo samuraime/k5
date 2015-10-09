@@ -19,7 +19,7 @@ class AdminPersonnelController extends AdminController
 
         $personnel = Personnel::find(Request::input('id'));
 
-        return $personnel->toJson();
+        return response()->json($personnel);
     }
 
     public function getList(HttpRequest $request)
@@ -29,15 +29,7 @@ class AdminPersonnelController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        $inputs = Request::all();
-        $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
-        $personnels = Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight');
-        if (isset($inputs['searchKey']) && $inputs['searchKey'] && isset($inputs['searchValue'])&& $inputs['searchValue']) {
-            $personnels = $personnels->where($inputs['searchKey'], 'LIKE', "%{$inputs['searchValue']}%");
-        }
-        $personnels = $personnels->paginate($perPage);
-        
-        return response()->json($personnels);
+        return parent::pagination(Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight'));
     }
 
     public function postIndex(HttpRequest $request)
@@ -49,7 +41,7 @@ class AdminPersonnelController extends AdminController
 
         $personnel = Personnel::create(Request::all());
 
-        return $personnel->toJson();
+        return response()->json($personnel);
     }
 
     public function putIndex(HttpRequest $request)
@@ -62,7 +54,7 @@ class AdminPersonnelController extends AdminController
         $personnel = Personnel::find($inputs['id']);
         $personnel->update($inputs);
 
-        return $personnel->toJson();
+        return response()->json($personnel);
     }
 
     public function deleteIndex(HttpRequest $request)

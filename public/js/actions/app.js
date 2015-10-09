@@ -9,7 +9,7 @@ export function initAppData() {
     return (dispatch, getState) => {
         jQuery.ajax({
             type: 'GET',
-            url: '/admin/account/session',
+            url: '/admin/session',
             success: data => dispatch(initApp(data)),
             error: dispatch({ type: ActionTypes.APP_INIT_DATA_ERROR })
         })

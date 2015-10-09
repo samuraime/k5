@@ -13,14 +13,15 @@
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
     Route::controllers([
-        'summary' => 'AdminSummaryController',
-        'enterprise' => 'AdminEnterpriseController',
-        'personnel' => 'AdminPersonnelController',
-        'message' => 'AdminMessageController',
-        'log' => 'AdminLogController',
-        'manage' => 'AdminManageController',
         'account' => 'AdminAccountController',
+        'article' => 'AdminArticleController',
+        'enterprise' => 'AdminEnterpriseController',
         'index' => 'AdminIndexController',
+        'log' => 'AdminLogController',
+        'message' => 'AdminMessageController',
+        'personnel' => 'AdminPersonnelController',
+        'session' => 'AdminSessionController',
+        'summary' => 'AdminSummaryController',
         '/' => 'AdminIndexController'
     ]);
 });

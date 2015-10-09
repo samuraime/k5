@@ -43,19 +43,19 @@ export default class LeftNavBar extends Component {
                                 <span className="am-icon-pencil-square-o"> 留言管理</span>
                             </Link>
                         </ListItem>
-                        <ListItem className={ permissions.indexOf('manage') != -1 ? '' : 'am-hide' + ' admin-parent'}>
+                        <ListItem className={ (permissions.indexOf('account') != -1 || permissions.indexOf('article') != -1) ? '' : 'am-hide' + ' admin-parent'}>
                             <a data-am-collapse="{target: '#collapse-nav2'}">
                                 <span className="am-icon-puzzle-piece"> 系统管理</span>
                                 <span className="am-icon-angle-right am-fr am-margin-right"></span>
                             </a>
                             <List className="am-collapse admin-sidebar-sub" id="collapse-nav2">
-                                <ListItem>
+                                <ListItem className={ permissions.indexOf('article') != -1 ? '' : 'am-hide'}>
                                     <Link to="/manage/article">
                                         <span className="am-icon-list-alt"> 前台文章</span>
                                     </Link>
                                 </ListItem>
-                                <ListItem>
-                                    <Link to="/manage/user">
+                                <ListItem className={ permissions.indexOf('account') != -1 ? '' : 'am-hide'}>
+                                    <Link to="/manage/account">
                                         <span className="am-icon-table"> 账号管理</span>
                                     </Link>
                                 </ListItem>
