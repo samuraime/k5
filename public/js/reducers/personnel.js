@@ -10,6 +10,9 @@ export default function personnel(state = personnelState, action) {
         case ActionTypes.PERSONNEL_LOAD_DATA_COMPLETED:
             return Object.assign({}, state, action.data);
 
+        case ActionTypes.PERSONNEL_CHANGE_SEARCH_PARAMS: 
+            return Object.assign({}, state, action.data);
+
         case ActionTypes.PERSONNEL_SEARCH_COMPLETED:
             return Object.assign({}, state, action.data);
 

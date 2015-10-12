@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
+import { ButtonToolbar, Selected } from 'amazeui-react';
 
 /**
  * @prop category array
  */
 export default class SearchBox extends Component {
     search() {
-        const category = this.refs.searchCategory.getDOMNode().value;
-        const value = this.refs.searchValue.getDOMNode().value.trim();
-        this.props.handleSearch({searchKey: category, searchValue: value});
+        // const searchKey = this.refs.searchCategory.getDOMNode().value;
+        const searchValue = this.refs.searchValue.getDOMNode().value.trim();
+        this.props.handleSearch({searchKey: this.props.searchKey, searchValue});
     }
 
-    renderOptions() {
-        let cates = [];
+    generateSelectedProps() {
+        let data = [];
         for (let key in this.props.category) {
-            cates.push(<option value={ key }>{ this.props.category[key] }</option>);
+            data.push({value: key, label: this.props.category[key]});
         }
-        return cates;
+
+        return {
+            data,
+            placeholder: '搜索选项',
+            onChange: searchKey => {
+                this.props.changeSearchParams({searchKey});
+            }
+                
+        };
     }
 
     render() {
@@ -23,12 +32,11 @@ export default class SearchBox extends Component {
             <div className="am-u-sm-12 am-u-md-6">
                 <form onSubmit={ () => this.search() }>
                     <div className="am-form-group am-u-md-6">
-                        <select ref="searchCategory" data-am-selected="{btnSize: 'sm'}">
-                            <option value="all">所有类别</option>
-                            { this.renderOptions() }
-                        </select>
+                        <ButtonToolbar>
+                            <Selected { ...this.generateSelectedProps() } />
+                        </ButtonToolbar>
                     </div>
-                    <div className="am-input-group am-u-md-6 am-input-group-sm">
+                    <div className="am-input-group am-u-md-6 am-input-group">
                         <input type="text" ref="searchValue" className="am-form-field" />
                         <span className="am-input-group-btn">
                           <button onClick={ () => this.search() } className="am-btn am-btn-default" type="button">搜索</button>

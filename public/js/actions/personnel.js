@@ -47,6 +47,10 @@ export function handleDeleteItem(id) {
     }
 }
 
+export function changeSearchParams(data) {
+    return { type: ActionTypes.PERSONNEL_CHANGE_SEARCH_PARAMS, data};
+}
+
 function searchCompleted(data) {
     return { type: ActionTypes.PERSONNEL_SEARCH_COMPLETED, data };
 }

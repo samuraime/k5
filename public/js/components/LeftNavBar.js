@@ -17,12 +17,12 @@ export default class LeftNavBar extends Component {
                         </ListItem>
                         <ListItem className={ permissions.indexOf('enterprise') != -1 ? '' : 'am-hide' }>
                             <Link to="/enterprise">
-                                <span className="am-icon-file"> 企业数据</span>
+                                <span className="am-icon-file"> 企业信息</span>
                             </Link>
                         </ListItem>
                         <ListItem className={ permissions.indexOf('personnel') != -1 ? '' : 'am-hide' }>
                             <Link to="/personnel">
-                                <span className="am-icon-file"> 人才数据</span>
+                                <span className="am-icon-file"> 人才信息</span>
                             </Link>
                         </ListItem>
                         <ListItem className={ permissions.indexOf('log') != -1 ? '' : 'am-hide' + ' admin-parent'}>

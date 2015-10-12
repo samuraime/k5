@@ -79,7 +79,7 @@ class Tbody extends Component {
 export default class DataTable extends Component {
     render() {
         return (
-            <Table>
+            <Table className="table-main" { ...{hover: true, striped: true, responsive: true} }>
                 <Thead header={ this.props.header } />
                 <Tbody>
                     { this.props.data.map(item => 

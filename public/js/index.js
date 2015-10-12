@@ -15,7 +15,7 @@ import Account from './containers/Account';
 
 const store = configureStore();
 
-let unsubscribe = store.subscribe(() =>
+store.subscribe(() =>
   console.log(store.getState())
 );
 

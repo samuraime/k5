@@ -19,15 +19,15 @@ class Personnel extends Component {
     }
 
     render() {
-        const header = {id: 'ID', name: '姓名', mobile: '电话', email: '邮箱', birth: '生日', height: 'Height', weight: 'Weight', _action: '操作'}
-        const category = header;
+        const header = {id: 'ID', name: '姓名', mobile: '电话', email: '邮箱', birth: '生日', height: '身高', weight: '体重', _action: '操作'}
+        const category = Object.assign({}, header);
         delete category.id;
         delete category._action;
-
+        
         return (
             <div className="admin-content">
                 <div className="am-cf am-padding border-bottom">
-                    <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">数据列表</strong> / <small>企业列表</small></div>
+                    <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">人才列表</strong></div>
                 </div>
                 <div className="am-g">
                     <div className="am-u-sm-12 am-u-md-6">
@@ -39,7 +39,7 @@ class Personnel extends Component {
                             </div>
                         </div>
                     </div>
-                    <SearchBox category={ category } handleSearch={ this.props.handleSearch }/>
+                    <SearchBox { ...{category, searchKey: this.props.personnel.searchKey, handleSearch: this.props.handleSearch, changeSearchParams: this.props.changeSearchParams} } />
                 </div>
                 <div className="am-g">
                     <div className="am-u-sm-12">

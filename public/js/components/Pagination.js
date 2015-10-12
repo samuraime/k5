@@ -35,17 +35,21 @@ class Item extends Component {
  */
 export default class Pagination extends Component {
     handleGoPage() {
-        let page = this.refs.goPage.getDOMNode().value.trim();
-        if (page >= 1 && page <= this.props.data.last_page) {
-            this.props.handleGoPage({page: page, searchKey: this.props.data.searchKey, searchValue: this.props.data.searchValue});
-        }
+        let pageInfo = {searchKey: this.props.data.searchKey, searchValue: this.props.data.searchValue}
+        let page = this.refs.page.getValue();
+        let perPage = this.refs.perPage.getValue();
+
+        perPage > 0 && (pageInfo.perPage = perPage);
+        page >= 1 && page <= this.props.data.last_page && (pageInfo.page = page);
+
+        this.props.handleGoPage(pageInfo);
     }
 
     render() {
         const defaultTitle = {first: '第一页', last: '最末页', next: '下一页', prev: '上一页', goto: '转到'}
         const title = Object.assign({}, defaultTitle, this.props.title);
         const { total, per_page, current_page, last_page, next_page_url, prev_page_url, from, to } = this.props.data;
-        const show_page_count = this.props.blockCount || 5;
+        const show_page_count = (this.props.blockCount || 5) > last_page ? last_page : (this.props.blockCount || 5);
         const left_offset = Math.floor((show_page_count - 1) / 2);
         const right_offset = Math.floor(show_page_count / 2);
         let start_page, end_page;
@@ -74,53 +78,55 @@ export default class Pagination extends Component {
         } 
 
         return(
-            <ul className={ 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') + (this.props.centered ? ' am-pagination-centered' : '')}>
-                <li>
-                    { `共  ${total}  条记录, 当前 ${current_page} / ${last_page}  页` }
-                </li>
-                { this.props.goto ? 
-                    <li>
-                        <form onSubmit={ () => this.handleGoPage() }>
-                        <label>{ defaultTitle.goto }</label>
-                        <input type="text" ref="goPage" />
-                        <Button amStyle="primary" onClick={ () => this.handleGoPage() }>Go</Button>
-                        </form>
-                    </li> : ''
-                }
-                { this.props.last ? 
-                    <Pagination.Item 
-                        disabled={ current_page == 1 } 
-                        pageInfo={ {page: 1} } 
-                        handleGoPage={ this.props.handleGoPage }>
-                        { defaultTitle.first }
-                    </Pagination.Item> : ''
-                }
-                { this.props.next ? 
-                    <Pagination.Item 
-                        disabled={ current_page == 1 } 
-                        pageInfo={ {page: current_page - 1} } 
-                        handleGoPage={ this.props.handleGoPage }>
-                        { defaultTitle.prev }
-                    </Pagination.Item> : ''
-                }
-                { mainPagination }
-                { this.props.next ? 
-                    <Pagination.Item 
-                        disabled={ current_page == last_page } 
-                        pageInfo={ {page: current_page + 1} } 
-                        handleGoPage={ this.props.handleGoPage }>
-                        { defaultTitle.next }
-                    </Pagination.Item> : ''
-                }
-                { this.props.last ? 
-                    <Pagination.Item 
-                        disabled={ current_page == last_page } 
-                        pageInfo={ {page: last_page} } 
-                        handleGoPage={ this.props.handleGoPage }>
-                        { defaultTitle.last }
-                    </Pagination.Item> : ''
-                }
-            </ul>
+            <div>
+                <div className="am-g">
+                    <Form inline className="am-fr" onSubmit={ () => this.handleGoPage() }>
+                        { `共  ${total}  条记录, 每页显示` }
+                        <Input ref="perPage" defaultValue={ per_page } placeholder={ per_page } />
+                        { `条记录, 当前` }
+                        <Input ref="page" defaultValue={ current_page } placeholder={ current_page }/>
+                        { ` / ${last_page}  页` }
+                        <input type="submit" className="am-hide"/>
+                    </Form>
+                </div>
+                <div className="am-g">
+                    <ul className={ 'am-pagination' + (this.props.right ? ' am-pagination-right' : '') + (this.props.centered ? ' am-pagination-centered' : '')}>
+                        { this.props.last ? 
+                            <Pagination.Item 
+                                disabled={ current_page == 1 } 
+                                pageInfo={ {page: 1} } 
+                                handleGoPage={ this.props.handleGoPage }>
+                                { defaultTitle.first }
+                            </Pagination.Item> : ''
+                        }
+                        { this.props.next ? 
+                            <Pagination.Item 
+                                disabled={ current_page == 1 } 
+                                pageInfo={ {page: current_page - 1} } 
+                                handleGoPage={ this.props.handleGoPage }>
+                                { defaultTitle.prev }
+                            </Pagination.Item> : ''
+                        }
+                        { mainPagination }
+                        { this.props.next ? 
+                            <Pagination.Item 
+                                disabled={ current_page == last_page } 
+                                pageInfo={ {page: current_page + 1} } 
+                                handleGoPage={ this.props.handleGoPage }>
+                                { defaultTitle.next }
+                            </Pagination.Item> : ''
+                        }
+                        { this.props.last ? 
+                            <Pagination.Item 
+                                disabled={ current_page == last_page } 
+                                pageInfo={ {page: last_page} } 
+                                handleGoPage={ this.props.handleGoPage }>
+                                { defaultTitle.last }
+                            </Pagination.Item> : ''
+                        }
+                    </ul>
+                </div>
+            </div>
         );
     }
 }
