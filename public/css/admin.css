@@ -337,4 +337,17 @@ gallery.html css
 /*首页样式*/
 .am-background-color{background:#fff;}
 .am-center-header{text-align:center;}
+/*新增修改页面 2015-10-14 start*/
+.am-background-color{background:#fff;}
+.am-center-header{text-align:center;}
+.width60{width:70%;margin:0px auto;margin-top:20px;}
+.rightremove{margin-left:1.3em;}
+.clearfolt{clear:both;}
+.paddinglr{padding:0.5em 6em;}
+.centers{text-align:center;}
+h3.yahei{background: #F7F7F7;padding-left: 15px;font-size: 16px;font-weight: normal;padding-top:0.5em;padding-bottom:0.5em;}
+.am-u-select{padding:0;position:relative;float:left;display: inline;}
+.select{position:relative;float:left;display: inline-block;}
+.martop2{position:relative;top:20px;}
+/*新增修改页面 2015-10-14 end*/
 
