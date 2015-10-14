@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            企业列表
+        </title>
+        <meta name="description" content="这是一个form页面">
+        <meta name="keywords" content="form">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="icon" type="image/png" href="i/favicon.png">
+        <link rel="apple-touch-icon-precomposed" href="i/app-icon72x72@2x.png">
+        <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+        <link rel="stylesheet" href="css/amazeui.min.css" />
+        <link rel="stylesheet" href="css/admin.css">
+        <!--[if lte IE 9]>
+            <p class="browsehappy">
+                你正在使用
+                <strong>
+                    过时
+                </strong>
+                的浏览器，Amaze UI 暂不支持。 请
+                <a href="http://browsehappy.com/" target="_blank">
+                    升级浏览器
+                </a>
+                以获得更好的体验！
+            </p>
+        <![endif]-->
+    </head>
+
+    <body>
+        <header class="am-topbar admin-header">
+            <div class="am-topbar-brand">
+                <strong>
+                    公司名称
+                </strong>
+                <small>
+                    后台管理模板
+                </small>
+            </div>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only"
+            data-am-collapse="{target: '#topbar-collapse'}">
+                <span class="am-sr-only">
+                    导航切换
+                </span>
+                <span class="am-icon-bars">
+                </span>
+            </button>
+            <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+                <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+                    <li class="am-header-information am-text-secondary">
+                        xxx欢迎您登陆
+                    </li>
+                    <li class="am-dropdown" data-am-dropdown>
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            <span class="am-icon-users">
+                            </span>
+                            管理员
+                            <span class="am-icon-caret-down">
+                            </span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li>
+                                <a href="#">
+                                    <span class="am-icon-user">
+                                    </span>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="am-icon-cog">
+                                    </span>
+                                    修改密码
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="am-icon-power-off">
+                                    </span>
+                                    退出登录
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="am-hide-sm-only">
+                        <a href="javascript:;" id="admin-fullscreen">
+                            <span class="am-icon-arrows-alt">
+                            </span>
+                            <span class="admin-fullText">
+                                开启全屏
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="w1200 mt20">
+            <div class="am-cf admin-main">
+                <!-- sidebar start -->
+                <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+                    <div class="am-offcanvas-bar admin-offcanvas-bar">
+                        <ul class="am-list admin-sidebar-list">
+                            <li>
+                                <a class="am-cf" href="#">
+                                    <span class="am-icon-area-chart">
+                                    </span>
+                                    数据统计
+                                    <span class="am-icon-star am-fr am-margin-right admin-icon-yellow">
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-cf">
+                                    <span class="am-icon-check am-icon-file-text">
+                                    </span>
+                                    企业列表
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="am-icon-file">
+                                    </span>
+                                    人才列表
+                                </a>
+                            </li>
+                            </li>
+                            <li class="admin-parent">
+                                <a data-am-collapse="{target: '#collapse-nav1'}">
+                                    <span class="am-icon-calendar">
+                                    </span>
+                                    日志记录
+                                    <span class="am-icon-angle-right am-fr am-margin-right">
+                                    </span>
+                                </a>
+                                <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav1">
+                                    <li>
+                                        <a href="#">
+                                            <span class="am-icon-table">
+                                            </span>
+                                            回访记录
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="am-icon-pencil-square-o">
+                                    </span>
+                                    留言板管理
+                                </a>
+                            </li>
+                            <li class="#">
+                                <a data-am-collapse="{target: '#collapse-nav2'}">
+                                    <span class="am-icon-puzzle-piece">
+                                    </span>
+                                    系统管理
+                                    <span class="am-icon-angle-right am-fr am-margin-right">
+                                    </span>
+                                </a>
+                                <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav2">
+                                    <li>
+                                        <a href="#">
+                                            <span class="am-icon-list-alt">
+                                            </span>
+                                            前台文章
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="am-icon-table">
+                                            </span>
+                                            账号管理
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="am-panel am-panel-default admin-sidebar-panel">
+                            <div class="am-panel-bd">
+                                <p>
+                                    <span class="am-icon-bookmark">
+                                    </span>
+                                    公告
+                                </p>
+                                <p>
+                                    时光静好，与君语；细水流年，与君同。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="am-panel am-panel-default admin-sidebar-panel">
+                            <div class="am-panel-bd">
+                                <p>
+                                    <span class="am-icon-tag">
+                                    </span>
+                                    wiki
+                                </p>
+                                <p>
+                                    Welcome to the Amaze UI wiki!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- sidebar end -->
+                <!-- content start -->
+                <div class="admin-content">
+                    <div class="am-cf am-padding border-bottom">
+                        <div class="am-fl am-cf">
+                            <strong class="am-text-primary am-text-lg">
+                                数据列表
+                            </strong>
+                            /
+                            <small>
+                                人才基本信息表
+                            </small>
+                        </div>
+                    </div>
+                    <div class="am-g">
+                        <div class="am-u-sm-12">
+                            <!--表单内容 start-->
+                            <h3 class="yahei">
+                                人才基本信息表
+                            </h3>
+                            <form class="am-form">
+                                <div class="width60">
+                                    <div class="am-form-group am-u-md-6">
+                                        <label for="doc-ipt-name">
+                                            姓名:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-name" placeholder="输入姓名">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label>
+                                            性别:
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="docInlineRadio">
+                                            男
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="docInlineRadio">
+                                            女
+                                        </label>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-nationality">
+                                            国籍:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-nationality" placeholder="中国大陆">
+                                    </div>
+                                    <div class="am-form-group am-form-icon am-u-md-6">
+                                        <label for="doc-ipt-date">
+                                            出生年月日:
+                                        </label>
+                                        <i class="am-icon-calendar rightremove">
+                                        </i>
+                                        <input type="text" id="doc-ipt-date" class="am-form-field" placeholder="日期">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6 ">
+                                        <label>
+                                            民族:
+                                        </label>
+                                        <select id="doc-select-1">
+                                            <option value="option1">
+                                                阿昌族
+                                            </option>
+                                            <option value="option2">
+                                                鄂温克族
+                                            </option>
+                                            <option value="option3">
+                                                傈僳族
+                                            </option>
+                                            <option value="option1">
+                                                水族
+                                            </option>
+                                            <option value="option2">
+                                                白族
+                                            </option>
+                                            <option value="option3">
+                                                高山族
+                                            </option>
+                                            <option value="option1">
+                                                珞巴族
+                                            </option>
+                                            <option value="option2">
+                                                塔吉克族
+                                            </option>
+                                            <option value="option3">
+                                                保安族
+                                            </option>
+                                            <option value="option1">
+                                                仡佬族
+                                            </option>
+                                            <option value="option2">
+                                                满族
+                                            </option>
+                                            <option value="option3">
+                                                布朗族
+                                            </option>
+                                            <option value="option1">
+                                                哈尼族
+                                            </option>
+                                            <option value="option2">
+                                                毛南族
+                                            </option>
+                                            <option value="option3">
+                                                土家族
+                                            </option>
+                                            <option value="option1">
+                                                布依族
+                                            </option>
+                                            <option value="option2">
+                                                哈萨克族
+                                            </option>
+                                            <option value="option3">
+                                                门巴族
+                                            </option>
+                                            <option value="option1">
+                                                土族
+                                            </option>
+                                            <option value="option2">
+                                                朝鲜族
+                                            </option>
+                                            <option value="option3">
+                                                汉族
+                                            </option>
+                                            <option value="option1">
+                                                蒙古族
+                                            </option>
+                                            <option value="option2">
+                                                佤族
+                                            </option>
+                                            <option value="option3">
+                                                达斡尔族
+                                            </option>
+                                            <option value="option1">
+                                                赫哲族
+                                            </option>
+                                            <option value="option2">
+                                                苗族
+                                            </option>
+                                            <option value="option3">
+                                                维吾尔族
+                                            </option>
+                                            <option value="option1">
+                                                傣族
+                                            </option>
+                                            <option value="option2">
+                                                回族
+                                            </option>
+                                            <option value="option3">
+                                                仫佬族
+                                            </option>
+                                            <option value="option1">
+                                                乌孜别克族
+                                            </option>
+                                            <option value="option2">
+                                                德昂族
+                                            </option>
+                                            <option value="option3">
+                                                基诺族
+                                            </option>
+                                            <option value="option3">
+                                                纳西族
+                                            </option>
+                                            <option value="option1">
+                                                锡伯族
+                                            </option>
+                                            <option value="option2">
+                                                东乡族
+                                            </option>
+                                            <option value="option3">
+                                                京族
+                                            </option>
+                                            <option value="option2">
+                                                怒族
+                                            </option>
+                                            <option value="option3">
+                                                瑶族
+                                            </option>
+                                            <option value="option3">
+                                                侗族
+                                            </option>
+                                            <option value="option1">
+                                                景颇族
+                                            </option>
+                                            <option value="option2">
+                                                普米族
+                                            </option>
+                                            <option value="option3">
+                                                彝族
+                                            </option>
+                                            <option value="option3">
+                                                独龙族
+                                            </option>
+                                            <option value="option3">
+                                                柯尔克孜族
+                                            </option>
+                                            <option value="option1">
+                                                羌族
+                                            </option>
+                                            <option value="option2">
+                                                裕固族
+                                            </option>
+                                            <option value="option3">
+                                                俄罗斯族
+                                            </option>
+                                            <option value="option3">
+                                                拉祜族
+                                            </option>
+                                            <option value="option1">
+                                                撒拉族
+                                            </option>
+                                            <option value="option2">
+                                                藏族
+                                            </option>
+                                            <option value="option3">
+                                                鄂伦春族
+                                            </option>
+                                            <option value="option3">
+                                                黎族
+                                            </option>
+                                            <option value="option3">
+                                                畲族
+                                            </option>
+                                            <option value="option3">
+                                                壮族
+                                            </option>
+                                        </select>
+                                        <span class="am-form-caret">
+                                        </span>
+                                    </div>
+                                    <div class="am-form-group am-form-icon am-u-md-6 ">
+                                        <label for="doc-ipt-place-origin">
+                                            籍贯:
+                                        </label>
+                                        <input type="text" id="doc-ipt-place-origin" placeholder="中国大陆">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-location">
+                                            户口所在地:
+                                        </label>
+                                        <input type="text" id="doc-ipt-location" placeholder="中国大陆">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-title">
+                                            职称:
+                                        </label>
+                                        <input type="text" placeholder="教师" id="doc-ipt-title">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-experience">
+                                            工作经验
+                                        </label>
+                                        <textarea rows="5" id="doc-ipt-experience">
+                                        </textarea>
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label>
+                                            婚姻状况:
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="married">
+                                            已婚
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="married">
+                                            未婚
+                                        </label>
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label>
+                                            政治面貌:
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            中共党员 　　
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            中共预备党员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            共青团员 　　
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            民革党员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            民盟盟员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            民建会员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            民进会员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            农工党党员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            致公党党员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            九三学社社员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            台盟盟员
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            无党派民主人士
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="communist">
+                                            群众（现称普通公民）
+                                        </label>
+                                    </div>
+                                    　　
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6 ">
+                                        <label for="doc-ipt-education">
+                                            最高学历:
+                                        </label>
+                                        <input type="email" class="" id="doc-ipt-education" placeholder="硕士">
+                                    </div>
+                                    <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-telephone">
+                                            联系电话:
+                                        </label>
+                                        <input type="tel" class="am-form-field" placeholder="电话" id="doc-ipt-telephone">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-mobilephone">
+                                            手机号码:
+                                        </label>
+                                        <input type="tel" class="" id="doc-ipt-mobilephone" placeholder="手机号码">
+                                    </div>
+                                    <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-email">
+                                            E_mail:
+                                        </label>
+                                        <input type="email" class="am-form-field" placeholder="E_mail" id="doc-ipt-email">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-dm-12">
+                                        <label for="doc-ipt-addess">
+                                            联系地址:
+                                        </label>
+                                        <input type="text" id="doc-ipt-addess" placeholder="输入姓名">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-graduated">
+                                            毕业学校1:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-graduated" placeholder="毕业学校">
+                                    </div>
+                                    <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-professional">
+                                            毕业专业1:
+                                        </label>
+                                        <input type="text" class="am-form-field" placeholder="毕业专业" id="doc-ipt-professional">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-graduated1">
+                                            毕业学校2:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-graduated1" placeholder="毕业学校">
+                                    </div>
+                                    <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-professional1">
+                                            毕业专业2:
+                                        </label>
+                                        <input type="tel" class="am-form-field" placeholder="毕业专业" id="doc-ipt-professional">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-graduated2">
+                                            毕业学校3:
+                                        </label>
+                                        <input type="email" class="" id="doc-ipt-graduated2" placeholder="毕业学校">
+                                    </div>
+                                    <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-professional2">
+                                            毕业学校3:
+                                        </label>
+                                        <input type="tel" class="am-form-field" placeholder="毕业学校" id="doc-ipt-professional2">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-professionalfield">
+                                            专业领域:
+                                        </label>
+                                        <input type="text" id="doc-ipt-professionalfield" placeholder="专业领域">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label>
+                                            是否海归人员:
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="docInlineRadio">
+                                            是
+                                        </label>
+                                        <label class="am-radio-inline">
+                                            <input type="radio" name="docInlineRadio">
+                                            否
+                                        </label>
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-company">
+                                            回国前单位:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-company" placeholder="回国前单位">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-product">
+                                            用人单位/创办企业（项目）:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-product" placeholder="用人单位/创办企业（项目）">
+                                    </div>
+                                    <div class="am-form-group am-u-md-12">
+                                        <label for="doc-ipt-titlepost">
+                                            职务/职称:
+                                        </label>
+                                        <input type="text" class="" id="doc-ipt-titlepost" placeholder="职务/职称">
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label>
+                                            人才分类
+                                        </label>
+                                        <select id="doc-select-1">
+                                            <option value="option1">
+                                                选项一...
+                                            </option>
+                                            <option value="option2">
+                                                选项二.....
+                                            </option>
+                                            <option value="option3">
+                                                选项三........
+                                            </option>
+                                        </select>
+                                        <span class="am-form-caret">
+                                        </span>
+                                    </div>
+                                    <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                        <label>
+                                            人才类型
+                                        </label>
+                                        <select id="doc-select-1">
+                                            <option value="option1">
+                                                选项一...
+                                            </option>
+                                            <option value="option2">
+                                                选项二.....
+                                            </option>
+                                            <option value="option3">
+                                                选项三........
+                                            </option>
+                                        </select>
+                                        <span class="am-form-caret">
+                                        </span>
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                </div>
+                                <h3 class="yahei">
+                                    人才经历信息
+                                </h3>
+                                <div class="width60">
+                                    <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                        <label for="doc-ipt-types">
+                                            人才经历类型:
+                                        </label>
+                                        <select id="doc-ipt-types">
+                                            <option value="option1">
+                                                开创型人才
+                                            </option>
+                                            <option value="option2">
+                                                经验型人才
+                                            </option>
+                                            <option value="option3">
+                                                开始年月
+                                            </option>
+                                            <option value="option2">
+                                                结束年月
+                                            </option>
+                                            <option value="option3">
+                                                单位
+                                            </option>
+                                            <option value="option3">
+                                                内容
+                                            </option>
+                                        </select>
+                                        <span class="am-form-caret">
+                                        </span>
+                                    </div>
+                                    <div class="am-form-group  am-u-offset-6">
+                                        <div class="am-form-group ">
+                                            <label>
+                                                时间:
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select>
+                                                    <option value="option1">
+                                                        2015年&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2016年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2017年
+                                                    </option>
+                                                    <option value="option2">
+                                                        2018年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2019年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2015年
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select id="doc-select-1">
+                                                    <option value="option1">
+                                                        2015年&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2016年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2017年
+                                                    </option>
+                                                    <option value="option2">
+                                                        2018年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2019年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2015年
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            到
+                                            <label class="am-select-inline">
+                                                <select id="doc-select-1">
+                                                    <option value="option1">
+                                                        2015年&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2016年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2017年
+                                                    </option>
+                                                    <option value="option2">
+                                                        2018年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2019年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2015年
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select id="doc-select-1">
+                                                    <option value="option1">
+                                                        2015年&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2016年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2017年
+                                                    </option>
+                                                    <option value="option2">
+                                                        2018年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2019年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2015年
+                                                    </option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="am-form-group am-u-md-6 paddingleft">
+                                            <label for="doc-ipt-companys">
+                                                单位:
+                                            </label>
+                                            <input type="text" class="" id="doc-ipt-companys" placeholder="单位">
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group">
+                                            <label for="doc-ipt-content">
+                                                内容
+                                            </label>
+                                            <textarea rows="5" id="doc-ipt-content">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--人才评定信息 start-->
+                                <div class="clearfolt">
+                                </div>
+                                <h3 class="yahei">
+                                    人才评定信息
+                                </h3>
+                                <form class="am-form">
+                                    <div class="width60">
+                                        <div class="am-form-group am-form-icon am-u-md-6">
+                                            <label for="doc-ipt-evaluation">
+                                                评定年月:
+                                            </label>
+                                            <i class="am-icon-calendar rightremove">
+                                            </i>
+                                            <input type="text" id="doc-ipt-evaluation" class="am-form-field" placeholder="日期">
+                                        </div>
+                                        <div class="am-form-group  am-u-md-4">
+                                            <label for="doc-ipt-batch">
+                                                批次:
+                                            </label>
+                                            <input type="text" id="doc-ipt-batch" class="am-form-field" placeholder="批次">
+                                        </div>
+                                        <div class="am-u-offset-2">
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group am-u-md-12">
+                                            <label for="doc-ipt-results">
+                                                评定结果
+                                            </label>
+                                            <textarea rows="5" id="doc-ipt-results">
+                                            </textarea>
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label>
+                                                人才分类
+                                            </label>
+                                            <select id="doc-select-talents">
+                                                <option value="option1">
+                                                    选项一...
+                                                </option>
+                                                <option value="option2">
+                                                    选项二.....
+                                                </option>
+                                                <option value="option3">
+                                                    选项三........
+                                                </option>
+                                            </select>
+                                            <span class="am-form-caret">
+                                            </span>
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                            <label>
+                                                人才类型
+                                            </label>
+                                            <select id="doc-select-talentlist">
+                                                <option value="option1">
+                                                    选项一...
+                                                </option>
+                                                <option value="option2">
+                                                    选项二.....
+                                                </option>
+                                                <option value="option3">
+                                                    选项三........
+                                                </option>
+                                            </select>
+                                            <span class="am-form-caret">
+                                            </span>
+                                        </div>
+                                        <div class="clearfolt">
+                                            <div class="am-form-group am-u-md-12">
+                                                <label for="doc-ipt-introduction">
+                                                    人才介绍
+                                                </label>
+                                                <textarea rows="5" id="doc-ipt-introduction">
+                                                </textarea>
+                                            </div>
+                                            <div class="clearfolt">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--人才评定信息 end-->
+                                <!--人才项目信息 start -->
+                                <h3 class="yahei">
+                                    人才项目信息
+                                </h3>
+                                <form class="am-form">
+                                    <div class="width60">
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-projectname">
+                                                项目名称:
+                                            </label>
+                                            <input type="text" class="" id="doc-ipt-projectname" placeholder="项目名称">
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-3">
+                                            <label>
+                                                项目状态
+                                            </label>
+                                            <select id="doc-select-1">
+                                                <option value="option1">
+                                                    未启动
+                                                </option>
+                                                <option value="option2">
+                                                    正常
+                                                </option>
+                                                <option value="option3">
+                                                    延期
+                                                </option>
+                                                <option value="option3">
+                                                    暂停
+                                                </option>
+                                            </select>
+                                            <span class="am-form-caret">
+                                            </span>
+                                        </div>
+                                        <div class="am-form-group  am-u-offset-3">
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group am-u-md-12">
+                                            <label for="doc-ipt-talentintroduction">
+                                                人才介绍
+                                            </label>
+                                            <textarea rows="5" id="doc-ipt-talentintroduction">
+                                            </textarea>
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group am-u-md-12">
+                                            <label for="doc-ipt-process">
+                                                项目进程
+                                            </label>
+                                            <textarea rows="5" id="doc-ipt-process">
+                                            </textarea>
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group  am-u-offset-6">
+                                            <label for="doc-ipt-product">
+                                                项目开始到结束时间:
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select id="doc-select-1">
+                                                    <option value="option1">
+                                                        2015年&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2016年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2017年
+                                                    </option>
+                                                    <option value="option2">
+                                                        2018年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2019年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2015年
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select>
+                                                    <option value="option1">
+                                                        1月&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2月
+                                                    </option>
+                                                    <option value="option3">
+                                                        3月
+                                                    </option>
+                                                    <option value="option2">
+                                                        4月
+                                                    </option>
+                                                    <option value="option3">
+                                                        5月
+                                                    </option>
+                                                    <option value="option3">
+                                                        6月
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select>
+                                                    <option value="option1">
+                                                        1日&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2日
+                                                    </option>
+                                                    <option value="option3">
+                                                        3日
+                                                    </option>
+                                                    <option value="option2">
+                                                        4日
+                                                    </option>
+                                                    <option value="option3">
+                                                        5日
+                                                    </option>
+                                                    <option value="option3">
+                                                        6日
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            到
+                                            <label class="am-select-inline">
+                                                <select>
+                                                    <option value="option1">
+                                                        2015年&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2016年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2017年
+                                                    </option>
+                                                    <option value="option2">
+                                                        2018年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2019年
+                                                    </option>
+                                                    <option value="option3">
+                                                        2015年
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select>
+                                                    <option value="option1">
+                                                        1月&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2月
+                                                    </option>
+                                                    <option value="option3">
+                                                        3月
+                                                    </option>
+                                                    <option value="option2">
+                                                        4月
+                                                    </option>
+                                                    <option value="option3">
+                                                        5月
+                                                    </option>
+                                                    <option value="option3">
+                                                        6月
+                                                    </option>
+                                                </select>
+                                            </label>
+                                            <label class="am-select-inline">
+                                                <select>
+                                                    <option value="option1">
+                                                        1日&nbsp;
+                                                    </option>
+                                                    <option value="option2">
+                                                        2日
+                                                    </option>
+                                                    <option value="option3">
+                                                        3日
+                                                    </option>
+                                                    <option value="option2">
+                                                        4日
+                                                    </option>
+                                                    <option value="option3">
+                                                        5日
+                                                    </option>
+                                                    <option value="option3">
+                                                        6日
+                                                    </option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--人才项目信息 end-->
+                                <!--工作单位信息 start-->
+                                <div class="clearfolt">
+                                </div>
+                                <h3 class="yahei">
+                                    工作单位信息
+                                </h3>
+                                <form class="am-form">
+                                    <div class="width60">
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-workunit">
+                                                工作单位:
+                                            </label>
+                                            <input type="text" class="" id="doc-ipt-workunit" placeholder="工作单位">
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-posts">
+                                                职务:
+                                            </label>
+                                            <input type="text" class="am-form-posts" placeholder="职务" id="doc-ipt-professional2">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-workingarea">
+                                                工作面积:
+                                            </label>
+                                            <input type="text" class="" id="doc-ipt-workingarea" placeholder="工作面积">
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-registeredaddress">
+                                                注册地址:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="注册地址" id="doc-ipt-registeredaddress">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-workingaddress">
+                                                工作地址:
+                                            </label>
+                                            <input type="text" class="" id="doc-ipt-workingaddress" placeholder="工作地址">
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-3">
+                                            <label for="doc-ipt-registeredcapital">
+                                                注册资本:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="注册资本" id="doc-ipt-registeredcapital">
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-3">
+                                            <label for="doc-ipt-registration-time">
+                                                注册时间:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="注册时间" id="doc-ipt-registration-time">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-select-unit-property">
+                                                单位性质
+                                            </label>
+                                            <select id="doc-select-unit-property">
+                                                <option value="option1">
+                                                    国家行政企业事业单位
+                                                </option>
+                                                <option value="option2">
+                                                    公私合作企业事业单位
+                                                </option>
+                                                <option value="option3">
+                                                    中外合资企业事业单位
+                                                </option>
+                                                <option value="option3">
+                                                    社会组织机构
+                                                </option>
+                                                <option value="option3">
+                                                    国际组织机构
+                                                </option>
+                                                <option value="option3">
+                                                    外资企业事业单位
+                                                </option>
+                                                <option value="option3">
+                                                    私营企业事业单位
+                                                </option>
+                                                <option value="option3">
+                                                    集体企业事业单位
+                                                </option>
+                                                <option value="option3">
+                                                    国防军事企业事业单位
+                                                </option>
+                                            </select>
+                                            <span class="am-form-caret">
+                                            </span>
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-3">
+                                            <label>
+                                                人员规模
+                                            </label>
+                                            <select id="doc-select-1">
+                                                <option value="option1">
+                                                    1-50人
+                                                </option>
+                                                <option value="option2">
+                                                    50-150人
+                                                </option>
+                                                <option value="option3">
+                                                    150-500人
+                                                </option>
+                                                <option value="option3">
+                                                    500-1000人
+                                                </option>
+                                                <option value="option3">
+                                                    100-5000人
+                                                </option>
+                                                <option value="option3">
+                                                    5000-10000人
+                                                </option>
+                                                <option value="option3">
+                                                    10000人以上
+                                                </option>
+                                            </select>
+                                            <span class="am-form-caret">
+                                            </span>
+                                        </div>
+                                        <div class="am-form-group  am-u-sm-12 am-u-md-3">
+                                            <label>
+                                                经营规模
+                                            </label>
+                                            <select id="doc-select-1">
+                                                <option value="option1">
+                                                    1-50人
+                                                </option>
+                                                <option value="option2">
+                                                    50-150人
+                                                </option>
+                                                <option value="option3">
+                                                    150-500人
+                                                </option>
+                                                <option value="option3">
+                                                    500-1000人
+                                                </option>
+                                                <option value="option3">
+                                                    100-5000人
+                                                </option>
+                                                <option value="option3">
+                                                    5000-10000人
+                                                </option>
+                                                <option value="option3">
+                                                    10000人以上
+                                                </option>
+                                            </select>
+                                            <span class="am-form-caret">
+                                            </span>
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--工作单位信息 end-->
+                                <!--联系人相关信息 start-->
+                                <h3 class="yahei">
+                                    联系人相关信息
+                                </h3>
+                                <form class="am-form">
+                                    <div class="width60">
+                                        <div class="am-form-group am-u-sm-12 am-u-md-3">
+                                            <label for="doc-ipt-relationship">
+                                                与联系人关系:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="与联系人关系" id="doc-ipt-relationship">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-3 ">
+                                            <label for="doc-ipt-relationship-name">
+                                                联系人姓名:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="联系人姓名" id="doc-ipt-relationship-name">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-relationship-company">
+                                                联系人单位:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="联系人姓名" id="doc-ipt-relationship-company">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-relationship-post">
+                                                联系人职务:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="联系人职务" id="doc-ipt-relationship-post">
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-relationship-phone">
+                                                联系人手机号码:
+                                            </label>
+                                            <input type="tel" class="am-form-field" placeholder="联系人手机号码" id="doc-ipt-relationship-phone">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-6">
+                                            <label for="doc-ipt-relationship-qq">
+                                                联系人QQ号码:
+                                            </label>
+                                            <input type="tel" class="am-form-field" placeholder="联系人QQ号码" id="doc-ipt-relationship-qq">
+                                        </div>
+                                        <div class="clearfolt">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-4">
+                                            <label for="doc-ipt-relationship-tel">
+                                                联系人办公电话:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="联系人手机号码" id="doc-ipt-relationship-tel">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-4">
+                                            <label for="doc-ipt-relationship-fax">
+                                                联系人传真:
+                                            </label>
+                                            <input type="text" class="am-form-field" placeholder="联系人传真" id="doc-ipt-relationship-fax">
+                                        </div>
+                                        <div class="am-form-group am-u-sm-12 am-u-md-4">
+                                            <label for="doc-ipt-relationship-mail">
+                                                联系人E-mail:
+                                            </label>
+                                            <input type="tel" class="am-form-field" placeholder="联系人E-mail" id="doc-ipt-relationship-mail">
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--联系人相关信息 end-->
+                                <div class="width60">
+                                    <div class="am-form-group martop2">
+                                        <div class="am-u-md-6 am-u-sm-12 centers">
+                                            <button type="submit" class="am-btn am-btn-default am-btn-primary paddinglr">
+                                                确认提交
+                                            </button>
+                                        </div>
+                                        <div class="am-u-md-6 am-u-sm-12 centers">
+                                            <button type="submit" class="am-btn am-btn-default paddinglr">
+                                                取消提交
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfolt">
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
+                            </form>
+                            <!--表单内容end-->
+                        </div>
+                    </div>
+                    <!-- content end -->
+                </div>
+            </div>
+        </div>
+        <!--[if (gte IE 9)|!(IE)]>
+            <!-->
+            <script src="js/jquery.min.js">
+            </script>
+        <!--<![endif]-->
+        <script src="js/amazeui.min.js">
+        </script>
+        <script src="js/app.js">
+        </script>
+    </body>
+
+</html>
