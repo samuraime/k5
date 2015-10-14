@@ -350,4 +350,6 @@ h3.yahei{background: #F7F7F7;padding-left: 15px;font-size: 16px;font-weight: nor
 .select{position:relative;float:left;display: inline-block;}
 .martop2{position:relative;top:20px;}
 /*新增修改页面 2015-10-14 end*/
+/*分页样式*/
+.pagination .am-form-group input{display:block;width:35px;padding:0px 0px;text-align:center;margin:0px 5px;}
 
