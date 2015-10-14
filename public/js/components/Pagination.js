@@ -78,7 +78,7 @@ export default class Pagination extends Component {
         } 
 
         return(
-            <div>
+            <div className="am-u-sm-12 pagination">
                 <div className="am-g">
                     <Form inline className="am-fr" onSubmit={ () => this.handleGoPage() }>
                         { `共  ${total}  条记录, 每页显示` }

@@ -35,7 +35,8 @@ class AdminAccountController extends AdminController
             'password' => ['requried', 'regex:/\S{6,20}/', 'confirmed'],
             'password_confirmation' => 'requried',
             'nickname' => 'string|max:20',
-            'mobile' => 'integer'
+            'mobile' => 'integer',
+            'permission' => 'required|string|max:200'
         ]);
 
         $inputs = Request::all();
