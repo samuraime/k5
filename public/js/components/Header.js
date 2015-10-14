@@ -1,6 +1,32 @@
 import React, { Component, PropTypes } from 'react';
+import { Form, Input, Modal, ModalTrigger } from 'amazeui-react';
 
 export default class Header extends Component {
+    constructor() {
+        super();
+        this.profileModal = (
+            <Modal type="popup" title="个人资料" closeViaDimmer>
+                <Form horizontal>
+                    <Input type="text" label="用户名" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="text" label="显示名" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="email" label="邮箱" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="text" label="电话" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="submit" amStyle="primary" value="提交" wrapperClassName="am-u-sm-offset-2 am-u-sm-10" />
+                </Form>
+            </Modal>
+        );
+        this.passwordModal = (
+            <Modal type="popup" title="修改密码" closeViaDimmer>
+                <Form horizontal>
+                    <Input type="password" label="旧密码" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="password" label="新密码" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="password" label="确认密码" labelClassName="am-u-sm-2" wrapperClassName="am-u-sm-10" />
+                    <Input type="submit" amStyle="primary" value="提交" wrapperClassName="am-u-sm-offset-2 am-u-sm-10" />
+                </Form>
+            </Modal>
+        );
+    }
+
     render() {
         const { user } = this.props;
 
@@ -16,7 +42,7 @@ export default class Header extends Component {
                 </button>
                 <div className="am-collapse am-topbar-collapse" id="topbar-collapse">
                     <ul className="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-                        <li className="am-header-information am-text-secondary"> 欢迎您登录</li>
+                        <li className="am-header-information"> 欢迎您登录</li>
                         <li className="am-dropdown" data-am-dropdown>
                             <a className="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                                 <span className="am-icon-users"></span> { user.name }
@@ -24,12 +50,16 @@ export default class Header extends Component {
                             </a>
                             <ul className="am-dropdown-content">
                                 <li>
-                                    <a href="/admin/account/profile">
+                                    <ModalTrigger modal={ this.profileModal }>
+                                    <a href="javascript:void(0)">
                                         <span className="am-icon-user"></span> 个人资料</a>
+                                    </ModalTrigger>
                                 </li>
                                 <li>
-                                    <a href="/admin/account/password">
-                                        <span className="am-icon-cog"></span> 修改密码</a>
+                                    <ModalTrigger modal={ this.passwordModal }>
+                                        <a href="javascript:void(0)">
+                                            <span className="am-icon-cog"></span> 修改密码</a>
+                                    </ModalTrigger>
                                 </li>
                                 <li>
                                     <a href="/auth/logout">

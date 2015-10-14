@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as PersonnelActions from '../actions/personnel';
+import * as personnelActions from '../actions/personnel';
 import DataTable from '../components/DataTable';
 import Pagination from '../components/Pagination';
 import SearchBox from '../components/SearchBox';
@@ -27,7 +27,7 @@ class Personnel extends Component {
         return (
             <div className="admin-content">
                 <div className="am-cf am-padding border-bottom">
-                    <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">人才列表</strong></div>
+                    <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">人才信息</strong> / <small>人才列表</small></div>
                 </div>
                 <div className="am-g">
                     <div className="am-u-sm-12 am-u-md-6">
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(PersonnelActions, dispatch);
+  return bindActionCreators(personnelActions, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Personnel);

@@ -55,13 +55,11 @@ class Tr extends Component {
                 <td><input type="checkbox"/></td>
                 { this.renderTds() }
                 <td>
-                    <ButtonGroup>
-                        <Button amSize="xs"><span className="am-text-secondary am-icon-pencil-square-o"> 编辑</span></Button>
-                        <Button amSize="xs"><span className="am-icon-copy"> 复制</span></Button>
-                        <ModalTrigger modal={ this.renderDeleteModal() } onConfirm={ () => this.deleteItem() }>
-                            <Button amSize="xs"><span className="am-text-danger am-icon-trash-o"> 删除</span></Button>
-                        </ModalTrigger>
-                    </ButtonGroup>
+                    <Button amSize="xs"><span className="am-text-secondary am-icon-pencil-square-o"> 编辑</span></Button>
+                    <Button amSize="xs"><span className="am-icon-copy"> 复制</span></Button>
+                    <ModalTrigger modal={ this.renderDeleteModal() } onConfirm={ () => this.deleteItem() }>
+                        <Button amSize="xs"><span className="am-text-danger am-icon-trash-o"> 删除</span></Button>
+                    </ModalTrigger>
                 </td>
             </tr>
         );

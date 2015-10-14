@@ -50,12 +50,12 @@ export default class LeftNavBar extends Component {
                             </a>
                             <List className="am-collapse admin-sidebar-sub" id="collapse-nav2">
                                 <ListItem className={ permissions.indexOf('article') != -1 ? '' : 'am-hide'}>
-                                    <Link to="/manage/article">
+                                    <Link to="/article">
                                         <span className="am-icon-list-alt"> 前台文章</span>
                                     </Link>
                                 </ListItem>
                                 <ListItem className={ permissions.indexOf('account') != -1 ? '' : 'am-hide'}>
-                                    <Link to="/manage/account">
+                                    <Link to="/account">
                                         <span className="am-icon-table"> 账号管理</span>
                                     </Link>
                                 </ListItem>

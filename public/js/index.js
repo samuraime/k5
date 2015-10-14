@@ -10,7 +10,7 @@ import Enterprise from './containers/Enterprise';
 import Personnel from './containers/Personnel';
 import Message from './containers/Message';
 import Log from './containers/Log';
-import Manage from './containers/Manage';
+// import Manage from './containers/Manage';
 import Account from './containers/Account';
 
 const store = configureStore();
@@ -31,9 +31,7 @@ React.render(
                 <Route path="/personnel" component={Personnel} />
                 <Route path="/log" component={Log} />
                 <Route path="/message" component={Message} />
-                <Route path="/manage" component={Manage}>
-                    <Route path="/manage/account" component={Account} />
-                </Route>
+                <Route path="/account" component={Account} />
             </Route>
         </Router>
     )}

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as AccountActions from '../actions/account';
+import * as accountActions from '../actions/account';
 import DataTable from '../components/DataTable';
 import Pagination from '../components/Pagination';
 import SearchBox from '../components/SearchBox';
@@ -20,14 +20,14 @@ class Account extends Component {
 
     render() {
         const header = {id: 'ID', name: '姓名', mobile: '电话', email: '邮箱', permission: '权限', _action: '操作'}
-        const category = header;
+        const category = Object.assign({}, header);
         delete category.id;
         delete category._action;
 
         return (
             <div className="admin-content">
                 <div className="am-cf am-padding border-bottom">
-                    <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">数据列表</strong> / <small>企业列表</small></div>
+                    <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">系统管理</strong> / <small>账号管理</small></div>
                 </div>
                 <div className="am-g">
                     <div className="am-u-sm-12 am-u-md-6">
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(AccountActions, dispatch);
+  return bindActionCreators(accountActions, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account);
