@@ -29,32 +29,6 @@ class Summary extends Component {
                 <div className="am-cf am-padding border-bottom">
                     <div className="am-fl am-cf"><strong className="am-text-primary am-text-lg">数据汇总</strong></div>
                 </div>
-                <ul className="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
-                    <li>
-                        <a href="#" className="am-text-success">
-                            <span className="am-icon-btn am-icon-file-text"></span>
-                            <br />新增人才
-                            <br />2300</a>
-                    </li>
-                    <li>
-                        <a href="#" className="am-text-warning">
-                            <span className="am-icon-btn am-icon-briefcase"></span>
-                            <br />新增企业
-                            <br />308</a>
-                    </li>
-                    <li>
-                        <a href="#" className="am-text-danger">
-                            <span className="am-icon-btn am-icon-recycle"></span>
-                            <br />昨日访问
-                            <br />80082</a>
-                    </li>
-                    <li>
-                        <a href="#" className="am-text-secondary">
-                            <span className="am-icon-btn am-icon-user-md"></span>
-                            <br />在线用户
-                            <br />3000</a>
-                    </li>
-                </ul>
                 <div className="am-g">
                     <div className="am-u-sm-12 am-u-md-6">
                         <div className="am-btn-toolbar">

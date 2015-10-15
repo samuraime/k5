@@ -103,6 +103,10 @@
 
 	var _containersAccount2 = _interopRequireDefault(_containersAccount);
 
+	var _containersAccountEdit = __webpack_require__(523);
+
+	var _containersAccountEdit2 = _interopRequireDefault(_containersAccountEdit);
+
 	var store = (0, _storeConfigureStore2['default'])();
 
 	store.subscribe(function () {
@@ -126,7 +130,8 @@
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/personnel', component: _containersPersonnel2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/log', component: _containersLog2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/message', component: _containersMessage2['default'] }),
-	                _react2['default'].createElement(_reactRouter.Route, { path: '/account', component: _containersAccount2['default'] })
+	                _react2['default'].createElement(_reactRouter.Route, { path: '/account', component: _containersAccount2['default'] }),
+	                _react2['default'].createElement(_reactRouter.Route, { path: '/account/edit', component: _containersAccountEdit2['default'] })
 	            )
 	        );
 	    }
@@ -39874,21 +39879,21 @@
 /* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(190);
 
@@ -39900,16 +39905,84 @@
 	    function Index() {
 	        _classCallCheck(this, Index);
 
-	        _get(Object.getPrototypeOf(Index.prototype), 'constructor', this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Index.prototype), "constructor", this).apply(this, arguments);
 	    }
 
 	    _createClass(Index, [{
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
-	            return _react2['default'].createElement(
-	                'div',
-	                null,
-	                'Index'
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "admin-content" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "am-cf am-padding border-bottom" },
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "am-fl am-cf" },
+	                        _react2["default"].createElement(
+	                            "strong",
+	                            { className: "am-text-primary am-text-lg" },
+	                            "呵呵管理系统"
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "ul",
+	                    { className: "am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list " },
+	                    _react2["default"].createElement(
+	                        "li",
+	                        null,
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "#", className: "am-text-success" },
+	                            _react2["default"].createElement("span", { className: "am-icon-btn am-icon-file-text" }),
+	                            _react2["default"].createElement("br", null),
+	                            "新增人才",
+	                            _react2["default"].createElement("br", null),
+	                            "2300"
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "li",
+	                        null,
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "#", className: "am-text-warning" },
+	                            _react2["default"].createElement("span", { className: "am-icon-btn am-icon-briefcase" }),
+	                            _react2["default"].createElement("br", null),
+	                            "新增企业",
+	                            _react2["default"].createElement("br", null),
+	                            "308"
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "li",
+	                        null,
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "#", className: "am-text-danger" },
+	                            _react2["default"].createElement("span", { className: "am-icon-btn am-icon-recycle" }),
+	                            _react2["default"].createElement("br", null),
+	                            "昨日访问",
+	                            _react2["default"].createElement("br", null),
+	                            "80082"
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "li",
+	                        null,
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "#", className: "am-text-secondary" },
+	                            _react2["default"].createElement("span", { className: "am-icon-btn am-icon-user-md" }),
+	                            _react2["default"].createElement("br", null),
+	                            "在线用户",
+	                            _react2["default"].createElement("br", null),
+	                            "3000"
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -39917,8 +39990,8 @@
 	    return Index;
 	})(_react.Component);
 
-	exports['default'] = Index;
-	module.exports = exports['default'];
+	exports["default"] = Index;
+	module.exports = exports["default"];
 
 /***/ },
 /* 510 */
@@ -40004,62 +40077,6 @@
 	                            'strong',
 	                            { className: 'am-text-primary am-text-lg' },
 	                            '数据汇总'
-	                        )
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'ul',
-	                    { className: 'am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ' },
-	                    _react2['default'].createElement(
-	                        'li',
-	                        null,
-	                        _react2['default'].createElement(
-	                            'a',
-	                            { href: '#', className: 'am-text-success' },
-	                            _react2['default'].createElement('span', { className: 'am-icon-btn am-icon-file-text' }),
-	                            _react2['default'].createElement('br', null),
-	                            '新增人才',
-	                            _react2['default'].createElement('br', null),
-	                            '2300'
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        'li',
-	                        null,
-	                        _react2['default'].createElement(
-	                            'a',
-	                            { href: '#', className: 'am-text-warning' },
-	                            _react2['default'].createElement('span', { className: 'am-icon-btn am-icon-briefcase' }),
-	                            _react2['default'].createElement('br', null),
-	                            '新增企业',
-	                            _react2['default'].createElement('br', null),
-	                            '308'
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        'li',
-	                        null,
-	                        _react2['default'].createElement(
-	                            'a',
-	                            { href: '#', className: 'am-text-danger' },
-	                            _react2['default'].createElement('span', { className: 'am-icon-btn am-icon-recycle' }),
-	                            _react2['default'].createElement('br', null),
-	                            '昨日访问',
-	                            _react2['default'].createElement('br', null),
-	                            '80082'
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        'li',
-	                        null,
-	                        _react2['default'].createElement(
-	                            'a',
-	                            { href: '#', className: 'am-text-secondary' },
-	                            _react2['default'].createElement('span', { className: 'am-icon-btn am-icon-user-md' }),
-	                            _react2['default'].createElement('br', null),
-	                            '在线用户',
-	                            _react2['default'].createElement('br', null),
-	                            '3000'
 	                        )
 	                    )
 	                ),
@@ -40254,6 +40271,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(345);
+
 	var _amazeuiReact = __webpack_require__(420);
 
 	var Thead = (function (_Component) {
@@ -40330,11 +40349,6 @@
 	            return tds;
 	        }
 	    }, {
-	        key: 'deleteItem',
-	        value: function deleteItem() {
-	            this.props.handleDeleteItem(this.props.data.id);
-	        }
-	    }, {
 	        key: 'renderDeleteModal',
 	        value: function renderDeleteModal() {
 	            return _react2['default'].createElement(
@@ -40348,6 +40362,7 @@
 	        value: function render() {
 	            var _this = this;
 
+	            console.log(this.history);
 	            return _react2['default'].createElement(
 	                'tr',
 	                null,
@@ -40362,7 +40377,9 @@
 	                    null,
 	                    _react2['default'].createElement(
 	                        _amazeuiReact.Button,
-	                        { amSize: 'xs' },
+	                        { amSize: 'xs', onClick: function () {
+	                                return _reactRouter.History.pushState(null, '/');
+	                            } },
 	                        _react2['default'].createElement(
 	                            'span',
 	                            { className: 'am-text-secondary am-icon-pencil-square-o' },
@@ -40381,7 +40398,7 @@
 	                    _react2['default'].createElement(
 	                        _amazeuiReact.ModalTrigger,
 	                        { modal: this.renderDeleteModal(), onConfirm: function () {
-	                                return _this.deleteItem();
+	                                return _this.props.handleDeleteItem(_this.props.data.id);
 	                            } },
 	                        _react2['default'].createElement(
 	                            _amazeuiReact.Button,
@@ -40446,7 +40463,10 @@
 	                    Tbody,
 	                    null,
 	                    this.props.data.map(function (item) {
-	                        return _react2['default'].createElement(Tr, { data: item, header: _this2.props.header, handleDeleteItem: _this2.props.handleDeleteItem });
+	                        return _react2['default'].createElement(Tr, { data: item,
+	                            header: _this2.props.header,
+	                            handleEditItem: _this2.props.handleEditItem,
+	                            handleDeleteItem: _this2.props.handleDeleteItem });
 	                    })
 	                )
 	            );
@@ -41676,6 +41696,79 @@
 	        });
 	    };
 	}
+
+/***/ },
+/* 523 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(190);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(399);
+
+	var _reactRedux = __webpack_require__(391);
+
+	var _actionsAccount = __webpack_require__(522);
+
+	var accountActions = _interopRequireWildcard(_actionsAccount);
+
+	var AccountEdit = (function (_Component) {
+	    _inherits(AccountEdit, _Component);
+
+	    function AccountEdit(props) {
+	        _classCallCheck(this, AccountEdit);
+
+	        _get(Object.getPrototypeOf(AccountEdit.prototype), 'constructor', this).call(this, props);
+	        // props.initAccountEditData();
+	        // this.goPageWithInfo = this.goPageWithInfo.bind(this);
+	        console.log(this.props);
+	    }
+
+	    _createClass(AccountEdit, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                { className: 'admin-content' },
+	                '修改账户'
+	            );
+	        }
+	    }]);
+
+	    return AccountEdit;
+	})(_react.Component);
+
+	function mapStateToProps(state) {
+	    return {
+	        account: state.account
+	    };
+	}
+
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(accountActions, dispatch);
+	}
+
+	exports['default'] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AccountEdit);
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

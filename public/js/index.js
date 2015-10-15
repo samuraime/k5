@@ -12,6 +12,7 @@ import Message from './containers/Message';
 import Log from './containers/Log';
 // import Manage from './containers/Manage';
 import Account from './containers/Account';
+import AccountEdit from './containers/AccountEdit';
 
 const store = configureStore();
 
@@ -23,15 +24,16 @@ React.render(
     <Provider store={store}>
     {() => (
         <Router>
-            <Route path="/" component={App}>
-                <IndexRoute component={Index} />
-                <Route path="/index" component={Index} />
-                <Route path="/summary" component={Summary} />
-                <Route path="/enterprise" component={Enterprise} />
-                <Route path="/personnel" component={Personnel} />
-                <Route path="/log" component={Log} />
-                <Route path="/message" component={Message} />
-                <Route path="/account" component={Account} />
+            <Route path="/" component={ App }>
+                <IndexRoute component={ Index } />
+                <Route path="/index" component={ Index } />
+                <Route path="/summary" component={ Summary } />
+                <Route path="/enterprise" component={ Enterprise } />
+                <Route path="/personnel" component={ Personnel } />
+                <Route path="/log" component={ Log } />
+                <Route path="/message" component={ Message } />
+                <Route path="/account" component={ Account } />
+                <Route path="/account/edit" component={AccountEdit} />
             </Route>
         </Router>
     )}

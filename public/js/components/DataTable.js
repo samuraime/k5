@@ -1,4 +1,5 @@
 import React, { Component, Proptypes } from 'react';
+import { History } from 'react-router';
 import { Table, Button, ButtonGroup, Modal, ModalTrigger, Icon } from 'amazeui-react';
 
 class Thead extends Component {
@@ -24,6 +25,7 @@ class Thead extends Component {
 }
 
 class Tr extends Component {
+    mixins: [History]
     renderTds() {
         if (this.props.header._action) {
             delete this.props.header._action;
@@ -37,10 +39,6 @@ class Tr extends Component {
         return tds;
     }
 
-    deleteItem() {
-        this.props.handleDeleteItem(this.props.data.id);
-    }
-
     renderDeleteModal() {
         return (
             <Modal type="confirm" title="删除确认">
@@ -50,14 +48,15 @@ class Tr extends Component {
     }
 
     render() {
+        console.log(this.history);
         return (
             <tr>
                 <td><input type="checkbox"/></td>
                 { this.renderTds() }
                 <td>
-                    <Button amSize="xs"><span className="am-text-secondary am-icon-pencil-square-o"> 编辑</span></Button>
+                    <Button amSize="xs" onClick={ () => History.pushState(null, '/') }><span className="am-text-secondary am-icon-pencil-square-o"> 编辑</span></Button>
                     <Button amSize="xs"><span className="am-icon-copy"> 复制</span></Button>
-                    <ModalTrigger modal={ this.renderDeleteModal() } onConfirm={ () => this.deleteItem() }>
+                    <ModalTrigger modal={ this.renderDeleteModal() } onConfirm={ () => this.props.handleDeleteItem(this.props.data.id) }>
                         <Button amSize="xs"><span className="am-text-danger am-icon-trash-o"> 删除</span></Button>
                     </ModalTrigger>
                 </td>
@@ -81,7 +80,11 @@ export default class DataTable extends Component {
                 <Thead header={ this.props.header } />
                 <Tbody>
                     { this.props.data.map(item => 
-                        <Tr data={ item } header={ this.props.header } handleDeleteItem={ this.props.handleDeleteItem }/>
+                        <Tr data={ item } 
+                            header={ this.props.header } 
+                            handleEditItem={ this.props.handleEditItem } 
+                            handleDeleteItem={ this.props.handleDeleteItem } >
+                        </Tr>
                     ) }
                 </Tbody>
             </Table>
