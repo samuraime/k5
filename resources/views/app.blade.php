@@ -7,7 +7,7 @@
 	<title>Laravel</title>
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="/css/amazeui.min.css" />
-    <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/admin.css">
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>

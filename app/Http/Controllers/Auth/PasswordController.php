@@ -1,38 +1,77 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use Request;
+use Session;
+use HttpRequest;
+use Cache;
+use Mail;
+use App\Models\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\PasswordBroker;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller {
+	private $recoverAccountCachePrefix = 'RecoverAccount_';
 
-	/*
-	|--------------------------------------------------------------------------
-	| Password Reset Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller is responsible for handling password reset requests
-	| and uses a simple trait to include this behavior. You're free to
-	| explore this trait and override any methods you wish to tweak.
-	|
-	*/
-
-	use ResetsPasswords;
-
-	/**
-	 * Create a new password controller instance.
-	 *
-	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
-	 * @param  \Illuminate\Contracts\Auth\PasswordBroker  $passwords
-	 * @return void
-	 */
-	public function __construct(Guard $auth, PasswordBroker $passwords)
-	{
-		$this->auth = $auth;
-		$this->passwords = $passwords;
-
-		$this->middleware('guest');
+	public function getFind()
+	{	
+		return view('password.find');
 	}
 
+	public function postFind(HttpRequest $request) 
+	{
+		$this->validate($request, [
+			'email' => 'required|email|exists:user,email'
+		]);
+
+		$email = Request::input('email');
+		$user = User::where('email', $email)->first();
+		$token = md5($email + time());
+		Cache::put($this->recoverAccountCachePrefix . $user->id, $token, 60);
+		Mail::send('emails.password', [
+			'user' => $user, 
+			'link' => url('/password/recover') . '?' . http_build_query([
+				'id' => $user->id, 
+				'token' => $token
+			])
+		], function($message) use ($email) {
+			$message->from(env('MAIL_USERNAME'))->to($email)->subject('重置密码');
+		});
+
+		return view('password.find-send');
+	}
+
+	public function getRecover(HttpRequest $request)
+	{
+		$this->validate($request, [
+			'id' => 'required|integer|exists:user,id',
+			'token' => 'required|size:32'
+		]);
+
+		$id = Request::input('id');
+		$requestToken = Request::input('token');
+		$cacheKey = $this->recoverAccountCachePrefix . $id;
+		if (Cache::has($cacheKey) && ($cacheToken = Cache::get($cacheKey)) && $cacheToken === $requestToken) {
+			Session::put('recover.id', $id);
+			return view('password.recover-form');
+		} else {
+			return response('请求过期/请求非法');
+		}
+	}
+
+	public function postRecover(HttpRequest $request) 
+	{
+		$this->validate($request, [
+			'password' => ['required', 'regex:/^\S{6,}$/', 'confirmed'],
+			'password_confirmation' => 'required'
+		]);
+
+		$id = Session::get('recover.id');
+		$user = User::find($id);
+		$user->password = password(Request::input('password'));
+		$user->save();
+
+		Session::forget('recover');
+		Cache::forget($this->recoverAccountCachePrefix . $id);
+
+		return view('password.recover-success');
+	}
 }
