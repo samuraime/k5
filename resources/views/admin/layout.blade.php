@@ -24,8 +24,8 @@
 <body>
     <header class="am-topbar admin-header">
         <div class="am-topbar-brand">
-            <strong>公司名称</strong>
-            <small>后台管理模板</small>
+            <strong>人才交流中心</strong>
+            <small>后台管理</small>
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}">
             <span class="am-sr-only">导航切换</span>
@@ -33,10 +33,10 @@
         </button>
         <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-                <li class="am-header-information am-text-secondary"> 欢迎您登录</li>
+                <li class="am-header-information"> 欢迎您登录</li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        <span class="am-icon-users"></span> {{ Session::get('user.name') }}
+                        <span class="am-icon-users"> {{ Session::get('user.name') }}</span>
                         <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
@@ -72,21 +72,21 @@
                         @if (in_array('summary', Session::get('user.permission')))
                         <li>
                             <a class="am-cf" href="/admin/summary">
-                                <span class="am-icon-area-chart"></span> 数据列表
-                                <span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span>
+                                <span class="am-icon-area-chart"></span> 数据汇总
+                                <span class="am-fr am-margin-right"></span>
                             </a>
                         </li>
                         @endif
                         @if (in_array('enterprise', Session::get('user.permission')))
                         <li>
                             <a href="/admin/enterprise" class="am-cf">
-                                <span class="am-icon-check am-icon-file-text"></span> 企业列表</a>
+                                <span class="am-icon-check am-icon-file-text"></span> 企业信息</a>
                         </li>
                         @endif
                         @if (in_array('personnel', Session::get('user.permission')))
                         <li>
                             <a href="/admin/personnel">
-                                <span class="am-icon-file"></span> 人才列表</a>
+                                <span class="am-icon-file"></span> 人才信息</a>
                         </li>
                         @endif
                         @if (in_array('log', Session::get('user.permission')))
@@ -109,21 +109,25 @@
                                 <span class="am-icon-pencil-square-o"></span> 留言板管理</a>
                         </li>
                         @endif
-                        @if (in_array('manage', Session::get('user.permission')))
+                        @if (in_array('article', Session::get('user.permission')) || in_array('account', Session::get('user.permission')))
                         <li class="#">
                             <a data-am-collapse="{target: '#collapse-nav2'}">
                                 <span class="am-icon-puzzle-piece"></span> 系统管理
                                 <span class="am-icon-angle-right am-fr am-margin-right"></span>
                             </a>
                             <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav2">
+                                @if (in_array('article', Session::get('user.permission')))
                                 <li>
-                                    <a href="/admin/manage/article">
+                                    <a href="/admin/article">
                                         <span class="am-icon-list-alt"></span> 前台文章</a>
                                 </li>
+                                @endif
+                                @if (in_array('account', Session::get('user.permission')))
                                 <li>
-                                    <a href="/admin/manage/user">
+                                    <a href="/admin/account">
                                         <span class="am-icon-table"></span> 账号管理</a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
                         @endif
@@ -133,13 +137,6 @@
                             <p>
                                 <span class="am-icon-bookmark"></span> 公告</p>
                             <p>时光静好，与君语；细水流年，与君同。</p>
-                        </div>
-                    </div>
-                    <div class="am-panel am-panel-default admin-sidebar-panel">
-                        <div class="am-panel-bd">
-                            <p>
-                                <span class="am-icon-tag"></span> wiki</p>
-                            <p>Welcome to the Amaze UI wiki!</p>
                         </div>
                     </div>
                 </div>
@@ -237,12 +234,41 @@
     </div>
   </div>
 </div>
-    <!--[if (gte IE 9)|!(IE)]><!-->
-    <script src="/js/jquery.min.js"></script>
-    <!--<![endif]-->
-    <script src="/js/amazeui.min.js"></script>
-    <script src="/js/app.js"></script>
-    @yield('foot-assets')
+
+
+@include('admin.delete-confirm-modal')
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="/js/jquery.min.js"></script>
+<!--<![endif]-->
+<script src="/js/amazeui.min.js"></script>
+<script src="/js/app.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.data-table-delete').click(function(event) {
+        event.preventDefault();
+        $('#delete-confirm-modal').modal({
+            relatedTarget: this,
+            onConfirm: function() {
+                var item = $(this.relatedTarget).parents('tr');
+                $.ajax({
+                    type: 'DELETE',
+                    data: {id: item.attr('data-id')},
+                    success: function() {
+                        item.remove();
+                    },
+                    error: function() {
+                        alert('删除失败');
+                    }
+                });
+            },
+            onCancel: function() {
+
+            }
+        });
+    });
+});
+</script>
+@yield('foot-assets')
 </body>
 
 </html>

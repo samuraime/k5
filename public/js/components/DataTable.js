@@ -48,7 +48,7 @@ class Tr extends Component {
     }
 
     render() {
-        console.log(this.history);
+        console.log(History);
         return (
             <tr>
                 <td><input type="checkbox"/></td>

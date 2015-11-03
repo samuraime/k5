@@ -9,6 +9,32 @@ class AdminAccountController extends AdminController
     public function getIndex(HttpRequest $request)
     {
         $this->validate($request, [
+            'page' => 'integer',
+            'perPage' => 'integer',
+        ]);
+
+        $pagination = parent::pagination(User::select('*'));
+        $fields = [
+            'id' => 'ID',
+            'name' => '姓名',
+            'nickname' => '显示名',
+            'mobile' => '电话',
+            'email' => '邮箱',
+            // 'permission' => '权限',
+            'created_at' => '创建日期',
+        ];
+
+        return view('admin.account.index', 
+            array_merge($pagination, [
+                'fields' => $fields,
+                'url' => url('/admin/account')
+            ])
+        );
+    }
+
+    public function getOne(HttpRequest $request)
+    {
+        $this->validate($request, [
             'id' => 'required|exists:user,id',
         ]);
 
@@ -43,6 +69,17 @@ class AdminAccountController extends AdminController
         $user = User::create($inputs);
 
         return response()->json($user);
+    }
+
+    public function getEdit(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:user,id',
+        ]);
+
+        $user = User::find(Request::input('id'));
+
+        return view('admin.account.edit', ['account' => $user->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

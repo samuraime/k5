@@ -9,6 +9,30 @@ class AdminArticleController extends AdminController
     public function getIndex(HttpRequest $request)
     {
         $this->validate($request, [
+            'page' => 'integer',
+            'perPage' => 'integer',
+        ]);
+
+        $pagination = parent::pagination(Article::select('*')->join('user', 'user.id', '=', 'uid'));
+        $fields = [
+            'id' => 'ID',
+            'title' => '标题',
+            'nickname' => '发布者',
+            'created_at' => '创建时间',
+            'updated_at' => '修改时间',
+        ];
+
+        return view('admin.account.index', 
+            array_merge($pagination, [
+                'fields' => $fields,
+                'url' => url('/admin/article')
+            ])
+        );
+    }
+
+    public function getOne(HttpRequest $request)
+    {
+        $this->validate($request, [
             'id' => 'required|exists:article,id',
         ]);
 
@@ -40,6 +64,17 @@ class AdminArticleController extends AdminController
         $article = Article::create($inputs);
 
         return response()->json($article);
+    }
+
+    public function getEdit(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:article,id',
+        ]);
+
+        $article = Article::find(Request::input('id'));
+
+        return view('admin.article.edit', ['article' => $article->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

@@ -40362,7 +40362,7 @@
 	        value: function render() {
 	            var _this = this;
 
-	            console.log(this.history);
+	            console.log(_reactRouter.History);
 	            return _react2['default'].createElement(
 	                'tr',
 	                null,
