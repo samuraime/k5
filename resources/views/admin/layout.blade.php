@@ -41,11 +41,11 @@
                     </a>
                     <ul class="am-dropdown-content">
                         <li>
-                            <a href="/admin/account/profile">
+                            <a onclick="$('#profile-modal').modal('open')">
                                 <span class="am-icon-user"></span> 个人资料</a>
                         </li>
                         <li>
-                            <a href="/admin/account/password">
+                            <a onclick="$('#password-modal').modal('open')">
                                 <span class="am-icon-cog"></span> 修改密码</a>
                         </li>
                         <li>
@@ -150,92 +150,83 @@
         </div>
     </div>
 
+<!-- 个人信息 start -->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">修改信息
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form class="am-form am-form-horizontal">
+                <div class="am-form-group">
+                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">显示名</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" id="doc-ipt-3" placeholder="显示名">
+                    </div>
+                </div>
 
-<!--删除弹框-->
-  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-  <div class="am-modal-dialog">
-    <div class="am-modal-hd">Amaze UI</div>
-    <div class="am-modal-bd">
-      确定删除吗？
+                <div class="am-form-group">
+                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">电话</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" id="doc-ipt-3" placeholder="电话">
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">电子邮箱</label>
+                    <div class="am-u-sm-9">
+                        <input type="email" id="doc-ipt-pwd-2" placeholder="电子邮箱">
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <div class="am-u-sm-3 am-u-sm-offset-3">
+                        <input type="submit" class="am-btn am-btn-default" value="提交修改" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="am-modal-footer">
-      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-      <span class="am-modal-btn" data-am-modal-confirm id="determine-delete">确定</span>
-    </div>
-  </div>
 </div>
-<!--编辑弹框 -->
-  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm-edit">
-  <div class="am-modal-dialog">
-    <div class="am-modal-hd">Amaze UI </div>
-    <div class="am-modal-bd">
-  <form class="am-form am-form-horizontal am-scoller" id="organization-form">
-  </form>
+<!-- 个人信息 end -->
+
+<!-- 密码 start -->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="password-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">修改密码
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form class="am-form am-form-horizontal">
+                <div class="am-form-group">
+                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">旧密码</label>
+                    <div class="am-u-sm-9">
+                        <input type="password" id="doc-ipt-3" placeholder="旧密码">
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">新密码</label>
+                    <div class="am-u-sm-9">
+                        <input type="password" id="doc-ipt-3" placeholder="新密码">
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">确认密码</label>
+                    <div class="am-u-sm-9">
+                        <input type="password" id="doc-ipt-pwd-2" placeholder="确认密码">
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <div class="am-u-sm-3 am-u-sm-offset-3">
+                        <input type="submit" class="am-btn am-btn-default" value="提交修改" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="am-modal-footer">
-      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-      <span class="am-modal-btn" data-am-modal-confirm id="deterall-delete">保存</span>
-    </div>
-  </div>
 </div>
-<!--删除弹框-->
-  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-  <div class="am-modal-dialog">
-    <div class="am-modal-hd">Amaze UI</div>
-    <div class="am-modal-bd">
-      确定删除吗？
-    </div>
-    <div class="am-modal-footer">
-      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-      <span class="am-modal-btn" data-am-modal-confirm >确定</span>
-    </div>
-  </div>
-</div>
-<!--全局新添加内容-->
-  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm-add" >
-  <div class="am-modal-dialog">
-    <div class="am-modal-hd">Amaze UI</div>
-    <div class="am-modal-bd">
-   <form class="am-form am-form-horizontal am-scoller" id="all-new-list">
-  <div class="am-form-group">
-    <label for="doc-ipt-3-name" class="am-u-sm-2 am-form-label am-text-sm am-left-none">姓名</label>
-    <div class="am-u-sm-10">
-      <input type="text" id="doc-ipt-3-name" placeholder="输入您的姓名" value="">
-    </div>
-  </div>
-
-  <div class="am-form-group">
-    <label for="doc-ipt-3-email" class="am-u-sm-2 am-form-label am-text-sm am-left-none">邮箱</label>
-    <div class="am-u-sm-10">
-      <input type="email" id="doc-ipt-3-email" placeholder="输入你的电子邮件" value="">
-    </div>
-  </div>
-
-  <div class="am-form-group">
-    <label for="doc-ipt-3-mobile" class="am-u-sm-2 am-form-label am-text-sm am-left-none">电话</label>
-    <div class="am-u-sm-10">
-      <input type="tel" id="doc-ipt-3-mobile" placeholder="输入您的电话号码" value="">
-    </div>
-  </div>
-
-  <div class="am-form-group">
-    <label for="doc-ipt-3-birthDate" class="am-u-sm-2 am-form-label am-text-sm am-left-none">修改日期</label>
-    <div class="am-u-sm-10">
-      <input type="date" id="doc-ipt-3-birthDate" value="">
-    </div>
-  </div>
-
-
-</form>
-    </div>
-    <div class="am-modal-footer">
-      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-      <span class="am-modal-btn" data-am-modal-confirm >保存</span>
-    </div>
-  </div>
-</div>
-
-
+<!-- 密码 end -->
 @include('admin.delete-confirm-modal')
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/js/jquery.min.js"></script>
@@ -244,6 +235,7 @@
 <script src="/js/app.js"></script>
 <script type="text/javascript">
 $(function() {
+    /* 数据列表单个删除 */
     $('.data-table-delete').click(function(event) {
         event.preventDefault();
         $('#delete-confirm-modal').modal({
@@ -265,6 +257,20 @@ $(function() {
 
             }
         });
+    });
+
+    /* 数据列表全选 */
+    $('#data-table th input[type="checkbox"]').click(function() {
+        $('#data-table input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+    });
+
+    /* 批量删除 */
+    $('#delete-items').click(function() {
+        var ids = [];
+        $('#data-table td input[type="checkbox"]:checked').each(function() {
+            ids.push($(this).parents('tr').attr('data-id'));
+        });
+        console.log(ids);
     });
 });
 </script>

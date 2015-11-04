@@ -23,7 +23,7 @@
                  class="am-disabled" 
                 @endif
             >
-                <a href="{{ $url . '?page=' . $current_page - 1}}">上一页</a>
+                <a href="{{ $url . '?page=' . ($current_page - 1)}}">上一页</a>
             </li>    
             @for ($i = $start_page; $i <= $end_page; $i++)     
             <li 
@@ -39,7 +39,7 @@
                  class="am-disabled" 
                 @endif
             >
-                <a href="{{ $url . '?page=' . $current_page + 1}}">下一页</a>
+                <a href="{{ $url . '?page=' . ($current_page + 1)}}">下一页</a>
             </li>
             <li 
                 @if ($current_page == $last_page)
