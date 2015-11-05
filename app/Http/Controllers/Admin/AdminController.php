@@ -18,7 +18,7 @@ class AdminController extends Controller
     {
         $inputs = Request::all();
         $perPage = isset($inputs['perPage']) ? $inputs['perPage'] : 10;
-        if (isset($inputs['searchKey']) && $inputs['searchKey'] && isset($inputs['searchValue'])&& $inputs['searchValue']) {
+        if (isset($inputs['searchKey']) && $inputs['searchKey'] && isset($inputs['searchValue']) && $inputs['searchValue']) {
             $query = $query->where($inputs['searchKey'], 'LIKE', "%{$inputs['searchValue']}%");
         }
         $pagination = $query->paginate($perPage);

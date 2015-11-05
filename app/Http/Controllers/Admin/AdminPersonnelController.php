@@ -8,12 +8,6 @@ class AdminPersonnelController extends AdminController
 {
     public function getIndex(HttpRequest $request)
     {
-        $this->validate($request, [
-            'page' => 'integer',
-            'perPage' => 'integer',
-        ]);
-
-        $pagination = parent::pagination(Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight'));
         $fields = [
             'id' => 'ID',
             'name' => '姓名',
@@ -24,12 +18,10 @@ class AdminPersonnelController extends AdminController
             'weight' => '体重',
         ];
 
-        return view('admin.personnel.index', 
-            array_merge($pagination, [
-                'fields' => $fields,
-                'url' => url('/admin/personnel')
-            ])
-        );
+        return view('admin.personnel.index', [
+            'fields' => $fields,
+            'url' => url('/admin/personnel')
+        ]);
     }
 
     public function getById(HttpRequest $request)
@@ -45,6 +37,14 @@ class AdminPersonnelController extends AdminController
 
     public function getList(HttpRequest $request)
     {
+        $this->validate($request, [
+            'page' => 'integer',
+            'perPage' => 'integer',
+        ]);
+
+        $pagination = parent::pagination(Personnel::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight'));
+
+        return response()->json($pagination);
     }
 
     public function postIndex(HttpRequest $request)

@@ -15,6 +15,7 @@
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <link rel="stylesheet" href="/css/amazeui.min.css" />
     <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/jquery.min.js"></script>
     @yield('head-assets')
     <!--[if lte IE 9]>
     <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a> 以获得更好的体验！</p>
@@ -228,52 +229,8 @@
 </div>
 <!-- 密码 end -->
 @include('admin.delete-confirm-modal')
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="/js/jquery.min.js"></script>
-<!--<![endif]-->
 <script src="/js/amazeui.min.js"></script>
 <script src="/js/app.js"></script>
-<script type="text/javascript">
-$(function() {
-    /* 数据列表单个删除 */
-    $('.data-table-delete').click(function(event) {
-        event.preventDefault();
-        $('#delete-confirm-modal').modal({
-            relatedTarget: this,
-            onConfirm: function() {
-                var item = $(this.relatedTarget).parents('tr');
-                $.ajax({
-                    type: 'DELETE',
-                    data: {id: item.attr('data-id')},
-                    success: function() {
-                        item.remove();
-                    },
-                    error: function() {
-                        alert('删除失败');
-                    }
-                });
-            },
-            onCancel: function() {
-
-            }
-        });
-    });
-
-    /* 数据列表全选 */
-    $('#data-table th input[type="checkbox"]').click(function() {
-        $('#data-table input[type="checkbox"]').prop('checked', $(this).prop('checked'));
-    });
-
-    /* 批量删除 */
-    $('#delete-items').click(function() {
-        var ids = [];
-        $('#data-table td input[type="checkbox"]:checked').each(function() {
-            ids.push($(this).parents('tr').attr('data-id'));
-        });
-        console.log(ids);
-    });
-});
-</script>
 @yield('foot-assets')
 </body>
 
