@@ -50,7 +50,7 @@ class AdminAccountController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        return parent::pagination(User::select(['id', 'name', 'email', 'mobile', 'permission']));
+        return parent::pagination(User::select(['id', 'nickname', 'name', 'email', 'mobile', 'permission', 'created_at']));
     }
 
     public function postIndex(HttpRequest $request)

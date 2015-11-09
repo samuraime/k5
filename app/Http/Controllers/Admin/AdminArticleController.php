@@ -1,39 +1,31 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\Article;
 use Request;
 use HttpRequest;
+use App\Models\Article;
 
 class AdminArticleController extends AdminController
 {
     public function getIndex(HttpRequest $request)
     {
-        $this->validate($request, [
-            'page' => 'integer',
-            'perPage' => 'integer',
-        ]);
-
-        $pagination = parent::pagination(Article::select('*')->join('user', 'user.id', '=', 'uid'));
         $fields = [
             'id' => 'ID',
             'title' => '标题',
-            'nickname' => '发布者',
+            'author' => '发布者',
             'created_at' => '创建时间',
             'updated_at' => '修改时间',
         ];
 
-        return view('admin.account.index', 
-            array_merge($pagination, [
-                'fields' => $fields,
-                'url' => url('/admin/article')
-            ])
-        );
+        return view('admin.article.index', [
+            'fields' => $fields,
+            'url' => url('/admin/article')
+        ]);
     }
 
-    public function getOne(HttpRequest $request)
+    public function getById(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:article,id',
+            'id' => 'required|exists:article,id'
         ]);
 
         $article = Article::find(Request::input('id'));
@@ -41,30 +33,30 @@ class AdminArticleController extends AdminController
         return response()->json($article);
     }
 
-    public function getList()
+    public function getList(HttpRequest $request)
     {
         $this->validate($request, [
             'page' => 'integer',
             'perPage' => 'integer',
         ]);
 
-        $articles = parent::pagination(Article::select('id', 'title', 'email', 'mobile'));
+        $pagination = parent::pagination(Article::select('*'));
 
-        return response()->json($articles);
+        return response()->json($pagination);
     }
 
     public function postIndex(HttpRequest $request)
     {
+        // 还有好多验证
         $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required',
+            'name' => 'required'
         ]);
 
-        $inputs = Request::all();
-        $article = Article::create($inputs);
+        $article = Article::create(Request::all());
 
         return response()->json($article);
     }
+
 
     public function getEdit(HttpRequest $request)
     {
@@ -80,13 +72,12 @@ class AdminArticleController extends AdminController
     public function putIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'exists|article,id',
-            'title' => 'required',
-            'content' => 'required',
+            'id' => 'required|exists:article,id',
         ]);
 
+        $inputs = Request::all();
         $article = Article::find($inputs['id']);
-        $article->update(Request::all());
+        $article->update($inputs);
 
         return response()->json($article);
     }
@@ -94,10 +85,10 @@ class AdminArticleController extends AdminController
     public function deleteIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:user,id',
+            'id' => 'required|exists:article,id',
         ]);
 
-        $affectedRows = Article::destroy(Request::input('id')); 
+        $affectedRows = Article::destroy(Request::get('id'));
 
         return response()->json(['affectedRows' => $affectedRows]);
     }
@@ -108,9 +99,9 @@ class AdminArticleController extends AdminController
             'ids' => 'required',
         ]);
 
-        $ids = Request::input('ids');
+        $ids = Request::get('ids');
         $affectedRows = Article::destroy($ids);
-        
-        return $response->json(['affectedRows' => $affectedRows]);
+
+        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

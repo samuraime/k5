@@ -1,53 +1,39 @@
 <hr/>
-<div class="pagination am-g">
+<div id="pagination" class="pagination am-g">
     <div class="am-u-12">
-        <form id="" class="am-form am-fr">
-            共  {{ $total }}  条记录, 每页显示
-            <input type="text" ref="perPage" placeholder="{{ $per_page }}" />
+        <form id="pagination-form" class="am-form am-fr">
+            共  <span id="pagination-total"></span>  条记录, 每页显示
+            <input type="text" id="pagination-perpage" ref="perPage" placeholder="" />
             条记录, 当前
-            <input type="text" ref="page" placeholder="{{ $current_page }}"/>
-             / {{ $last_page }}  页
+            <input type="text" id="pagination-page" ref="page" placeholder=""/>
+            / <span id="pagination-last-page"></span>  页
+            <input type="submit" class="am-hide" />
         </form>
     </div>
     <div class="am-u-12">
         <ul class="am-fr am-pagination">
-            <li 
-                @if ($current_page == 1)
-                 class="am-disabled" 
-                @endif
-            >
-                <a href="{{ $url . '?page=1' }}">第一页</a>
+            <li id="pagination-first">
+                <a href="">第一页</a>
             </li>
-            <li 
-                @if ($current_page == 1)
-                 class="am-disabled" 
-                @endif
-            >
-                <a href="{{ $url . '?page=' . ($current_page - 1)}}">上一页</a>
+            <li  id="pagination-prev">
+                <a href="">上一页</a>
             </li>    
-            @for ($i = $start_page; $i <= $end_page; $i++)     
-            <li 
-                @if ($i == $current_page)
-                 class="am-active" 
-                @endif
-            >
-                <a href="{{ $url . '?page=' . $i}}">{{ $i }}</a>
+            <li  id="pagination-next">
+                <a href="">下一页</a>
             </li>
-            @endfor
-            <li 
-                @if ($current_page == $last_page)
-                 class="am-disabled" 
-                @endif
-            >
-                <a href="{{ $url . '?page=' . ($current_page + 1)}}">下一页</a>
-            </li>
-            <li 
-                @if ($current_page == $last_page)
-                 class="am-disabled" 
-                @endif
-            >
-                <a href="{{ $url . '?page=' . $last_page}}">最末页</a>
+            <li  id="pagination-last">
+                <a href="">最末页</a>
             </li>
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+    $('#pagination').on('click', 'li a', function(event) {
+        loadDataWithPagination($(this).attr('data-page'));
+    });
+
+    $('#pagination form').submit(function(event) {
+        event.preventDefault();
+        loadDataWithPagination();
+    });
+</script>

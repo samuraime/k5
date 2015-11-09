@@ -1,59 +1,85 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\Log;
 use Request;
 use HttpRequest;
+use App\Models\Log;
 
 class AdminLogController extends AdminController
 {
     public function getIndex(HttpRequest $request)
     {
+        $fields = [
+            'id' => 'ID',
+            'name' => '姓名',
+            'mobile' => '电话',
+            'email' => '邮箱',
+            'birth' => '生日',
+            'height' => '身高',
+            'weight' => '体重',
+        ];
+
+        return view('admin.log.index', [
+            'fields' => $fields,
+            'url' => url('/admin/log')
+        ]);
+    }
+
+    public function getById(HttpRequest $request)
+    {
         $this->validate($request, [
-            'id' => 'required|exists:log,id',
+            'id' => 'required|exists:log,id'
         ]);
 
-        $log = Log::find(Request::get('id'));
+        $log = Log::find(Request::input('id'));
 
         return response()->json($log);
     }
 
-    public function getList()
+    public function getList(HttpRequest $request)
     {
         $this->validate($request, [
             'page' => 'integer',
             'perPage' => 'integer',
         ]);
 
-        $logs = parent::pagination(Log::select('id', 'title', 'email', 'mobile'));
+        $pagination = parent::pagination(Log::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight'));
 
-        return response()->json($log);
+        return response()->json($pagination);
     }
 
     public function postIndex(HttpRequest $request)
     {
+        // 还有好多验证
         $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required',
+            'name' => 'required'
         ]);
 
-        $inputs = Request::all();
-        $log = Log::create($inputs);
+        $log = Log::create(Request::all());
 
         return response()->json($log);
+    }
+
+
+    public function getEdit(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:log,id',
+        ]);
+
+        $log = Log::find(Request::input('id'));
+
+        return view('admin.log.edit', ['log' => $log->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'exists|log,id',
-            'title' => 'required',
-            'content' => 'required',
+            'id' => 'required|exists:log,id',
         ]);
 
+        $inputs = Request::all();
         $log = Log::find($inputs['id']);
-        $log->title = $inputs['title'];
-        $log->content = $inputs['content'];
-        $log->save();
+        $log->update($inputs);
 
         return response()->json($log);
     }
@@ -61,10 +87,10 @@ class AdminLogController extends AdminController
     public function deleteIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:user,id',
+            'id' => 'required|exists:log,id',
         ]);
 
-        $affectedRows = Log::destroy(Request::input('id')); 
+        $affectedRows = Log::destroy(Request::get('id'));
 
         return response()->json(['affectedRows' => $affectedRows]);
     }
@@ -75,9 +101,9 @@ class AdminLogController extends AdminController
             'ids' => 'required',
         ]);
 
-        $ids = Request::input('ids');
+        $ids = Request::get('ids');
         $affectedRows = Log::destroy($ids);
-        
-        return $response->json(['affectedRows' => $affectedRows]);
+
+        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

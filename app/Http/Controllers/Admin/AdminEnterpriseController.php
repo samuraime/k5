@@ -8,12 +8,6 @@ class AdminEnterpriseController extends AdminController
 {
     public function getIndex(HttpRequest $request)
     {
-        $this->validate($request, [
-            'page' => 'integer',
-            'perPage' => 'integer',
-        ]);
-
-        $pagination = parent::pagination(Enterprise::select('*'));
         $fields = [
             'id' => 'ID',
             'name' => '企业名',
@@ -25,12 +19,32 @@ class AdminEnterpriseController extends AdminController
             'registration_address' => '注册地址',
         ];
 
-        return view('admin.enterprise.index', 
-            array_merge($pagination, [
-                'fields' => $fields,
-                'url' => url('/admin/enterprise')
-            ])
-        );
+        return view('admin.enterprise.index', [
+            'fields' => $fields,
+        ]);
+    }
+
+    public function getById(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:enterprise,id'
+        ]);
+
+        $enterprise = Enterprise::find(Request::input('id'));
+
+        return response()->json($enterprise);
+    }
+
+    public function getList(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'page' => 'integer',
+            'perPage' => 'integer',
+        ]);
+
+        $pagination = parent::pagination(Enterprise::select('*'));
+
+        return response()->json($pagination);
     }
 
     public function postIndex(HttpRequest $request)

@@ -93,12 +93,12 @@
                         @if (in_array('log', Session::get('user.permission')))
                         <li class="admin-parent">
                             <a data-am-collapse="{target: '#collapse-nav1'}">
-                                <span class="am-icon-calendar"></span> 日志记录
+                                <span class="am-icon-calendar"></span> 日志管理
                                 <span class="am-icon-angle-right am-fr am-margin-right"></span>
                             </a>
                             <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav1">
                                 <li>
-                                    <a href="/admin/log/visit">
+                                    <a href="/admin/log">
                                         <span class="am-icon-table"></span> 回访记录</a>
                                 </li>
                             </ul>
@@ -150,7 +150,6 @@
             <!-- content end -->
         </div>
     </div>
-
 <!-- 个人信息 start -->
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
     <div class="am-modal-dialog">
@@ -162,21 +161,21 @@
                 <div class="am-form-group">
                     <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">显示名</label>
                     <div class="am-u-sm-9">
-                        <input type="text" id="doc-ipt-3" placeholder="显示名">
+                        <input type="text" id="doc-ipt-3" placeholder="显示名" value="{{Session::get('user.nickname')}}"/>
                     </div>
                 </div>
 
                 <div class="am-form-group">
                     <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">电话</label>
                     <div class="am-u-sm-9">
-                        <input type="text" id="doc-ipt-3" placeholder="电话">
+                        <input type="text" id="doc-ipt-3" placeholder="电话" value="{{Session::get('user.mobile')}}"/>
                     </div>
                 </div>
 
                 <div class="am-form-group">
                     <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">电子邮箱</label>
                     <div class="am-u-sm-9">
-                        <input type="email" id="doc-ipt-pwd-2" placeholder="电子邮箱">
+                        <input type="email" id="doc-ipt-pwd-2" placeholder="电子邮箱" value="{{Session::get('user.email')}}"/>
                     </div>
                 </div>
                 <div class="am-form-group">
