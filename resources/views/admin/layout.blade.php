@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="/i/favicon.png">
+    <link rel="icon" href="/favicon.ico">
     <link rel="apple-touch-icon-precomposed" href="/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <link rel="stylesheet" href="/css/amazeui.min.css" />
     <link rel="stylesheet" href="/css/admin.css">
-    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
     @yield('head-assets')
     <!--[if lte IE 9]>
     <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a> 以获得更好的体验！</p>
@@ -77,20 +77,17 @@
                                 <span class="am-fr am-margin-right"></span>
                             </a>
                         </li>
-                        @endif
-                        @if (in_array('enterprise', Session::get('user.permission')))
+                        @endif @if (in_array('enterprise', Session::get('user.permission')))
                         <li>
                             <a href="/admin/enterprise" class="am-cf">
                                 <span class="am-icon-check am-icon-file-text"></span> 企业信息</a>
                         </li>
-                        @endif
-                        @if (in_array('personnel', Session::get('user.permission')))
+                        @endif @if (in_array('personnel', Session::get('user.permission')))
                         <li>
                             <a href="/admin/personnel">
                                 <span class="am-icon-file"></span> 人才信息</a>
                         </li>
-                        @endif
-                        @if (in_array('log', Session::get('user.permission')))
+                        @endif @if (in_array('log', Session::get('user.permission')))
                         <li class="admin-parent">
                             <a data-am-collapse="{target: '#collapse-nav1'}">
                                 <span class="am-icon-calendar"></span> 日志管理
@@ -103,14 +100,12 @@
                                 </li>
                             </ul>
                         </li>
-                        @endif
-                        @if (in_array('message', Session::get('user.permission')))
+                        @endif @if (in_array('message', Session::get('user.permission')))
                         <li>
                             <a href="/admin/message">
                                 <span class="am-icon-pencil-square-o"></span> 留言板管理</a>
                         </li>
-                        @endif
-                        @if (in_array('article', Session::get('user.permission')) || in_array('account', Session::get('user.permission')))
+                        @endif @if (in_array('article', Session::get('user.permission')) || in_array('account', Session::get('user.permission')))
                         <li class="#">
                             <a data-am-collapse="{target: '#collapse-nav2'}">
                                 <span class="am-icon-puzzle-piece"></span> 系统管理
@@ -122,8 +117,7 @@
                                     <a href="/admin/article">
                                         <span class="am-icon-list-alt"></span> 前台文章</a>
                                 </li>
-                                @endif
-                                @if (in_array('account', Session::get('user.permission')))
+                                @endif @if (in_array('account', Session::get('user.permission')))
                                 <li>
                                     <a href="/admin/account">
                                         <span class="am-icon-table"></span> 账号管理</a>
@@ -145,92 +139,87 @@
             <!-- sidebar end -->
             <!-- content start -->
             <div class="admin-content">
-              @yield('content')
+                @yield('content')
             </div>
             <!-- content end -->
         </div>
     </div>
-<!-- 个人信息 start -->
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">修改信息
-            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-        </div>
-        <div class="am-modal-bd">
-            <form class="am-form am-form-horizontal">
-                <div class="am-form-group">
-                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">显示名</label>
-                    <div class="am-u-sm-9">
-                        <input type="text" id="doc-ipt-3" placeholder="显示名" value="{{Session::get('user.nickname')}}"/>
+    <!-- 个人信息 start -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">修改信息
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">显示名</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="doc-ipt-3" placeholder="显示名" value="{{Session::get('user.nickname')}}" />
+                        </div>
                     </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">电话</label>
-                    <div class="am-u-sm-9">
-                        <input type="text" id="doc-ipt-3" placeholder="电话" value="{{Session::get('user.mobile')}}"/>
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">电话</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="doc-ipt-3" placeholder="电话" value="{{Session::get('user.mobile')}}" />
+                        </div>
                     </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">电子邮箱</label>
-                    <div class="am-u-sm-9">
-                        <input type="email" id="doc-ipt-pwd-2" placeholder="电子邮箱" value="{{Session::get('user.email')}}"/>
+                    <div class="am-form-group">
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">电子邮箱</label>
+                        <div class="am-u-sm-9">
+                            <input type="email" id="doc-ipt-pwd-2" placeholder="电子邮箱" value="{{Session::get('user.email')}}" />
+                        </div>
                     </div>
-                </div>
-                <div class="am-form-group">
-                    <div class="am-u-sm-3 am-u-sm-offset-3">
-                        <input type="submit" class="am-btn am-btn-default" value="提交修改" />
+                    <div class="am-form-group">
+                        <div class="am-u-sm-3 am-u-sm-offset-3">
+                            <input type="submit" class="am-btn am-btn-default" value="提交修改" />
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- 个人信息 end -->
-
-<!-- 密码 start -->
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="password-modal">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">修改密码
-            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-        </div>
-        <div class="am-modal-bd">
-            <form class="am-form am-form-horizontal">
-                <div class="am-form-group">
-                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">旧密码</label>
-                    <div class="am-u-sm-9">
-                        <input type="password" id="doc-ipt-3" placeholder="旧密码">
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">新密码</label>
-                    <div class="am-u-sm-9">
-                        <input type="password" id="doc-ipt-3" placeholder="新密码">
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">确认密码</label>
-                    <div class="am-u-sm-9">
-                        <input type="password" id="doc-ipt-pwd-2" placeholder="确认密码">
-                    </div>
-                </div>
-                <div class="am-form-group">
-                    <div class="am-u-sm-3 am-u-sm-offset-3">
-                        <input type="submit" class="am-btn am-btn-default" value="提交修改" />
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<!-- 密码 end -->
-@include('admin.delete-confirm-modal')
-<script src="/js/amazeui.min.js"></script>
-<script src="/js/app.js"></script>
-@yield('foot-assets')
+    <!-- 个人信息 end -->
+    <!-- 密码 start -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="password-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">修改密码
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">旧密码</label>
+                        <div class="am-u-sm-9">
+                            <input type="password" id="doc-ipt-3" placeholder="旧密码">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">新密码</label>
+                        <div class="am-u-sm-9">
+                            <input type="password" id="doc-ipt-3" placeholder="新密码">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">确认密码</label>
+                        <div class="am-u-sm-9">
+                            <input type="password" id="doc-ipt-pwd-2" placeholder="确认密码">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-3 am-u-sm-offset-3">
+                            <input type="submit" class="am-btn am-btn-default" value="提交修改" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 密码 end -->
+    @include('admin.delete-confirm-modal')
+    <script src="/js/amazeui/amazeui.min.js"></script>
+    <script src="/js/app.js"></script>
+    @yield('foot-assets')
 </body>
 
 </html>

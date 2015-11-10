@@ -60,6 +60,7 @@
 @section('foot-assets')
 <script type="text/javascript" src="/js/highcharts/highcharts.js"></script>
 <script type="text/javascript" src="/js/highcharts/highcharts-3d.js"></script>
+<script type="text/javascript" src="/js/highcharts/highcharts-more.js"></script>
 <script type="text/javascript">
 $(function () {
     $.get('/admin/summary/personnel-by-gender-month', {}, function(personnels) {
