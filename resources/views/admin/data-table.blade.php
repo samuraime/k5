@@ -85,5 +85,9 @@
             });
         }
     });
+
+    $('#add-item').click(function() {
+        window.location.href = window.location.pathname + '/new';
+    });
 });
 </script>

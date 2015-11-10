@@ -6,6 +6,26 @@ class AdminSummaryController extends AdminController
 {
     public function getIndex()
     {
+        $options = [
+            // 'table' => [
+            //     'enterprise' => '企业信息',
+            //     'personnel' => '人才信息',
+            //     'log' => '回访日志',
+            //     'message' => '留言记录',
+            // ],
+            'type' => [
+                'line' => '折线图',
+                'column' => '柱状图',
+                'pie' => '饼状图',
+                'scatter' => '散点图',
+            ],
+            'fields' => [
+                'name' => '姓名',
+                'gender' => '性别',
+                'nationality' => '国籍',
+                'degree' => '学历',
+            ]
+        ];
         return view('admin.summary.index');
     }
 

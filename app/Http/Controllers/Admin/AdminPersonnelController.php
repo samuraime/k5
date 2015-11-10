@@ -59,6 +59,11 @@ class AdminPersonnelController extends AdminController
         return response()->json($personnel);
     }
 
+    public function getNew()
+    {
+        return view('admin.personnel.new');
+    }
+
 
     public function getEdit(HttpRequest $request)
     {

@@ -1,12 +1,12 @@
 @extends('admin.layout')
 
-@section('title', '数据统计')
+@section('title', '数据汇总')
 
 @section('content')
 <div class="am-cf am-padding border-bottom">
     <div class="am-fl am-cf">
-        <strong class="am-text-primary am-text-lg">数据列表</strong> /
-        <small>企业列表</small>
+        <strong class="am-text-primary am-text-lg">数据汇总</strong> /
+        <small>数据图表</small>
     </div>
 </div>
 <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
@@ -36,6 +36,10 @@
     </li>
 </ul>
 <div class="am-g">
+    <div id="chart-container" class="am-u-sm-12">
+    </div>
+</div>
+<div class="am-g">
     <div id="column-basic" class="am-u-sm-12">
     </div>
 </div>
@@ -61,6 +65,7 @@
 <script type="text/javascript" src="/js/highcharts/highcharts.js"></script>
 <script type="text/javascript" src="/js/highcharts/highcharts-3d.js"></script>
 <script type="text/javascript" src="/js/highcharts/highcharts-more.js"></script>
+<script type="text/javascript" src="/js/chart.js"></script>
 <script type="text/javascript">
 $(function () {
     $.get('/admin/summary/personnel-by-gender-month', {}, function(personnels) {
