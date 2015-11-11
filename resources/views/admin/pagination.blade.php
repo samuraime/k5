@@ -1,4 +1,3 @@
-<hr/>
 <div id="pagination" class="pagination am-g">
     <div class="am-u-12">
         <form id="pagination-form" class="am-form am-fr">

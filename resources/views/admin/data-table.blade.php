@@ -1,6 +1,6 @@
 <div class="am-g">
     <div class="am-u-sm-12 am-scrollable-horizontal">
-        <table id="data-table" class="am-table am-text-nowrap am-table-striped am-table-hover table-main">
+        <table id="data-table" class="am-table am-table-bordered am-table-striped am-text-nowrap am-table-hover table-main">
             <thead>
                 <tr>
                     <th class="table-check">

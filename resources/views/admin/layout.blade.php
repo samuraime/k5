@@ -88,22 +88,14 @@
                                 <span class="am-icon-file"></span> 人才信息</a>
                         </li>
                         @endif @if (in_array('log', Session::get('user.permission')))
-                        <li class="admin-parent">
-                            <a data-am-collapse="{target: '#collapse-nav1'}">
-                                <span class="am-icon-calendar"></span> 日志管理
-                                <span class="am-icon-angle-right am-fr am-margin-right"></span>
-                            </a>
-                            <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav1">
-                                <li>
-                                    <a href="/admin/log">
-                                        <span class="am-icon-table"></span> 回访记录</a>
-                                </li>
-                            </ul>
+                        <li>
+                            <a href="/admin/log">
+                                <span class="am-icon-table"></span> 访问日志</a>
                         </li>
                         @endif @if (in_array('message', Session::get('user.permission')))
                         <li>
                             <a href="/admin/message">
-                                <span class="am-icon-pencil-square-o"></span> 留言板管理</a>
+                                <span class="am-icon-pencil-square-o"></span> 留言管理</a>
                         </li>
                         @endif @if (in_array('article', Session::get('user.permission')) || in_array('account', Session::get('user.permission')))
                         <li class="#">

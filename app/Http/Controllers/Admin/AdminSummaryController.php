@@ -13,41 +13,143 @@ class AdminSummaryController extends AdminController
     public function getIndex()
     {
         $options = [
-            // 'table' => [
-            //     'enterprise' => '企业信息',
-            //     'personnel' => '人才信息',
-            //     'log' => '回访日志',
-            //     'message' => '留言记录',
-            // ],
+            'table' => [
+                'personnel' => [
+                    'name' => '人才信息',
+                    'charts' => [
+                        'line' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'bar' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'column' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'pie' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'scatter' => [],
+                    ],
+                ],
+                'enterprise' => [
+                    'name' => '企业信息',
+                    'charts' => [
+                        'line' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'bar' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'column' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'pie' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'scatter' => [],
+                    ],
+                ],
+                'log' => [
+                    'name' => '回访日志',
+                    'charts' => [
+                        'line' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'bar' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'column' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'pie' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                    ],
+                ],
+                'message' => [
+                    'name' => '留言记录',
+                    'charts' => [
+                        'line' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'bar' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'column' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                        'pie' => [
+                            'year' => '年份',
+                            'month' => '年月份',
+                            'day' => '日期',
+                            'week' => '星期',
+                        ],
+                    ],
+                ],
+            ],
             'type' => [
                 'line' => '折线图',
+                'bar' => '条形图',
                 'column' => '柱状图',
                 'pie' => '饼状图',
                 'scatter' => '散点图',
             ],
-            'fields' => [
-                'name' => '姓名',
-                'gender' => '性别',
-                'nationality' => '国籍',
-                'degree' => '学历',
-            ]
+            // 'fields' => [
+            //     'name' => '姓名',
+            //     'gender' => '性别',
+            //     'nationality' => '国籍',
+            //     'degree' => '学历',
+            // ]
         ];
         return view('admin.summary.index', [
-            'stat' => $this->stat(),
             'chart' => $options,
         ]);
-    }
-
-    private function stat()
-    {
-        $tables = ['personnel', 'enterprise', 'log', 'message'];
-        $list = [];
-        foreach ($tables as $table) {
-            $model = 'App\\Models\\' . ucfirst($table);
-            $list[$table] = $model::count();
-        }
-
-        return $list;
     }
 
     public function getChart(HttpRequest $request)
@@ -76,7 +178,7 @@ class AdminSummaryController extends AdminController
             $query = $query->where('created_at', '>=', $inputs['start']);
         }
         if (isset($inputs['end']) && !empty($inputs['end'])) {
-            $query = $query->where('created_at', '>=', $inputs['end']);
+            $query = $query->where('created_at', '<=', $inputs['end']);
         }
 
         return $query;
@@ -177,55 +279,50 @@ class AdminSummaryController extends AdminController
         ]);
     }
 
-    public function getPersonnel()
-    {
+    // public function getPersonnelByGenderMonth()
+    // {
+    //     $data = DB::table('personnel')
+    //         ->select(DB::raw('COUNT(id) AS num, gender, DATE_FORMAT(birth, "%m") AS month'))
+    //         ->groupBy('gender')
+    //         ->groupBy(DB::raw('DATE_FORMAT(birth, "%m")'))
+    //         ->orderBy('gender')
+    //         ->orderBy(DB::raw('DATE_FORMAT(birth, "%m")'))
+    //         ->get();
 
-    }
+    //     $maleData = [];
+    //     $femaleData = [];
+    //     foreach ($data as $item) {
+    //         $item->gender == 'male' ? array_push($maleData, $item->num) : array_push($femaleData, $item->num);
+    //     }
 
-    public function getPersonnelByGenderMonth()
-    {
-        $data = DB::table('personnel')
-            ->select(DB::raw('COUNT(id) AS num, gender, DATE_FORMAT(birth, "%m") AS month'))
-            ->groupBy('gender')
-            ->groupBy(DB::raw('DATE_FORMAT(birth, "%m")'))
-            ->orderBy('gender')
-            ->orderBy(DB::raw('DATE_FORMAT(birth, "%m")'))
-            ->get();
+    //     return response()->json(['male' => $maleData, 'female' => $femaleData]);
+    // }
 
-        $maleData = [];
-        $femaleData = [];
-        foreach ($data as $item) {
-            $item->gender == 'male' ? array_push($maleData, $item->num) : array_push($femaleData, $item->num);
-        }
+    // public function getPersonnelByGenderHeightWeight()
+    // {
+    //     $data = DB::table('personnel')
+    //         ->select('gender', 'height', 'weight')
+    //         ->where('height', '>', 100)
+    //         ->where('weight', '<', 150)
+    //         ->orderBy('gender')
+    //         ->get();
 
-        return response()->json(['male' => $maleData, 'female' => $femaleData]);
-    }
+    //     $maleData = [];
+    //     $femaleData = [];
+    //     foreach ($data as $item) {
+    //         $item->gender == 'male' ? array_push($maleData, [$item->height, $item->weight]) : array_push($femaleData, [$item->height, $item->weight]);
+    //     }
 
-    public function getPersonnelByGenderHeightWeight()
-    {
-        $data = DB::table('personnel')
-            ->select('gender', 'height', 'weight')
-            ->where('height', '>', 100)
-            ->where('weight', '<', 150)
-            ->orderBy('gender')
-            ->get();
+    //     return response()->json(['male' => $maleData, 'female' => $femaleData]);
+    // }
 
-        $maleData = [];
-        $femaleData = [];
-        foreach ($data as $item) {
-            $item->gender == 'male' ? array_push($maleData, [$item->height, $item->weight]) : array_push($femaleData, [$item->height, $item->weight]);
-        }
+    // public function getPersonnelByOccupation()
+    // {
+    //     $data = DB::table('personnel')
+    //         ->select(DB::raw('COUNT(*) AS count'), 'occupation')
+    //         ->groupBy('occupation')
+    //         ->get();
 
-        return response()->json(['male' => $maleData, 'female' => $femaleData]);
-    }
-
-    public function getPersonnelByOccupation()
-    {
-        $data = DB::table('personnel')
-            ->select(DB::raw('COUNT(*) AS count'), 'occupation')
-            ->groupBy('occupation')
-            ->get();
-
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 }
