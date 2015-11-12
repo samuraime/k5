@@ -13,28 +13,12 @@ class AdminLogController extends AdminController
         $fields = [
             'id' => 'ID',
             'name' => '姓名',
-            'mobile' => '电话',
-            'email' => '邮箱',
-            'birth' => '生日',
-            'height' => '身高',
-            'weight' => '体重',
         ];
 
         return view('admin.log.index', [
             'fields' => $fields,
             'url' => url('/admin/log')
         ]);
-    }
-
-    public function getById(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:log,id'
-        ]);
-
-        $log = Log::find(Request::input('id'));
-
-        return response()->json($log);
     }
 
     public function getList(HttpRequest $request)

@@ -19,17 +19,17 @@ class PasswordController extends Controller {
 	public function postFind(HttpRequest $request) 
 	{
 		$this->validate($request, [
-			'email' => 'required|email|exists:user,email'
+			'email' => 'required|email|exists:account,email'
 		]);
 
 		$email = Request::input('email');
-		$user = User::where('email', $email)->first();
+		$account = User::where('email', $email)->first();
 		$token = md5($email + time());
-		Cache::put($this->recoverAccountCachePrefix . $user->id, $token, 60);
+		Cache::put($this->recoverAccountCachePrefix . $account->id, $token, 60);
 		Mail::send('emails.password', [
-			'user' => $user, 
+			'account' => $account, 
 			'link' => url('/password/recover') . '?' . http_build_query([
-				'id' => $user->id, 
+				'id' => $account->id, 
 				'token' => $token
 			])
 		], function($message) use ($email) {
@@ -42,7 +42,7 @@ class PasswordController extends Controller {
 	public function getRecover(HttpRequest $request)
 	{
 		$this->validate($request, [
-			'id' => 'required|integer|exists:user,id',
+			'id' => 'required|integer|exists:account,id',
 			'token' => 'required|size:32'
 		]);
 
@@ -65,9 +65,9 @@ class PasswordController extends Controller {
 		]);
 
 		$id = Session::get('recover.id');
-		$user = User::find($id);
-		$user->password = password(Request::input('password'));
-		$user->save();
+		$account = User::find($id);
+		$account->password = password(Request::input('password'));
+		$account->save();
 
 		Session::forget('recover');
 		Cache::forget($this->recoverAccountCachePrefix . $id);

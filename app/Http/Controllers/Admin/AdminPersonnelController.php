@@ -26,17 +26,6 @@ class AdminPersonnelController extends AdminController
         ]);
     }
 
-    public function getById(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:personnel,id'
-        ]);
-
-        $personnel = Personnel::find(Request::input('id'));
-
-        return response()->json($personnel);
-    }
-
     public function getList(HttpRequest $request)
     {
         $this->validate($request, [
@@ -59,11 +48,6 @@ class AdminPersonnelController extends AdminController
         $personnel = Personnel::create(Request::all());
 
         return response()->json($personnel);
-    }
-
-    public function getNew()
-    {
-        return view('admin.personnel.new');
     }
 
 

@@ -37,7 +37,7 @@
                 <li class="am-header-information"> 欢迎您登录</li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        <span class="am-icon-users"> {{ Session::get('user.name') }}</span>
+                        <span class="am-icon-users"> {{ Session::get('account.name') }}</span>
                         <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
@@ -70,46 +70,46 @@
             <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
                     <ul class="am-list admin-sidebar-list">
-                        @if (in_array('summary', Session::get('user.permission')))
+                        @if (in_array('summary', Session::get('account.permission')))
                         <li>
                             <a class="am-cf" href="/admin/summary">
                                 <span class="am-icon-area-chart"></span> 数据汇总
                                 <span class="am-fr am-margin-right"></span>
                             </a>
                         </li>
-                        @endif @if (in_array('enterprise', Session::get('user.permission')))
+                        @endif @if (in_array('enterprise', Session::get('account.permission')))
                         <li>
                             <a href="/admin/enterprise" class="am-cf">
                                 <span class="am-icon-check am-icon-file-text"></span> 企业信息</a>
                         </li>
-                        @endif @if (in_array('personnel', Session::get('user.permission')))
+                        @endif @if (in_array('personnel', Session::get('account.permission')))
                         <li>
                             <a href="/admin/personnel">
                                 <span class="am-icon-file"></span> 人才信息</a>
                         </li>
-                        @endif @if (in_array('log', Session::get('user.permission')))
+                        @endif @if (in_array('log', Session::get('account.permission')))
                         <li>
                             <a href="/admin/log">
                                 <span class="am-icon-table"></span> 访问日志</a>
                         </li>
-                        @endif @if (in_array('message', Session::get('user.permission')))
+                        @endif @if (in_array('message', Session::get('account.permission')))
                         <li>
                             <a href="/admin/message">
                                 <span class="am-icon-pencil-square-o"></span> 留言管理</a>
                         </li>
-                        @endif @if (in_array('article', Session::get('user.permission')) || in_array('account', Session::get('user.permission')))
+                        @endif @if (in_array('article', Session::get('account.permission')) || in_array('account', Session::get('account.permission')))
                         <li class="#">
                             <a data-am-collapse="{target: '#collapse-nav2'}">
                                 <span class="am-icon-puzzle-piece"></span> 系统管理
                                 <span class="am-icon-angle-right am-fr am-margin-right"></span>
                             </a>
                             <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav2">
-                                @if (in_array('article', Session::get('user.permission')))
+                                @if (in_array('article', Session::get('account.permission')))
                                 <li>
                                     <a href="/admin/article">
                                         <span class="am-icon-list-alt"></span> 前台文章</a>
                                 </li>
-                                @endif @if (in_array('account', Session::get('user.permission')))
+                                @endif @if (in_array('account', Session::get('account.permission')))
                                 <li>
                                     <a href="/admin/account">
                                         <span class="am-icon-table"></span> 账号管理</a>
@@ -136,78 +136,7 @@
             <!-- content end -->
         </div>
     </div>
-    <!-- 个人信息 start -->
-    <div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">修改信息
-                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-            </div>
-            <div class="am-modal-bd">
-                <form class="am-form am-form-horizontal">
-                    <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">显示名</label>
-                        <div class="am-u-sm-9">
-                            <input type="text" id="doc-ipt-3" placeholder="显示名" value="{{Session::get('user.nickname')}}" />
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">电话</label>
-                        <div class="am-u-sm-9">
-                            <input type="text" id="doc-ipt-3" placeholder="电话" value="{{Session::get('user.mobile')}}" />
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">电子邮箱</label>
-                        <div class="am-u-sm-9">
-                            <input type="email" id="doc-ipt-pwd-2" placeholder="电子邮箱" value="{{Session::get('user.email')}}" />
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <div class="am-u-sm-3 am-u-sm-offset-3">
-                            <input type="submit" class="am-btn am-btn-default" value="提交修改" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- 个人信息 end -->
-    <!-- 密码 start -->
-    <div class="am-modal am-modal-no-btn" tabindex="-1" id="password-modal">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">修改密码
-                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-            </div>
-            <div class="am-modal-bd">
-                <form class="am-form am-form-horizontal">
-                    <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">旧密码</label>
-                        <div class="am-u-sm-9">
-                            <input type="password" id="doc-ipt-3" placeholder="旧密码">
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">新密码</label>
-                        <div class="am-u-sm-9">
-                            <input type="password" id="doc-ipt-3" placeholder="新密码">
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">确认密码</label>
-                        <div class="am-u-sm-9">
-                            <input type="password" id="doc-ipt-pwd-2" placeholder="确认密码">
-                        </div>
-                    </div>
-                    <div class="am-form-group">
-                        <div class="am-u-sm-3 am-u-sm-offset-3">
-                            <input type="submit" class="am-btn am-btn-default" value="提交修改" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- 密码 end -->
+    @include('admin.user-modal')
     @include('admin.delete-confirm-modal')
     <script src="/js/amazeui/amazeui.min.js"></script>
     <script src="/js/app.js"></script>

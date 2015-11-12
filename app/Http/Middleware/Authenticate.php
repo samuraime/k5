@@ -14,13 +14,13 @@ class Authenticate {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if (!Session::has('user')) {
+		if (!Session::has('account')) {
 			return redirect('/');
 		}
 
         // 管理员后台首页放行
         if (preg_match('/^\/admin\/([a-z\-]+)[\/\?]?/', $_SERVER['REQUEST_URI'], $match)) {
-            if (!in_array($match[1], Session::get('user.permission'))) {
+            if (!in_array($match[1], Session::get('account.permission'))) {
                 abort(403, 'Forbidden');
             }
         }
