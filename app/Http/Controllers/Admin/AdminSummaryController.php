@@ -75,7 +75,7 @@ class AdminSummaryController extends AdminController
                     ],
                 ],
                 'log' => [
-                    'name' => '回访日志',
+                    'name' => '访问日志',
                     'charts' => [
                         'line' => [
                             'year' => '年份',

@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Log;
+use App\Models\Article;
 
 class HomeController extends Controller {
 
@@ -32,7 +32,10 @@ class HomeController extends Controller {
 	 */
 	public function getIndex()
 	{
-		return view('home');
-	}
+		$article = Article::where('show', 1)->first();
 
+		return view('home', [
+			'article' => $article->toArray(),
+		]);
+	}
 }

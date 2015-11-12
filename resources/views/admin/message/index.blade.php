@@ -1,42 +1,25 @@
 @extends('admin.layout')
 
-@section('title', '留言管理')
+@section('title', '人才列表')
+
+@section('head-assets')
+<script type="text/javascript">
+var dataTableFields = {!! json_encode($fields) !!};
+</script>
+@stop
 
 @section('content')
 <div class="am-cf am-padding border-bottom">
     <div class="am-fl am-cf">
-        <strong class="am-text-primary am-text-lg">数据列表</strong> /
-        <small>企业列表</small>
+        <strong class="am-text-primary am-text-lg">留言记录</strong>
+        <small>留言列表</small>
     </div>
 </div>
-<ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
-    <li>
-        <a href="#" class="am-text-success">
-            <span class="am-icon-btn am-icon-file-text"></span>
-            <br>新增页面
-            <br>2300</a>
-    </li>
-    <li>
-        <a href="#" class="am-text-warning">
-            <span class="am-icon-btn am-icon-briefcase"></span>
-            <br>成交订单
-            <br>308</a>
-    </li>
-    <li>
-        <a href="#" class="am-text-danger">
-            <span class="am-icon-btn am-icon-recycle"></span>
-            <br>昨日访问
-            <br>80082</a>
-    </li>
-    <li>
-        <a href="#" class="am-text-secondary">
-            <span class="am-icon-btn am-icon-user-md"></span>
-            <br>在线用户
-            <br>3000</a>
-    </li>
-</ul>
-<div class="am-g">
-    <div class="am-u-sm-12">
-    </div>
-</div>
+
+@include('admin.search-box')
+@include('admin.data-table')
+@stop
+
+@section('foot-assets')
+
 @stop

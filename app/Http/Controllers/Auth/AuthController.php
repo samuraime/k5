@@ -3,7 +3,7 @@
 use Session;
 use Request;
 use HttpRequest;
-use DB;
+use App\Models\Account;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller {
@@ -20,14 +20,15 @@ class AuthController extends Controller {
 	public function postLogin(HttpRequest $request)
 	{
 		$this->validate($request , [
-			'email' => ['required', 'regex:/^\w+@\w+(\.\w+)+$/'],
+			// 'email' => ['required', 'regex:/^\w+@\w+(\.\w+)+$/'],
+			'name' => ['required', 'exists:account,name'],
 			'password' => ['required', 'regex:/^[\S]{6,16}$/'],
 		]);
 
-		$account = DB::table('account')->whereRaw('email = ? AND password = ?', [Request::input('email'), password(Request::input('password'))])->first();
+		$account = Account::where('name', Request::get('name'))->where('password', password(Request::input('password')))->first();
 		if ($account) {
 			$account->permission = json_decode($account->permission);
-			Session::put('account', (array)$account);
+			Session::put('account', $account->toArray());
 			return redirect('/admin');
 		} else {
 			return redirect()->back()->withErrors(['用户名或密码错误']);

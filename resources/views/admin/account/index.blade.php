@@ -10,7 +10,10 @@ var dataTableFields = {!! json_encode($fields) !!};
 
 @section('content')
 <div class="am-cf am-padding border-bottom">
-    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">系统管理</strong> / <small>账号管理</small></div>
+    <div class="am-fl am-cf">
+        <strong class="am-text-primary am-text-lg">系统管理</strong>
+        <small>账号管理</small>
+    </div>
 </div>
 
 @include('admin.search-box')

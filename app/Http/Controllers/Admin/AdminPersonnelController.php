@@ -11,7 +11,7 @@ class AdminPersonnelController extends AdminController
     public function getIndex(HttpRequest $request)
     {
         $fields = [
-            'id' => 'ID',
+            'id' => '编号',
             'name' => '姓名',
             'mobile' => '电话',
             'email' => '邮箱',

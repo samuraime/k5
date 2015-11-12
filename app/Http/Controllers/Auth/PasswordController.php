@@ -5,7 +5,7 @@ use Session;
 use HttpRequest;
 use Cache;
 use Mail;
-use App\Models\User;
+use App\Models\Account;
 use App\Http\Controllers\Controller;
 
 class PasswordController extends Controller {
@@ -23,7 +23,7 @@ class PasswordController extends Controller {
 		]);
 
 		$email = Request::input('email');
-		$account = User::where('email', $email)->first();
+		$account = Account::where('email', $email)->first();
 		$token = md5($email + time());
 		Cache::put($this->recoverAccountCachePrefix . $account->id, $token, 60);
 		Mail::send('emails.password', [
@@ -65,7 +65,7 @@ class PasswordController extends Controller {
 		]);
 
 		$id = Session::get('recover.id');
-		$account = User::find($id);
+		$account = Account::find($id);
 		$account->password = password(Request::input('password'));
 		$account->save();
 

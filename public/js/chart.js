@@ -42,7 +42,11 @@ $(function() {
 
     /* 生成图表 */
     var chartContainer = $('#chart-container');
-    var chartOptions = {};
+    var chartOptions = {
+        exporting: {
+            enabled: true,
+        }
+    };
     var renderChart = function(data) {
         chartOptions.title = $('#chart-title').val(),
         chartOptions.subtitle = $('#chart-subtitle').val(),

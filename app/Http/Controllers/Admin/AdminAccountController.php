@@ -17,13 +17,14 @@ class AdminAccountController extends AdminController
 
         $pagination = parent::pagination(Account::select('*'));
         $fields = [
-            'id' => 'ID',
+            'id' => '编号',
             'name' => '姓名',
-            'nickname' => '显示名',
+            // 'nickname' => '显示名',
             'mobile' => '电话',
             'email' => '邮箱',
             // 'permission' => '权限',
             'created_at' => '创建日期',
+            'updated_at' => '修改日期',
         ];
 
         return view('admin.account.index', 
@@ -41,7 +42,7 @@ class AdminAccountController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        return parent::pagination(Account::select(['id', 'nickname', 'name', 'email', 'mobile', 'permission', 'created_at']));
+        return parent::pagination(Account::select(['id', 'nickname', 'name', 'email', 'mobile', 'created_at', 'updated_at']));
     }
 
     public function postIndex(HttpRequest $request)

@@ -11,7 +11,7 @@ class AdminEnterpriseController extends AdminController
     public function getIndex(HttpRequest $request)
     {
         $fields = [
-            'id' => 'ID',
+            'id' => '编号',
             'name' => '企业名',
             'type' => '类型',
             'representative' => '法人',

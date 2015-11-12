@@ -3,6 +3,7 @@
 use Request;
 use HttpRequest;
 use App\Models\Log;
+use DB;
 
 class AdminLogController extends AdminController
 {
@@ -11,8 +12,12 @@ class AdminLogController extends AdminController
     public function getIndex(HttpRequest $request)
     {
         $fields = [
-            'id' => 'ID',
-            'name' => '姓名',
+            'id' => '编号',
+            'title' => '日志主题',
+            'author' => '发布者',
+            'editor' => '最后编辑',
+            'created_at' => '创建日期',
+            'updated_at' => '修改日期',
         ];
 
         return view('admin.log.index', [
@@ -27,8 +32,11 @@ class AdminLogController extends AdminController
             'page' => 'integer',
             'perPage' => 'integer',
         ]);
-
-        $pagination = parent::pagination(Log::select('id', 'name', 'email', 'mobile', 'birth', 'height', 'weight'));
+        $query = DB::table('log')
+            ->select(DB::raw('log.*, a.name author, e.name editor'))
+            ->leftJoin('account AS a', 'log.author', '=', 'a.id')
+            ->leftJoin('account AS e', 'log.editor', '=', 'e.id');
+        $pagination = parent::pagination($query);
 
         return response()->json($pagination);
     }

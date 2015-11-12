@@ -27,14 +27,16 @@ class AdminSessionController extends AdminController
     {
         $this->validate($request, [
             'nickname' => 'string|max:20',
-            'email' => 'required|email|unique:account,email',
+            'email' => 'required|email',
+            // 'email' => 'required|email|unique:account,email',
             'mobile' => 'regex:/[\d\+]+/',
         ]);
 
         $account = Account::find(Session::get('account.id'));
         $account->update(Request::all());
         $account->permission = json_decode($account->permission);
-        Session::put('account', (array)$account);
+        unset($account->password);
+        Session::put('account', $account->toArray());
 
         return response()->json($account);
     }
@@ -47,9 +49,10 @@ class AdminSessionController extends AdminController
         ]);
 
         $account = Account::find(Session::get('account.id'));
-        if ($account->password == password(Request::input('password'))) {
+        if ($account->password == password(Request::input('oldPassword'))) {
             $account->password = password(Request::input('password'));
             $account->save();
+            unset($account->password);
             return response()->json($account);
         } else {
             return response('Unauthorized', 401);

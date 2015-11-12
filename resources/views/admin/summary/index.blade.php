@@ -9,8 +9,12 @@
         <small>数据图表</small>
     </div>
 </div>
-<h3 class="yaheis"><i class="am-icon-area-chart "></i>选择数据 <span>必填</span></h3>
+<div class="am-g">
+    <div id="chart-container" class="am-u-sm-12">
+    </div>
+</div>
 <form id="chart-form" class="am-form am-form-horizontal">
+    <h3 class="yaheis am-text-primary"><i class="am-icon-table "></i> 选择数据 <span>必填</span></h3>
     <div class="am-form-group">
         <div class="am-u-md-6 am-u-sm-12 am-u-lg-3">
             <label>数据来源：</label>
@@ -37,32 +41,26 @@
             </select>
         </div>
     </div>
-    <h3 class="yaheis"><i class="am-icon-clock-o"></i>选择开始结束时间 <span>必填</span></h3>
+    <h3 class="yaheis am-text-primary"><i class="am-icon-clock-o"></i> 筛选数据 <span class="optional">选填</span></h3>
     <div class="am-form-group">
         <div class="am-u-sm-3">
-            <!--<input type="text" id="chart-start" placeholder="开始时间" class="am-u-sm-12" data-am-datepicker="{format: 'yyyy-mm-dd'}"/> -->
-            
-    <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
-  <input type="text" class="am-form-field" placeholder="开始时间" readonly id="chart-start" />
-  <span class="am-input-group-btn am-datepicker-add-on">
-    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-  </span>
-</div>
-
+            <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+                <input type="text" class="am-form-field" placeholder="开始时间" id="chart-start" />
+                <span class="am-input-group-btn am-datepicker-add-on">
+                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                </span>
+            </div>
         </div>
         <div class="am-u-sm-3 am-u-end">
-               <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
-  <input type="text" class="am-form-field" placeholder="结束时间" readonly id="chart-end" />
-  <span class="am-input-group-btn am-datepicker-add-on">
-    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-  </span>
-</div>
-
-
-           <!-- <input type="text" id="chart-end" placeholder="结束时间" class="am-u-sm-12" data-am-datepicker="{format: 'yyyy-mm-dd'}"/> -->
+            <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+                <input type="text" class="am-form-field" placeholder="结束时间" id="chart-end" />
+                <span class="am-input-group-btn am-datepicker-add-on">
+                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                </span>
+            </div>
         </div>
     </div>
-    <h3 class="yaheis"><i class="am-icon-edit"></i>填写相关信息 <span class="optional">选填</span></h3>
+    <h3 class="yaheis am-text-primary"><i class="am-icon-area-chart"></i> 图表信息 <span class="optional">选填</span></h3>
     <div class="am-form-group">
         <div class="am-u-sm-3">
             <label>图表标题：</label>
@@ -77,7 +75,7 @@
             <input type="text" id="chart-xtitle" placeholder="X轴标题" class="am-u-sm-12"/>
         </div>
         <div class="am-u-sm-3">
-             <label>Y轴标题：</label>
+            <label>Y轴标题：</label>
             <input type="text" id="chart-ytitle" placeholder="Y轴标题" class="am-u-sm-12"/>
         </div>
     </div>
@@ -92,18 +90,13 @@
         <button type="button" id="chart-submit" class="am-u-sm-offset-4 am-u-sm-4 am-btn am-btn-primary">生成图表</button>
     </div>
 </form>
-
-<div class="am-g">
-    <div id="chart-container" class="am-u-sm-12">
-    </div>
-</div>
-
 @stop
 
 @section('foot-assets')
 <script type="text/javascript" src="/js/highcharts/highcharts.js"></script>
 <script type="text/javascript" src="/js/highcharts/highcharts-3d.js"></script>
 <script type="text/javascript" src="/js/highcharts/highcharts-more.js"></script>
+<script type="text/javascript" src="/js/highcharts/exporting.js"></script>
 <script type="text/javascript">
     var options = {!! json_encode($chart) !!};
 </script>

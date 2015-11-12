@@ -25,8 +25,8 @@
 <body>
     <header class="am-topbar admin-header">
         <div class="am-topbar-brand">
-            <strong>人才交流中心</strong>
-            <small>后台管理</small>
+            <a href="/"><strong>人才交流中心</strong></a>
+            <a href="/admin"><small>后台管理</small></a>
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}">
             <span class="am-sr-only">导航切换</span>
@@ -37,7 +37,7 @@
                 <li class="am-header-information"> 欢迎您登录</li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        <span class="am-icon-users"> {{ Session::get('account.name') }}</span>
+                        <span class="am-icon-user"> {{ Session::get('account.name') }}</span>
                         <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
@@ -77,25 +77,25 @@
                                 <span class="am-fr am-margin-right"></span>
                             </a>
                         </li>
-                        @endif @if (in_array('enterprise', Session::get('account.permission')))
-                        <li>
-                            <a href="/admin/enterprise" class="am-cf">
-                                <span class="am-icon-check am-icon-file-text"></span> 企业信息</a>
-                        </li>
                         @endif @if (in_array('personnel', Session::get('account.permission')))
                         <li>
                             <a href="/admin/personnel">
                                 <span class="am-icon-file"></span> 人才信息</a>
                         </li>
+                        @endif @if (in_array('enterprise', Session::get('account.permission')))
+                        <li>
+                            <a href="/admin/enterprise" class="am-cf">
+                                <span class="am-icon-check am-icon-file-text"></span> 企业信息</a>
+                        </li>
                         @endif @if (in_array('log', Session::get('account.permission')))
                         <li>
                             <a href="/admin/log">
-                                <span class="am-icon-table"></span> 访问日志</a>
+                                <span class="am-icon-calendar"></span> 访问日志</a>
                         </li>
                         @endif @if (in_array('message', Session::get('account.permission')))
                         <li>
                             <a href="/admin/message">
-                                <span class="am-icon-pencil-square-o"></span> 留言管理</a>
+                                <span class="am-icon-pencil-square-o"></span> 留言记录</a>
                         </li>
                         @endif @if (in_array('article', Session::get('account.permission')) || in_array('account', Session::get('account.permission')))
                         <li class="#">
@@ -136,7 +136,154 @@
             <!-- content end -->
         </div>
     </div>
-    @include('admin.user-modal')
+
+    <!-- 自定义的alert start -->
+    <div class="am-modal am-modal-alert" tabindex="-1" id="alert-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"></div>
+            <div class="am-modal-bd"></div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn">确定</span>
+            </div>
+        </div>
+    </div>
+    <!-- 自定义alert end -->
+
+    <!-- 个人信息 start -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">个人资料
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <form id="user-profile-form" class="am-form am-form-horizontal" data-am-validator>
+                    <div class="am-form-group">
+                        <label for="user-mobile" class="am-u-sm-3 am-form-label">电话</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="user-mobile" required pattern="^\d+$" placeholder="电话" value="{{Session::get('account.mobile')}}" />
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">电子邮箱</label>
+                        <div class="am-u-sm-9">
+                            <input type="email" id="user-email" required class="js-pattern-email" placeholder="电子邮箱" value="{{Session::get('account.email')}}" />
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-3 am-u-sm-offset-3">
+                            <input type="submit" class="am-btn am-btn-primary" value="提交修改" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 个人信息 end -->
+    <!-- 密码 start -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="password-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">修改密码
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <form id="user-password-form" class="am-form am-form-horizontal" data-am-validator>
+                    <div class="am-form-group">
+                        <label for="user-old-password" class="am-u-sm-3 am-form-label">旧密码</label>
+                        <div class="am-u-sm-9">
+                            <input type="password" required pattern="^\S{6,20}$" id="user-old-password" placeholder="旧密码">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="user-password" class="am-u-sm-3 am-form-label">新密码</label>
+                        <div class="am-u-sm-9">
+                            <input type="password" required pattern="^\S{6,20}$" id="user-password" placeholder="新密码">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="user-password-confirmation" class="am-u-sm-3 am-form-label">确认密码</label>
+                        <div class="am-u-sm-9">
+                            <input type="password" required pattern="^\S{6,20}$" id="user-password-confirmation" data-equal-to="#user-password" placeholder="确认密码">
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-3 am-u-sm-offset-3">
+                            <input type="submit" class="am-btn am-btn-primary" value="提交修改" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 密码 end -->
+    <!-- 操作成功刷新 start -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="refresh-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">
+                <span>操作成功</span>
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+            </div>
+        </div>
+    </div>
+    <!-- 操作成功刷新 end -->
+    <script type="text/javascript">
+    $(function() {
+        $('#user-profile-form').submit(function() {
+            var data = {
+                nickname: $('#user-nickname').val(),
+                email: $('#user-email').val(),
+                mobile: $('#user-mobile').val(),
+            }
+
+            $.ajax({
+                url: '/admin/session/profile',
+                method: 'PUT',
+                data: data,
+                success: function(data) {
+                    $('#profile-modal').modal('close');
+                    alert('修改成功');
+                    $('#alert-modal').on('closed.modal.amui', function() {
+                        window.location.reload();
+                    });
+                },
+                error: function() {
+                    $('#profile-modal').modal('close');
+                    alert('遇到了什么错误, 请稍后再试');
+                }
+            });
+
+            return false;
+        });
+
+        $('#user-password-form').submit(function() {
+            var data = {
+                oldPassword: $('#user-old-password').val(),
+                password: $('#user-password').val(),
+                password_confirmation: $('#user-password-confirmation').val(),
+            }
+
+            $.ajax({
+                url: '/admin/session/password',
+                method: 'PUT',
+                data: data,
+                success: function(data) {
+                    $('#profile-modal').modal('close');
+                    alert('修改成功');
+                    $('#alert-modal').on('closed.modal.amui', function() {
+                        window.location.reload();
+                    });
+                },
+                error: function() {
+                    $('#profile-modal').modal('close');
+                    alert('修改失败, 请确认原密码是否正确');
+                }
+            });
+
+            return false;
+        });
+    });
+    </script>
     @include('admin.delete-confirm-modal')
     <script src="/js/amazeui/amazeui.min.js"></script>
     <script src="/js/app.js"></script>
