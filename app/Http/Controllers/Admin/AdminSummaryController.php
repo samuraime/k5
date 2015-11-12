@@ -140,12 +140,6 @@ class AdminSummaryController extends AdminController
                 'pie' => '饼状图',
                 'scatter' => '散点图',
             ],
-            // 'fields' => [
-            //     'name' => '姓名',
-            //     'gender' => '性别',
-            //     'nationality' => '国籍',
-            //     'degree' => '学历',
-            // ]
         ];
         return view('admin.summary.index', [
             'chart' => $options,

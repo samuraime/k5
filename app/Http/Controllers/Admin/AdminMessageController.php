@@ -6,6 +6,8 @@ use HttpQequest;
 
 class AdminMessageController extends AdminController
 {
+    public $table = 'message';
+
     public function getIndex(HttpRequest $request)
     {
         $this->validate($request, [
@@ -40,16 +42,5 @@ class AdminMessageController extends AdminController
 
         return response()->json($message);
 
-    }
-
-    public function deleteIndex(HttpRequest $request)
-    {   
-        $this->validate($request, [
-            'id' => 'required|exists:message,id'
-        ]);
-
-        $affectedRows = Message::destroy(Request::input('id'));        
-
-        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

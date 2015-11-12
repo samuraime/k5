@@ -6,6 +6,8 @@ use App\Models\Log;
 
 class AdminLogController extends AdminController
 {
+    public $table = 'log';
+
     public function getIndex(HttpRequest $request)
     {
         $fields = [
@@ -82,28 +84,5 @@ class AdminLogController extends AdminController
         $log->update($inputs);
 
         return response()->json($log);
-    }
-
-    public function deleteIndex(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:log,id',
-        ]);
-
-        $affectedRows = Log::destroy(Request::get('id'));
-
-        return response()->json(['affectedRows' => $affectedRows]);
-    }
-
-    public function deleteList(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'ids' => 'required',
-        ]);
-
-        $ids = Request::get('ids');
-        $affectedRows = Log::destroy($ids);
-
-        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

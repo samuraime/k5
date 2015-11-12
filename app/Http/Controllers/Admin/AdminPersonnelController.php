@@ -6,6 +6,8 @@ use App\Models\Personnel;
 
 class AdminPersonnelController extends AdminController
 {
+    public $table = 'personnel';
+
     public function getIndex(HttpRequest $request)
     {
         $fields = [
@@ -87,28 +89,5 @@ class AdminPersonnelController extends AdminController
         $personnel->update($inputs);
 
         return response()->json($personnel);
-    }
-
-    public function deleteIndex(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:personnel,id',
-        ]);
-
-        $affectedRows = Personnel::destroy(Request::get('id'));
-
-        return response()->json(['affectedRows' => $affectedRows]);
-    }
-
-    public function deleteList(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'ids' => 'required',
-        ]);
-
-        $ids = Request::get('ids');
-        $affectedRows = Personnel::destroy($ids);
-
-        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

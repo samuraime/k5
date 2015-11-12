@@ -6,6 +6,8 @@ use App\Models\Enterprise;
 
 class AdminEnterpriseController extends AdminController
 {
+    public $table = 'enterprise';
+
     public function getIndex(HttpRequest $request)
     {
         $fields = [
@@ -22,17 +24,6 @@ class AdminEnterpriseController extends AdminController
         return view('admin.enterprise.index', [
             'fields' => $fields,
         ]);
-    }
-
-    public function getById(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:enterprise,id'
-        ]);
-
-        $enterprise = Enterprise::find(Request::input('id'));
-
-        return response()->json($enterprise);
     }
 
     public function getList(HttpRequest $request)
@@ -80,28 +71,5 @@ class AdminEnterpriseController extends AdminController
         $enterprise->update(Request::all());
 
         return response()->json($enterprise);
-    }
-
-    public function deleteIndex(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:enterprise,id',
-        ]);
-
-        $affectedRows = Enterprise::destroy(Request::get('id'));
-
-        return response()->json(['affectedRows' => $affectedRows]);
-    }
-
-    public function deleteList(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'ids' => 'required',
-        ]);
-
-        $ids = Request::get('ids');
-        $affectedRows = Enterprise::destroy($ids);
-
-        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

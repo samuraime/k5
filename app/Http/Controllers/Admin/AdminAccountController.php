@@ -1,11 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+use App\Models\Account;
 use Request;
 use HttpRequest;
 
 class AdminAccountController extends AdminController
 {
+    public $table = 'account';
+
     public function getIndex(HttpRequest $request)
     {
         $this->validate($request, [
@@ -13,7 +15,7 @@ class AdminAccountController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        $pagination = parent::pagination(User::select('*'));
+        $pagination = parent::pagination(Account::select('*'));
         $fields = [
             'id' => 'ID',
             'name' => '姓名',
@@ -32,17 +34,6 @@ class AdminAccountController extends AdminController
         );
     }
 
-    public function getOne(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:user,id',
-        ]);
-
-        $user = User::find(Request::input('id'));
-
-        return response()->json($user);
-    }
-
     public function getList(HttpRequest $request)
     {
         $this->validate($request, [
@@ -50,14 +41,14 @@ class AdminAccountController extends AdminController
             'perPage' => 'integer',
         ]);
 
-        return parent::pagination(User::select(['id', 'nickname', 'name', 'email', 'mobile', 'permission', 'created_at']));
+        return parent::pagination(Account::select(['id', 'nickname', 'name', 'email', 'mobile', 'permission', 'created_at']));
     }
 
     public function postIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'regex:/\S{6,20}/', 'unique:user,name'],
-            'email' => 'required|email|unique:user,email',
+            'name' => ['required', 'regex:/\S{6,20}/', 'unique:account,name'],
+            'email' => 'required|email|unique:account,email',
             'password' => ['requried', 'regex:/\S{6,20}/', 'confirmed'],
             'password_confirmation' => 'requried',
             'nickname' => 'string|max:20',
@@ -66,81 +57,58 @@ class AdminAccountController extends AdminController
         ]);
 
         $inputs = Request::all();
-        $user = User::create($inputs);
+        $account = Account::create($inputs);
 
-        return response()->json($user);
+        return response()->json($account);
     }
 
     public function getEdit(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:user,id',
+            'id' => 'required|exists:account,id',
         ]);
 
-        $user = User::find(Request::input('id'));
+        $account = Account::find(Request::input('id'));
 
-        return view('admin.account.edit', ['account' => $user->toArray()]);
+        return view('admin.account.edit', ['account' => $account->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:user,id',
-            'name' => ['regex:/\S{6,20}/', 'unique:user,name'],
+            'id' => 'required|exists:account,id',
+            'name' => ['regex:/\S{6,20}/', 'unique:account,name'],
             'nickname' => 'string|max:20',
-            'email' => 'email|unique:user,email',
+            'email' => 'email|unique:account,email',
             'mobile' => 'string|max:20',
             'password' => ['regex:/\S{6,20}/', 'confirmed'],
             'permission' => 'string|max:200',
         ]);
 
         $inputs = Request::all();
-        $user = User::find($inputs['id']);
+        $account = Account::find($inputs['id']);
         foreach (['name', 'nickname', 'email', 'mobile', 'password', 'permission'] as $field) {
-            isset($inputs[$field]) && $user->$field = $inputs[$field];
+            isset($inputs[$field]) && $account->$field = $inputs[$field];
         }
-        isset($inputs['password']) && $user->password = password($inputs['password']);
+        isset($inputs['password']) && $account->password = password($inputs['password']);
 
         $permission = ['summary', 'enterprise', 'personnel', 'session', 'article', 'log', 'index', 'account'];
-        $user->permission = json_encode($permission);
-        $user->save();
-        $user->permission = json_decode($user->permission);
+        $account->permission = json_encode($permission);
+        $account->save();
+        $account->permission = json_decode($account->permission);
 
-        return response()->json($user);
+        return response()->json($account);
     }
 
     public function getPermisson()
     {
         $inputs = Request::all();
-        $user = User::find($inputs['id']);
+        $account = Account::find($inputs['id']);
         $permission = ['summary', 'enterprise', 'personnel', 'session', 'article', 'index', 'account', 'log', 'message'];
-        $user->permission = json_encode($permission);
-        $user->save();
-        $user->permission = json_decode($user->permission);
+        $account->permission = json_encode($permission);
+        $account->save();
+        $account->permission = json_decode($account->permission);
 
-        return response()->json($user);
-    }
-
-    public function deleteIndex(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:user,id',
-        ]);
-
-        $affectedRows = User::destroy(Request::input('id')); 
-
-        return response()->json(['affectedRows' => $affectedRows]);
-    }
-
-    public function deleteList(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'ids' => 'required',
-        ]);
-
-        $ids = Request::input('ids');
-        $affectedRows = User::destroy($ids);
-        
-        return $response->json(['affectedRows' => $affectedRows]);
+        return response()->json($account);
     }
 }

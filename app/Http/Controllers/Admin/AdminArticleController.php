@@ -6,6 +6,8 @@ use App\Models\Article;
 
 class AdminArticleController extends AdminController
 {
+    public $table = 'article';
+    
     public function getIndex(HttpRequest $request)
     {
         $fields = [
@@ -20,17 +22,6 @@ class AdminArticleController extends AdminController
             'fields' => $fields,
             'url' => url('/admin/article')
         ]);
-    }
-
-    public function getById(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:article,id'
-        ]);
-
-        $article = Article::find(Request::input('id'));
-
-        return response()->json($article);
     }
 
     public function getList(HttpRequest $request)
@@ -80,28 +71,5 @@ class AdminArticleController extends AdminController
         $article->update($inputs);
 
         return response()->json($article);
-    }
-
-    public function deleteIndex(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:article,id',
-        ]);
-
-        $affectedRows = Article::destroy(Request::get('id'));
-
-        return response()->json(['affectedRows' => $affectedRows]);
-    }
-
-    public function deleteList(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'ids' => 'required',
-        ]);
-
-        $ids = Request::get('ids');
-        $affectedRows = Article::destroy($ids);
-
-        return response()->json(['affectedRows' => $affectedRows]);
     }
 }

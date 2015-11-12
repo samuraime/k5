@@ -61,8 +61,45 @@ class AdminController extends Controller
         return $pagination;
     }
 
-    protected function deleteById()
+    public function getNew()
     {
+        return view('admin.' . $this->table . '.new');
+    }
 
+    public function getOne(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:' . $this->table . ',id'
+        ]);
+
+        $model = 'App\\Models\\' . ucfirst($this->table);
+        $orm = $model::find(Request::input('id'));
+
+        return response()->json($orm);
+    }
+
+    public function deleteIndex(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:' . $this->table . ',id',
+        ]);
+
+        $model = 'App\\Models\\' . ucfirst($this->table);
+        $affectedRows = $model::destroy(Request::get('id'));
+
+        return response()->json(['affectedRows' => $affectedRows]);
+    }
+
+    public function deleteList(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'ids' => 'required',
+        ]);
+
+        $ids = Request::get('ids');
+        $model = 'App\\Models\\' . ucfirst($this->table);
+        $affectedRows = $model::destroy($ids);
+
+        return response()->json(['affectedRows' => $affectedRows]);
     }
 }
