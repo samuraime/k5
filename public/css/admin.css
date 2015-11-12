@@ -352,4 +352,7 @@ h3.yahei{background: #F7F7F7;padding-left: 15px;font-size: 16px;font-weight: nor
 /*新增修改页面 2015-10-14 end*/
 /*分页样式*/
 .pagination .am-form input{display:inline-block;width:35px;padding:0px 0px;text-align:center;margin:0px 5px;}
+h3.yaheis{padding-left: 15px;font-size: 16px;}
+h3.yaheis span{color:#fff;background:#ff6600; font-size:14px;font-weight:normal;padding:0 10px;}
+h3.yaheis span.optional{background:#cccccc;}
 

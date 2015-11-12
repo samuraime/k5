@@ -5,54 +5,79 @@
 @section('content')
 <div class="am-cf am-padding border-bottom">
     <div class="am-fl am-cf">
-        <strong class="am-text-primary am-text-lg">数据汇总</strong> /
+        <strong class="am-text-primary am-text-lg">数据汇总</strong> 
         <small>数据图表</small>
     </div>
 </div>
+<h3 class="yaheis"><i class="am-icon-area-chart "></i>选择数据 <span>必填</span></h3>
 <form id="chart-form" class="am-form am-form-horizontal">
     <div class="am-form-group">
-        <div class="am-u-sm-3">
+        <div class="am-u-md-6 am-u-sm-12 am-u-lg-3">
+            <label>数据来源：</label>
             <select id="chart-table-select" data-am-selected>
                 <option value="0">数据来源</option>
             </select>
         </div>
-        <div class="am-u-sm-3">
+        <div class="am-u-md-6 am-u-sm-12 am-u-lg-3">
+            <label>图表类型：</label>
             <select id="chart-type-select" data-am-selected>
                 <option value="0">图表类型</option>
             </select>
         </div>
-        <div class="am-u-sm-3">
+        <div class="am-u-md-6 am-u-sm-12 am-u-lg-3">
+            <label>分组数据：</label>
             <select id="chart-category-select" data-am-selected>
                 <option value="0">分组依据</option>
             </select>
         </div>
-        <div class="am-u-sm-3">
+        <div class="am-u-md-6 am-u-sm-12 am-u-lg-3">
+            <label>其他选项：</label>
             <select id="chart-option-select" data-am-selected>
                 <option value="0">其他选项</option>
             </select>
         </div>
     </div>
-    <hr/>
+    <h3 class="yaheis"><i class="am-icon-clock-o"></i>选择开始结束时间 <span>必填</span></h3>
     <div class="am-form-group">
         <div class="am-u-sm-3">
-            <input type="text" id="chart-start" placeholder="开始时间" class="am-u-sm-12" data-am-datepicker="{format: 'yyyy-mm-dd'}"/>
+            <!--<input type="text" id="chart-start" placeholder="开始时间" class="am-u-sm-12" data-am-datepicker="{format: 'yyyy-mm-dd'}"/> -->
+            
+    <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+  <input type="text" class="am-form-field" placeholder="开始时间" readonly id="chart-start" />
+  <span class="am-input-group-btn am-datepicker-add-on">
+    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+  </span>
+</div>
+
         </div>
         <div class="am-u-sm-3 am-u-end">
-            <input type="text" id="chart-end" placeholder="结束时间" class="am-u-sm-12" data-am-datepicker="{format: 'yyyy-mm-dd'}"/>
+               <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+  <input type="text" class="am-form-field" placeholder="结束时间" readonly id="chart-end" />
+  <span class="am-input-group-btn am-datepicker-add-on">
+    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+  </span>
+</div>
+
+
+           <!-- <input type="text" id="chart-end" placeholder="结束时间" class="am-u-sm-12" data-am-datepicker="{format: 'yyyy-mm-dd'}"/> -->
         </div>
     </div>
-    <hr/>
+    <h3 class="yaheis"><i class="am-icon-edit"></i>填写相关信息 <span class="optional">选填</span></h3>
     <div class="am-form-group">
         <div class="am-u-sm-3">
+            <label>图表标题：</label>
             <input type="text" id="chart-title" placeholder="图表标题" class="am-u-sm-12"/>
         </div>
         <div class="am-u-sm-3">
+            <label>子标题：</label>
             <input type="text" id="chart-subtitle" placeholder="子标题" class="am-u-sm-12"/>
         </div>
         <div class="am-u-sm-3">
+            <label>X轴标题：</label>
             <input type="text" id="chart-xtitle" placeholder="X轴标题" class="am-u-sm-12"/>
         </div>
         <div class="am-u-sm-3">
+             <label>Y轴标题：</label>
             <input type="text" id="chart-ytitle" placeholder="Y轴标题" class="am-u-sm-12"/>
         </div>
     </div>
