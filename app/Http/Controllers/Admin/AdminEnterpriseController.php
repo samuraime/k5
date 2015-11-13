@@ -7,6 +7,7 @@ use App\Models\Enterprise;
 class AdminEnterpriseController extends AdminController
 {
     public $table = 'enterprise';
+    public $primaryNav = '企业信息';
 
     public function getIndex(HttpRequest $request)
     {
@@ -21,9 +22,12 @@ class AdminEnterpriseController extends AdminController
             'registration_address' => '注册地址',
         ];
 
-        return view('admin.enterprise.index', [
-            'fields' => $fields,
-        ]);
+        return view('admin.list', [
+                'fields' => $fields,
+                'primaryNav' => $this->primaryNav,
+                'secondaryNav' => '企业列表',
+            ]
+        );
     }
 
     public function getList(HttpRequest $request)
@@ -48,17 +52,6 @@ class AdminEnterpriseController extends AdminController
         $enterprise = Enterprise::create(Request::all());
 
         return response()->json($enterprise);
-    }
-
-    public function getEdit(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:enterprise,id',
-        ]);
-
-        $enterprise = Enterprise::find(Request::input('id'));
-
-        return view('admin.enterprise.edit', ['enterprise' => $enterprise->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

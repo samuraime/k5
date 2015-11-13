@@ -8,7 +8,8 @@ use DB;
 class AdminArticleController extends AdminController
 {
     public $table = 'article';
-    
+    public $primaryNav = '系统管理';
+
     public function getIndex(HttpRequest $request)
     {
         $fields = [
@@ -20,10 +21,12 @@ class AdminArticleController extends AdminController
             'updated_at' => '修改时间',
         ];
 
-        return view('admin.article.index', [
-            'fields' => $fields,
-            'url' => url('/admin/article')
-        ]);
+        return view('admin.list', [
+                'fields' => $fields,
+                'primaryNav' => $this->primaryNav,
+                'secondaryNav' => '文章列表',
+            ]
+        );
     }
 
     public function getList(HttpRequest $request)
@@ -52,18 +55,6 @@ class AdminArticleController extends AdminController
         $article = Article::create(Request::all());
 
         return response()->json($article);
-    }
-
-
-    public function getEdit(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:article,id',
-        ]);
-
-        $article = Article::find(Request::input('id'));
-
-        return view('admin.article.edit', ['article' => $article->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

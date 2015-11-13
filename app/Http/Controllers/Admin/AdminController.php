@@ -66,7 +66,7 @@ class AdminController extends Controller
         return view('admin.' . $this->table . '.new');
     }
 
-    public function getOne(HttpRequest $request)
+    private function getOne(HttpRequest $request, $action)
     {
         $this->validate($request, [
             'id' => 'required|exists:' . $this->table . ',id'
@@ -75,7 +75,17 @@ class AdminController extends Controller
         $model = 'App\\Models\\' . ucfirst($this->table);
         $orm = $model::find(Request::input('id'));
 
-        return response()->json($orm);
+        return view("admin.{$this->table}.{$action}", [$this->table => $orm->toArray()]);
+    }
+
+    public function getView(HttpRequest $request)
+    {
+        return $this->getOne($request, 'view');
+    }
+
+    public function getEdit(HttpRequest $request)
+    {
+        return $this->getOne($request, 'edit');
     }
 
     public function deleteIndex(HttpRequest $request)

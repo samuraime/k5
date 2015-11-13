@@ -6,10 +6,14 @@ use App\Models\User;
 
 class AdminIndexController extends AdminController
 {
+    public $primaryNav = '首页';
+
     public function getIndex()
     {
-        return view('admin.index', [
+        return view('admin.index.index', [
             'stat' => $this->stat(),
+            'primaryNav' => $this->primaryNav,
+            'secondaryNav' => '数据概况',
         ]);
     }
 
@@ -23,10 +27,5 @@ class AdminIndexController extends AdminController
         }
 
         return $list;
-    }
-
-    public function getReact()
-    {
-        return view('admin.react-index');
     }
 }

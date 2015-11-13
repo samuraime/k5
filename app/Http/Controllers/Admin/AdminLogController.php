@@ -8,6 +8,7 @@ use DB;
 class AdminLogController extends AdminController
 {
     public $table = 'log';
+    public $primaryNav = '访问日志';
 
     public function getIndex(HttpRequest $request)
     {
@@ -20,10 +21,12 @@ class AdminLogController extends AdminController
             'updated_at' => '修改日期',
         ];
 
-        return view('admin.log.index', [
-            'fields' => $fields,
-            'url' => url('/admin/log')
-        ]);
+        return view('admin.list', [
+                'fields' => $fields,
+                'primaryNav' => $this->primaryNav,
+                'secondaryNav' => '日志列表',
+            ]
+        );
     }
 
     public function getList(HttpRequest $request)
@@ -51,18 +54,6 @@ class AdminLogController extends AdminController
         $log = Log::create(Request::all());
 
         return response()->json($log);
-    }
-
-
-    public function getEdit(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:log,id',
-        ]);
-
-        $log = Log::find(Request::input('id'));
-
-        return view('admin.log.edit', ['log' => $log->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

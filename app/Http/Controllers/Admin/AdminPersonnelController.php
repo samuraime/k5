@@ -7,6 +7,7 @@ use App\Models\Personnel;
 class AdminPersonnelController extends AdminController
 {
     public $table = 'personnel';
+    public $primaryNav = '人才信息';
 
     public function getIndex(HttpRequest $request)
     {
@@ -20,10 +21,12 @@ class AdminPersonnelController extends AdminController
             'weight' => '体重',
         ];
 
-        return view('admin.personnel.index', [
-            'fields' => $fields,
-            'url' => url('/admin/personnel')
-        ]);
+        return view('admin.list', [
+                'fields' => $fields,
+                'primaryNav' => $this->primaryNav,
+                'secondaryNav' => '人才列表',
+            ]
+        );
     }
 
     public function getList(HttpRequest $request)
@@ -48,18 +51,6 @@ class AdminPersonnelController extends AdminController
         $personnel = Personnel::create(Request::all());
 
         return response()->json($personnel);
-    }
-
-
-    public function getEdit(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:personnel,id',
-        ]);
-
-        $personnel = Personnel::find(Request::input('id'));
-
-        return view('admin.personnel.edit', ['personnel' => $personnel->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

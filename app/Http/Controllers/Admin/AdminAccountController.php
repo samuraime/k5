@@ -7,15 +7,10 @@ use HttpRequest;
 class AdminAccountController extends AdminController
 {
     public $table = 'account';
+    public $primaryNav = '系统管理';
 
     public function getIndex(HttpRequest $request)
     {
-        $this->validate($request, [
-            'page' => 'integer',
-            'perPage' => 'integer',
-        ]);
-
-        $pagination = parent::pagination(Account::select('*'));
         $fields = [
             'id' => '编号',
             'name' => '姓名',
@@ -27,11 +22,11 @@ class AdminAccountController extends AdminController
             'updated_at' => '修改日期',
         ];
 
-        return view('admin.account.index', 
-            array_merge($pagination, [
+        return view('admin.list', [
                 'fields' => $fields,
-                'url' => url('/admin/account')
-            ])
+                'primaryNav' => $this->primaryNav,
+                'secondaryNav' => '账号列表',
+            ]
         );
     }
 
@@ -61,17 +56,6 @@ class AdminAccountController extends AdminController
         $account = Account::create($inputs);
 
         return response()->json($account);
-    }
-
-    public function getEdit(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:account,id',
-        ]);
-
-        $account = Account::find(Request::input('id'));
-
-        return view('admin.account.edit', ['account' => $account->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

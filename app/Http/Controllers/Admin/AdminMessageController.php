@@ -7,6 +7,7 @@ use App\Models\Message;
 class AdminMessageController extends AdminController
 {
     public $table = 'message';
+    public $primaryNav = '留言记录';
 
     public function getIndex(HttpRequest $request)
     {
@@ -22,10 +23,12 @@ class AdminMessageController extends AdminController
             'updated_at' => '修改时间',
         ];
 
-        return view('admin.message.index', [
-            'fields' => $fields,
-            'url' => url('/admin/message')
-        ]);
+        return view('admin.list', [
+                'fields' => $fields,
+                'primaryNav' => $this->primaryNav,
+                'secondaryNav' => '留言列表',
+            ]
+        );
     }
 
     public function getList(HttpRequest $request)
@@ -50,18 +53,6 @@ class AdminMessageController extends AdminController
         $message = Message::create(Request::all());
 
         return response()->json($message);
-    }
-
-
-    public function getEdit(HttpRequest $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:message,id',
-        ]);
-
-        $message = Message::find(Request::input('id'));
-
-        return view('admin.message.edit', ['message' => $message->toArray()]);
     }
 
     public function putIndex(HttpRequest $request)

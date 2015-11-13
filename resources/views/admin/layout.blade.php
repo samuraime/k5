@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>K5 - @yield('title')</title>
-    <meta name="description" content="这是一个form页面">
-    <meta name="keywords" content="form">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="icon" href="/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" href="/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <link rel="stylesheet" href="/css/amazeui.min.css" />
     <link rel="stylesheet" href="/css/admin.css">
     <script src="/js/jquery/jquery.min.js"></script>
@@ -131,12 +129,17 @@
             <!-- sidebar end -->
             <!-- content start -->
             <div class="admin-content">
+                <div class="am-cf am-padding border-bottom">
+                    <div class="am-fl am-cf">
+                        <strong class="am-text-primary am-text-lg">@yield('nav-primary')</strong>
+                        <small>@yield('nav-secondary')</small>
+                    </div>
+                </div>
                 @yield('content')
             </div>
             <!-- content end -->
         </div>
     </div>
-
     <!-- 自定义的alert start -->
     <div class="am-modal am-modal-alert" tabindex="-1" id="alert-modal">
         <div class="am-modal-dialog">
@@ -148,7 +151,6 @@
         </div>
     </div>
     <!-- 自定义alert end -->
-
     <!-- 个人信息 start -->
     <div class="am-modal am-modal-no-btn" tabindex="-1" id="profile-modal">
         <div class="am-modal-dialog">

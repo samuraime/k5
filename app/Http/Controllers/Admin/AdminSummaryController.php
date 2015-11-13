@@ -10,6 +10,8 @@ use Request;
 
 class AdminSummaryController extends AdminController
 {
+    public $primaryNav = '数据汇总';
+
     public function getIndex()
     {
         $options = [
@@ -143,6 +145,8 @@ class AdminSummaryController extends AdminController
         ];
         return view('admin.summary.index', [
             'chart' => $options,
+            'primaryNav' => $this->primaryNav,
+            'secondaryNav' => '数据图表',
         ]);
     }
 

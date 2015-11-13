@@ -1,14 +1,10 @@
 @extends('admin.layout')
 
-@section('title', '数据汇总')
+@section('title', $secondaryNav)
+@section('nav-primary', $primaryNav)
+@section('nav-secondary', $secondaryNav)
 
 @section('content')
-<div class="am-cf am-padding border-bottom">
-    <div class="am-fl am-cf">
-        <strong class="am-text-primary am-text-lg">数据汇总</strong> 
-        <small>数据图表</small>
-    </div>
-</div>
 <div class="am-g">
     <div id="chart-container" class="am-u-sm-12">
     </div>
