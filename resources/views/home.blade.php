@@ -14,6 +14,9 @@
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<script src="/js/jquery/jquery.min.js"></script>
+	<script src="/js/amazeui/amazeui.min.js"></script>
+	<script src="/js/app.js"></script>
 </head>
 <body>
 	<header class="am-topbar admin-header">
@@ -54,7 +57,7 @@
 					<hr/>
 				</div>
 				<div class="am-modal-bd">
-					<form class="am-form am-form-horizontal" data-am-validator role="form" method="POST" action="{{ url('/auth/login') }}">
+					<form id="login-form" class="am-form am-form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
 						<div class="am-form-group">
 							<label for="name" class="am-u-sm-3 am-form-label">登录名</label>
 							<div class="am-u-sm-9">
@@ -64,7 +67,7 @@
 						<div class="am-form-group">
 							<label for="password" class="am-u-sm-3 am-form-label">密码</label>
 							<div class="am-u-sm-9">
-								<input type="password" id="password" pattern="^\S{6,20}$" name="password" required placeholder="密码"/>
+								<input type="password" id="password" pattern="^\S{6,20}$" name="password" required autocomplete="off" placeholder="密码"/>
 							</div>
 						</div>
 						<div class="am-form-group">
@@ -80,8 +83,46 @@
 					</form>
 				</div>
 			</div>
-
 		</div>
+		<script type="text/javascript">
+		$(function() {
+			$('#login-form').validator({
+				validate: function(validity) {
+					if ($(validity.field).is('#password')) {
+						if (/^\S{6,20}$/.test($('#password').val())) {
+							return $.ajax({
+								method: 'POST',
+								url: '/auth/login',
+								cache: false,
+								data: {
+									name: $('#name').val(),
+									password: $('#password').val(),
+								},
+							}).then(function() {
+								validity.valid = true;
+								return validity;
+							}, function() {
+								validity.valid = false;
+								return validity;
+							});
+						} else {
+							validity.valid = false;
+							return validity;
+						}
+					}
+				},
+				submit: function() {
+					var validity = this.isFormValid();
+					$.when(validity).then(function() {
+						window.location.reload();
+					}, function() {
+						return false;
+					});
+					return false;
+				}
+			});
+		})
+		</script>
 	</header>
 
 	<div class="am-g">
@@ -98,11 +139,5 @@
 			<!--存放客户文章内容 -->
 		</div>
 	</div>
-
-	<!-- Scripts -->
-	<script src="/js/jquery/jquery.min.js"></script>
-	<!--<![endif]-->
-	<script src="/js/amazeui/amazeui.min.js"></script>
-	<script src="/js/app.js"></script>
 </body>
 </html>
