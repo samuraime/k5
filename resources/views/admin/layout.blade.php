@@ -97,11 +97,11 @@
                         </li>
                         @endif @if (in_array('article', Session::get('account.permission')) || in_array('account', Session::get('account.permission')))
                         <li class="#">
-                            <a data-am-collapse="{target: '#collapse-nav2'}">
+                            <a data-am-collapse="{target: '#collapse-nav'}">
                                 <span class="am-icon-puzzle-piece"></span> 系统管理
                                 <span class="am-icon-angle-right am-fr am-margin-right"></span>
                             </a>
-                            <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav2">
+                            <ul class="am-list am-collapse admin-sidebar-sub{{ preg_match('/\/admin\/(article)|(account)|(billboard)/', $_SERVER['REQUEST_URI']) ? ' am-in' : '' }}" id="collapse-nav">
                                 @if (in_array('article', Session::get('account.permission')))
                                 <li>
                                     <a href="/admin/article">
@@ -231,58 +231,87 @@
     <!-- 操作成功刷新 end -->
     <script type="text/javascript">
     $(function() {
-        $('#user-profile-form').submit(function() {
-            var data = {
-                nickname: $('#user-nickname').val(),
-                email: $('#user-email').val(),
-                mobile: $('#user-mobile').val(),
-            }
-
-            $.ajax({
-                url: '/admin/session/profile',
-                method: 'PUT',
-                data: data,
-                success: function(data) {
-                    $('#profile-modal').modal('close');
-                    alert('修改成功');
-                    $('#alert-modal').on('closed.modal.amui', function() {
-                        window.location.reload();
+        $('#user-profile-form').validator({
+            submit: function() {
+                if (this.isFormValid()) {
+                    $.ajax({
+                        url: '/admin/session/profile',
+                        method: 'PUT',
+                        data: {
+                            nickname: $('#user-nickname').val(),
+                            email: $('#user-email').val(),
+                            mobile: $('#user-mobile').val(),
+                        },
+                        success: function(data) {
+                            $('#profile-modal').modal('close');
+                            alert('修改成功');
+                            $('#alert-modal').on('closed.modal.amui', function() {
+                                window.location.reload();
+                            });
+                        },
+                        error: function() {
+                            $('#profile-modal').modal('close');
+                            alert('遇到了什么错误, 请稍后再试');
+                        }
                     });
-                },
-                error: function() {
-                    $('#profile-modal').modal('close');
-                    alert('遇到了什么错误, 请稍后再试');
+                } else {
+                    return false;
                 }
-            });
-
-            return false;
+            }
         });
+        $('#user-password-form').validator({
+            validate: function(validity) {
+                if ($(validity.field).is('#user-old-password')) {
+                    var password = $('#user-old-password').val();
 
-        $('#user-password-form').submit(function() {
-            var data = {
-                oldPassword: $('#user-old-password').val(),
-                password: $('#user-password').val(),
-                password_confirmation: $('#user-password-confirmation').val(),
-            }
-
-            $.ajax({
-                url: '/admin/session/password',
-                method: 'PUT',
-                data: data,
-                success: function(data) {
-                    $('#profile-modal').modal('close');
-                    alert('修改成功');
-                    $('#alert-modal').on('closed.modal.amui', function() {
-                        window.location.reload();
-                    });
-                },
-                error: function() {
-                    $('#profile-modal').modal('close');
-                    alert('修改失败, 请确认原密码是否正确');
+                    if (/^\S{6,20}$/.test(password)) {
+                        return $.ajax({
+                            method: 'POST',
+                            url: '/admin/session/check-password',
+                            data: {
+                                password: password,
+                            },
+                        }).then(function() {
+                            validity.valid = true;
+                            return validity;
+                        }, function() {
+                            validity.valid = false;
+                            return validity;
+                        });
+                    } else {
+                        validity.valid = false;
+                        return validity;
+                    }
                 }
-            });
-
-            return false;
+            },
+            submit: function() {
+                var validity = this.isFormValid();
+                $.when(validity).then(function() {
+                    $.ajax({
+                        url: '/admin/session/password',
+                        method: 'PUT',
+                        data: {
+                            oldPassword: $('#user-old-password').val(),
+                            password: $('#user-password').val(),
+                            password_confirmation: $('#user-password-confirmation').val(),
+                        },
+                        success: function(data) {
+                            $('#password-modal').modal('close');
+                            alert('修改成功');
+                            $('#alert-modal').on('closed.modal.amui', function() {
+                                window.location.reload();
+                            });
+                        },
+                        error: function() {
+                            $('#password-modal').modal('close');
+                            alert('修改失败, 请确认原密码是否正确');
+                        }
+                    });
+                }, function() {
+                    return false;
+                });
+                return false;
+            }
         });
     });
     </script>

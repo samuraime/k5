@@ -12,16 +12,23 @@
 @section('content')
 <form class="am-form am-form-horizontal">
     <div class="am-form-group">
-        <label for="title" class="am-u-sm-2 am-form-label">日志标题</label>
+        <label for="title" class="am-u-sm-2 am-form-label">日志标题:</label>
         <div class="am-u-sm-10">
             <input type="email" id="title" name="title" placeholder="日志标题">
         </div>
     </div>
 
     <div class="am-form-group">
-        <label for="content" class="am-u-sm-2 am-form-label">日志内容</label>
+        <label for="content" class="am-u-sm-2 am-form-label">日志内容:</label>
         <div class="am-u-sm-10">
             <textarea rows="10" id="content" name="content" placeholder="日志内容"></textarea>
+        </div>
+    </div>
+
+    <div class="am-form-group">
+        <label for="category" class="am-u-sm-2 am-form-label">日志分类:</label>
+        <div class="am-u-sm-10">
+            <input type="text" id="category" name="category" placeholder="日志分类">
         </div>
     </div>
 

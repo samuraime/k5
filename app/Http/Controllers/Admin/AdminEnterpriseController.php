@@ -15,11 +15,15 @@ class AdminEnterpriseController extends AdminController
             'id' => '编号',
             'name' => '企业名',
             'type' => '类型',
-            'representative' => '法人',
+            // 'representative' => '法人',
             'capital' => '注册资本',
-            'registration_number' => '注册号',
-            'registration_date' => '注册日期',
-            'registration_address' => '注册地址',
+            'office_address' => '办公地址',
+            'area' => '占地面积',
+            'staff_scale' => '员工规模',
+            'operation_scale' => '经营规模',
+            // 'registration_number' => '注册号',
+            // 'registration_date' => '注册日期',
+            // 'registration_address' => '注册地址',
         ];
 
         return view('admin.list', [

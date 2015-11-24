@@ -12,21 +12,21 @@
 @section('content')
 <form class="am-form am-form-horizontal">
     <div class="am-form-group">
-        <label for="title" class="am-u-sm-2 am-form-label">文章标题</label>
+        <label for="title" class="am-u-sm-2 am-form-label">文章标题:</label>
         <div class="am-u-sm-10">
             <input type="email" id="title" name="title" placeholder="文章标题">
         </div>
     </div>
 
     <div class="am-form-group">
-        <label for="content" class="am-u-sm-2 am-form-label">文章内容</label>
+        <label for="content" class="am-u-sm-2 am-form-label">文章内容:</label>
         <div class="am-u-sm-10">
             <textarea rows="10" id="content" name="content" placeholder="文章内容"></textarea>
         </div>
     </div>
 
     <div class="am-form-group">
-        <label for="show" class="am-u-sm-2 am-form-label">主页显示</label>
+        <label for="show" class="am-u-sm-2 am-form-label">主页显示:</label>
         <div class="am-u-sm-10">
             <label class="am-checkbox-inline">
                 <input type="checkbox" name="show" /> 是否显示

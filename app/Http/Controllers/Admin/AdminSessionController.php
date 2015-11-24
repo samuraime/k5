@@ -58,4 +58,17 @@ class AdminSessionController extends AdminController
             return response('Unauthorized', 401);
         }
     }
+
+    public function postCheckPassword(HttpRequest $request)
+    {
+        $this->validate($request, [
+            'password' => 'required',
+        ]);
+
+        if (password(Request::get('password')) == Account::find(Session::get('account.id'))->password) {
+            return response('ok');
+        } else {
+            abort(401);
+        }
+    }
 }

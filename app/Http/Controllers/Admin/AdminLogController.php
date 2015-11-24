@@ -15,6 +15,7 @@ class AdminLogController extends AdminController
         $fields = [
             'id' => '编号',
             'title' => '日志主题',
+            'category' => '日志分类',
             'author' => '发布者',
             'editor' => '最后编辑',
             'created_at' => '创建日期',
