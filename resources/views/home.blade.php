@@ -71,6 +71,15 @@
 							</div>
 						</div>
 						<div class="am-form-group">
+							<label for="captcha" class="am-u-sm-3 am-form-label">密码</label>
+							<div class="am-u-sm-6">
+								<input type="text" id="captcha" pattern="^\w{4}$" name="captcha" required autocomplete="off" placeholder="验证码"/>
+							</div>
+							<div class="am-u-sm-3">
+								<img id="captcha-img" src="/auth/captcha"/>
+							</div>
+						</div>
+						<div class="am-form-group">
 							<div class="am-u-sm-4 am-u-sm-offset-8">
 								<a href="/password/find">忘记密码?</a>
 							</div>
@@ -86,17 +95,21 @@
 		</div>
 		<script type="text/javascript">
 		$(function() {
+			$('#captcha-img').click(function() {
+				this.src += '?' + Date.now();
+			});
+
 			$('#login-form').validator({
 				validate: function(validity) {
-					if ($(validity.field).is('#password')) {
-						if (/^\S{6,20}$/.test($('#password').val())) {
+					if ($(validity.field).is('#captcha')) {
+						var captcha = $('#captcha').val();
+						if (/^\w{4}$/.test(captcha)) {
 							return $.ajax({
-								method: 'POST',
-								url: '/auth/login',
+								method: 'GET',
+								url: '/auth/check-captcha',
 								cache: false,
 								data: {
-									name: $('#name').val(),
-									password: $('#password').val(),
+									captcha: captcha,
 								},
 							}).then(function() {
 								validity.valid = true;
@@ -114,11 +127,11 @@
 				submit: function() {
 					var validity = this.isFormValid();
 					$.when(validity).then(function() {
-						window.location.reload();
+						// $('#login-form').submit();
+						return true;
 					}, function() {
 						return false;
 					});
-					return false;
 				}
 			});
 		})

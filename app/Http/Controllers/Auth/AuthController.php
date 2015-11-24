@@ -19,13 +19,12 @@ class AuthController extends Controller {
 		]);
 
 		if (!Session::has('captcha')) {
-			abort(403);
+			abort(401);
 		}
 
-		if (Session::get('captcha') == strtolower(Input::get('captcha'))) {
+		if (Session::get('captcha') == strtolower(Request::get('captcha'))) {
 			return response('ok');
 		} else {
-			Session::forget('captcha');
 			abort(403);
 		}
 	}
@@ -35,12 +34,11 @@ class AuthController extends Controller {
 		$captcha = new Captcha();
 		Session::put('captcha', strtolower($captcha->code));
 		$captcha->getImage();
-		die;
 	}
 
 	public function postLogin(HttpRequest $request)
 	{
-		if ($captcha = Session::has('catpcha')) {
+		if ($captcha = Session::get('captcha')) {
 			Session::forget('captcha');
 		} else {
 			abort(403);
