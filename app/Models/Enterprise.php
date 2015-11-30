@@ -5,5 +5,5 @@ use Illuminate\Database\Eloquent\Model;
 class Enterprise extends Model
 {
     protected $table = 'enterprise';
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 }

@@ -4,6 +4,7 @@ use Request;
 use HttpRequest;
 use App\Models\Log;
 use DB;
+use Session;
 
 class AdminLogController extends AdminController
 {
@@ -47,12 +48,17 @@ class AdminLogController extends AdminController
 
     public function postIndex(HttpRequest $request)
     {
-        // 还有好多验证
         $this->validate($request, [
-            'name' => 'required'
+            'title' => 'required',
+            'content' => 'required',
+            'comment' => 'string',
+            'category' => 'string',
         ]);
 
         $log = Log::create(Request::all());
+        $log->author = Session::get('account.id');
+        $log->editor = Session::get('account.id');
+        $log->save();
 
         return response()->json($log);
     }

@@ -2,7 +2,7 @@
     <div class="am-u-sm-12 am-u-md-6">
         <div class="am-btn-toolbar">
             <div class="am-btn-group am-btn-group-md">
-                <button id="add-item" type="button" class="am-btn am-btn-primary"><span class="am-icon-plus"></span> 新增</button>
+                <button id="add-item" type="button" class="am-btn am-btn-primary" @if (preg_match('/^\/admin\/message/i', $_SERVER['REQUEST_URI'])) disabled @endif ><span class="am-icon-plus"></span> 新增</button>
                 <button id="delete-items" type="button" class="am-btn am-btn-primary"><span class="am-icon-trash-o"></span> 删除</button>
             </div>
         </div>

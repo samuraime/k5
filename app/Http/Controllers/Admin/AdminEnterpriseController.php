@@ -8,6 +8,32 @@ class AdminEnterpriseController extends AdminController
 {
     public $table = 'enterprise';
     public $primaryNav = '企业信息';
+    public $typeMap = [
+        1 => '私营企业',
+        2 => '股份制企业',
+        3 => '集体所有制企业',
+        4 => '联营企业',
+        5 => '国有企业',
+        6 => '联营企业',
+        7 => '外商投资企业',
+        8 => '港、澳、台',
+        9 => '股份合作企业',
+    ];
+    public $staffScaleMap = [
+        1 => '20人以下',
+        2 => '20-100人',
+        3 => '100-500人',
+        4 => '100-500人',
+        5 => '2000人以上',
+    ];
+    public $operationScaleStaff = [
+        1 => '100万以下',
+        2 => '100-1000万',
+        3 => '1000万-1亿',
+        4 => '1-10亿',
+        5 => '10亿以上',
+    ];
+
 
     public function getIndex(HttpRequest $request)
     {
@@ -46,11 +72,22 @@ class AdminEnterpriseController extends AdminController
         return response()->json($pagination);
     }
 
+    public function getNew()
+    {
+        return view('admin.' . $this->table . '.edit', [
+            'primaryNav' => $this->primaryNav,
+            'typeMap' => $this->typeMap,
+            'staffScaleMap' => $this->staffScaleMap,
+            'operationScaleMap' => $this->operationScaleStaff,
+        ]);
+    }
+
     public function postIndex(HttpRequest $request)
     {
-        // 还有好多验证
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'capital' => 'digits_between:0,12',
+            'area' => 'digits_between:0,10',
         ]);
 
         $enterprise = Enterprise::create(Request::all());

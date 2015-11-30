@@ -8,12 +8,23 @@ class AdminAccountController extends AdminController
 {
     public $table = 'account';
     public $primaryNav = '系统管理';
+    public $permissions = [
+        'index' => '首页', 
+        'summary' => '数据汇总', 
+        'personnel' => '人才信息', 
+        'enterprise' => '企业信息', 
+        'log' => '访问日志', 
+        'message' => '留言记录', 
+        'article' => '文章管理',
+        'account' => '账号管理', 
+        'billboard' => '公告管理',
+    ];
 
     public function getIndex(HttpRequest $request)
     {
         $fields = [
             'id' => '编号',
-            'name' => '姓名',
+            'name' => '用户名',
             // 'nickname' => '显示名',
             'mobile' => '电话',
             'email' => '邮箱',
@@ -40,20 +51,32 @@ class AdminAccountController extends AdminController
         return parent::pagination(Account::select(['id', 'nickname', 'name', 'email', 'mobile', 'created_at', 'updated_at']));
     }
 
+    public function getNew()
+    {
+        return view('admin.' . $this->table . '.edit', [
+            'primaryNav' => $this->primaryNav,
+            'permissions' => $this->permissions,
+        ]);
+    }
+
     public function postIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'regex:/\S{6,20}/', 'unique:account,name'],
+            'name' => ['required', 'regex:/^\S{6,20}$/', 'unique:account,name'],
             'email' => 'required|email|unique:account,email',
-            'password' => ['requried', 'regex:/\S{6,20}/', 'confirmed'],
-            'password_confirmation' => 'requried',
-            'nickname' => 'string|max:20',
+            'password' => ['required', 'regex:/^\S{6,20}$/', 'confirmed'],
             'mobile' => 'integer',
-            'permission' => 'required|string|max:200'
+            'permission' => 'required|array',
         ]);
 
         $inputs = Request::all();
-        $account = Account::create($inputs);
+        $account = new Account;
+        $account->name = $inputs['name'];
+        $account->email = $inputs['email'];
+        $account->password = password($inputs['password']);
+        $account->mobile = isset($inputs['mobile']) ? $inputs['mobile'] : '';
+        $account->permission = json_encode(array_merge(['index'], $inputs['permission']));
+        $account->save();
 
         return response()->json($account);
     }

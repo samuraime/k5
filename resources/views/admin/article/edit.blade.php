@@ -10,18 +10,18 @@
 @section('nav-secondary', '新增文章')
 
 @section('content')
-<form class="am-form am-form-horizontal">
+<form class="am-form am-form-horizontal" data-am-validator method="POST" action="/admin/article">
     <div class="am-form-group">
         <label for="title" class="am-u-sm-2 am-form-label">文章标题:</label>
         <div class="am-u-sm-10">
-            <input type="email" id="title" name="title" placeholder="文章标题">
+            <input type="text" id="title" name="title" required minlength="1" placeholder="文章标题">
         </div>
     </div>
 
     <div class="am-form-group">
         <label for="content" class="am-u-sm-2 am-form-label">文章内容:</label>
         <div class="am-u-sm-10">
-            <textarea rows="10" id="content" name="content" placeholder="文章内容"></textarea>
+            <textarea rows="10" id="content" name="content" required minlength="1" placeholder="文章内容"></textarea>
         </div>
     </div>
 

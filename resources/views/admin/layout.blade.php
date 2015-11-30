@@ -25,6 +25,7 @@
         <div class="am-topbar-brand">
             <a href="/"><strong>人才交流中心</strong></a>
             <a href="/admin"><small>后台管理</small></a>
+            {{ var_dump(Session::get('errors')) }}
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}">
             <span class="am-sr-only">导航切换</span>

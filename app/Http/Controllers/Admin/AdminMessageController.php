@@ -43,17 +43,16 @@ class AdminMessageController extends AdminController
         return response()->json($pagination);
     }
 
-    public function postIndex(HttpRequest $request)
-    {
-        // 还有好多验证
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+    // public function postIndex(HttpRequest $request)
+    // {
+    //     $this->validate($request, [
+    //         'name' => 'required'
+    //     ]);
 
-        $message = Message::create(Request::all());
+    //     $message = Message::create(Request::all());
 
-        return response()->json($message);
-    }
+    //     return response()->json($message);
+    // }
 
     public function putIndex(HttpRequest $request)
     {

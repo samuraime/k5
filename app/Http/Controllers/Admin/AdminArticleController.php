@@ -4,6 +4,7 @@ use Request;
 use HttpRequest;
 use App\Models\Article;
 use DB;
+use Session;
 
 class AdminArticleController extends AdminController
 {
@@ -47,12 +48,15 @@ class AdminArticleController extends AdminController
 
     public function postIndex(HttpRequest $request)
     {
-        // 还有好多验证
         $this->validate($request, [
-            'name' => 'required'
+            'title' => 'required',
+            'content' => 'required',
         ]);
 
         $article = Article::create(Request::all());
+        $article->author = Session::get('account.id');
+        $article->editor = Session::get('account.id');
+        $article->save();
 
         return response()->json($article);
     }

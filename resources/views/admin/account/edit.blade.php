@@ -10,51 +10,50 @@
 @section('nav-secondary', '新增账号')
 
 @section('content')
-<form class="am-form am-form-horizontal">
+<form class="am-form am-form-horizontal" data-am-validator method="POST" action="/admin/account">
     <div class="am-form-group">
         <label for="name" class="am-u-sm-2 am-form-label">用户名:</label>
         <div class="am-u-sm-10">
-            <input type="text" id="name" name="name" placeholder="登录名">
+            <input type="text" id="name" name="name" required minlength="6" maxlength="20" placeholder="登录名">
         </div>
     </div>
 
     <div class="am-form-group">
         <label for="email" class="am-u-sm-2 am-form-label">电子邮箱:</label>
         <div class="am-u-sm-10">
-            <input type="email" id="email" name="email" placeholder="电子邮件">
+            <input type="email" id="email" name="email" required placeholder="电子邮件">
         </div>
     </div>
 
     <div class="am-form-group">
         <label for="mobile" class="am-u-sm-2 am-form-label">联系电话:</label>
         <div class="am-u-sm-10">
-            <input type="text" id="mobile" name="mobile" placeholder="联系电话">
+            <input type="text" id="mobile" name="mobile" pattern="\d+" placeholder="联系电话">
         </div>
     </div>
 
     <div class="am-form-group">
         <label for="password" class="am-u-sm-2 am-form-label">登录密码:</label>
         <div class="am-u-sm-10">
-            <input type="password" id="password" name="password" placeholder="登录密码">
+            <input type="password" id="password" name="password" requried minlength="6" maxlength="20" placeholder="登录密码">
         </div>
     </div>
 
     <div class="am-form-group">
-        <label for="password_comfirmation" class="am-u-sm-2 am-form-label">确认密码:</label>
+        <label for="password_confirmation" class="am-u-sm-2 am-form-label">确认密码:</label>
         <div class="am-u-sm-10">
-            <input type="password" id="password_comfirmation" name="password_comfirmation" placeholder="确认密码">
+            <input type="password" id="password_confirmation" name="password_confirmation" requried data-equal-to="#password" placeholder="确认密码">
         </div>
     </div>
 
     <div class="am-form-group">
         <label for="permission" class="am-u-sm-2 am-form-label">权限设置:</label>
         <div class="am-u-sm-10">
+            @foreach ($permissions as $key => $permission)
             <label class="am-checkbox-inline">
-                <input type="checkbox" name="permission[]" value="index" disabled checked>首页
+                <input type="checkbox" name="permission[]" value="{{ $key }}" @if('index' == $key) disabled checked @endif>{{ $permission }}
             </label>
-            <label class="am-checkbox-inline">
-                <input type="checkbox" name="permission[]" value="option2" /> 同时可以选我
-            </label>
+            @endforeach
         </div>
     </div>
 
