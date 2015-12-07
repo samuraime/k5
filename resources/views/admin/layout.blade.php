@@ -96,7 +96,7 @@
                             <a href="/admin/message">
                                 <span class="am-icon-pencil-square-o"></span> 留言记录</a>
                         </li>
-                        @endif @if (in_array('article', Session::get('account.permission')) || in_array('account', Session::get('account.permission')))
+                        @endif @if (in_array('article', Session::get('account.permission')) || in_array('billboard', Session::get('account.permission')) || in_array('account', Session::get('account.permission')))
                         <li class="#">
                             <a data-am-collapse="{target: '#collapse-nav'}">
                                 <span class="am-icon-puzzle-piece"></span> 系统管理
@@ -107,6 +107,11 @@
                                 <li>
                                     <a href="/admin/article">
                                         <span class="am-icon-list-alt"></span> 前台文章</a>
+                                </li>
+                                @endif @if (in_array('billboard', Session::get('account.permission')))
+                                <li>
+                                    <a href="/admin/billboard">
+                                        <span class="am-icon-calendar-o"></span> 公告管理</a>
                                 </li>
                                 @endif @if (in_array('account', Session::get('account.permission')))
                                 <li>
@@ -255,9 +260,9 @@
                             alert('遇到了什么错误, 请稍后再试');
                         }
                     });
-                } else {
-                    return false;
                 }
+
+                return false;
             }
         });
         $('#user-password-form').validator({

@@ -15,6 +15,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
     Route::controllers([
         'account' => 'AdminAccountController',
         'article' => 'AdminArticleController',
+        'billboard' => 'AdminBillboardController',
         'enterprise' => 'AdminEnterpriseController',
         'index' => 'AdminIndexController',
         'log' => 'AdminLogController',

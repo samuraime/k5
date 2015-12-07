@@ -63,7 +63,7 @@ class AdminController extends Controller
 
     public function getNew()
     {
-        return view('admin.' . $this->table . '.edit', [
+        return view('admin.' . $this->table . '.new', [
             'primaryNav' => $this->primaryNav,
         ]);
     }

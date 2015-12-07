@@ -53,7 +53,7 @@ class AdminAccountController extends AdminController
 
     public function getNew()
     {
-        return view('admin.' . $this->table . '.edit', [
+        return view('admin.' . $this->table . '.new', [
             'primaryNav' => $this->primaryNav,
             'permissions' => $this->permissions,
         ]);

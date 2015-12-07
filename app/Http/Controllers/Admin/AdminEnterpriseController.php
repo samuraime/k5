@@ -74,7 +74,7 @@ class AdminEnterpriseController extends AdminController
 
     public function getNew()
     {
-        return view('admin.' . $this->table . '.edit', [
+        return view('admin.' . $this->table . '.new', [
             'primaryNav' => $this->primaryNav,
             'typeMap' => $this->typeMap,
             'staffScaleMap' => $this->staffScaleMap,
