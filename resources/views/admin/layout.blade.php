@@ -76,9 +76,9 @@
                                 <span class="am-fr am-margin-right"></span>
                             </a>
                         </li>
-                        @endif @if (in_array('personnel', Session::get('account.permission')))
+                        @endif @if (in_array('talent', Session::get('account.permission')))
                         <li>
-                            <a href="/admin/personnel">
+                            <a href="/admin/talent">
                                 <span class="am-icon-file"></span> 人才信息</a>
                         </li>
                         @endif @if (in_array('enterprise', Session::get('account.permission')))
@@ -123,13 +123,14 @@
                         </li>
                         @endif
                     </ul>
-                    <div class="am-panel am-panel-default admin-sidebar-panel">
-                        <div class="am-panel-bd">
-                            <p>
-                                <span class="am-icon-bookmark"></span> 公告</p>
-                            <p>时光静好，与君语；细水流年，与君同。</p>
+                    @if ($billboard)
+                        <div class="am-panel am-panel-default admin-sidebar-panel">
+                            <div class="am-panel-bd">
+                                <p><span class="am-icon-bookmark"></span> 公告</p>
+                                <p>{{ $billboard->content }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <!-- sidebar end -->

@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use DB;
-use App\Models\Personnel;
+use App\Models\Talent;
 use App\Models\Enterprise;
 use App\Models\Log;
 use App\Models\Message;
@@ -16,7 +16,7 @@ class AdminSummaryController extends AdminController
     {
         $options = [
             'table' => [
-                'personnel' => [
+                'talent' => [
                     'name' => '人才信息',
                     'charts' => [
                         'line' => [
@@ -178,7 +178,7 @@ class AdminSummaryController extends AdminController
     {
         $this->validate($request, [
             'type' => 'required|in:line,bar,column,pie,scatter',
-            'table' => 'required|in:personnel,enterprise,log,message',
+            'table' => 'required|in:talent,enterprise,log,message',
             'start' => ['regex:/^\d{4}-\d{2}-\d{2}$/'],
             'end' => ['regex:/^\d{4}-\d{2}-\d{2}$/'],
         ]);
@@ -301,9 +301,9 @@ class AdminSummaryController extends AdminController
         ]);
     }
 
-    // public function getPersonnelByGenderMonth()
+    // public function getTalentByGenderMonth()
     // {
-    //     $data = DB::table('personnel')
+    //     $data = DB::table('talent')
     //         ->select(DB::raw('COUNT(id) AS num, gender, DATE_FORMAT(birth, "%m") AS month'))
     //         ->groupBy('gender')
     //         ->groupBy(DB::raw('DATE_FORMAT(birth, "%m")'))
@@ -320,9 +320,9 @@ class AdminSummaryController extends AdminController
     //     return response()->json(['male' => $maleData, 'female' => $femaleData]);
     // }
 
-    // public function getPersonnelByGenderHeightWeight()
+    // public function getTalentByGenderHeightWeight()
     // {
-    //     $data = DB::table('personnel')
+    //     $data = DB::table('talent')
     //         ->select('gender', 'height', 'weight')
     //         ->where('height', '>', 100)
     //         ->where('weight', '<', 150)
@@ -338,9 +338,9 @@ class AdminSummaryController extends AdminController
     //     return response()->json(['male' => $maleData, 'female' => $femaleData]);
     // }
 
-    // public function getPersonnelByOccupation()
+    // public function getTalentByOccupation()
     // {
-    //     $data = DB::table('personnel')
+    //     $data = DB::table('talent')
     //         ->select(DB::raw('COUNT(*) AS count'), 'occupation')
     //         ->groupBy('occupation')
     //         ->get();

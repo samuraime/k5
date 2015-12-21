@@ -15,8 +15,8 @@
             <tbody>
             </tbody>
         </table>
-        @include('admin.pagination')
     </div>
+    @include('admin.pagination')
 </div>
 <script type="text/javascript">
 var renderDataTable = function(pagination) {
@@ -28,7 +28,7 @@ var renderDataTable = function(pagination) {
         var link = 0;
         for (var i in dataTableFields) {
             link++;
-            tr += link == 2 ? ('<td><a href="' + url + '/view?id=' + item.id + '">' + item[i] + '</a></td>') : ('<td>' + item[i] + '</td>');
+            tr += link == 2 ? ('<td><a href="' + url + '/edit?id=' + item.id + '">' + item[i] + '</a></td>') : ('<td>' + item[i] + '</td>');
         }
         tr += '<td><a class="am-btn am-btn-default am-btn-xs am-text-secondary data-table-edit" href="' + url + '/edit?id=' + item.id + '" target="_self"><span class="am-icon-pencil-square-o"></span>编辑</a><button class="am-btn am-btn-default am-btn-xs am-text-danger data-table-delete"><span class="am-icon-pencil-square-o"></span>删除</button></td></tr>';
         tbody += tr;

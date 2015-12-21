@@ -1,52 +1,14 @@
-@extends('admin.layout')
-
-@section('title', '新增日志')
-
-@section('head-assets')
-
-@stop
-
-@section('nav-primary', $primaryNav)
-@section('nav-secondary', '新增日志')
-
-@section('content')
-<form class="am-form am-form-horizontal" data-am-validator method="POST" action="/admin/log">
-    <div class="am-form-group">
-        <label for="title" class="am-u-sm-2 am-form-label">日志标题:</label>
-        <div class="am-u-sm-10">
-            <input type="text" id="title" name="title" required minlength="1" placeholder="日志标题">
-        </div>
+@extends('admin.layout') @section('title', '日志列表') @section('head-assets')
+<script type="text/javascript">
+var dataTableFields = {
+    !!json_encode($fields) !!
+};
+</script>
+@stop @section('content')
+<div class="am-cf am-padding border-bottom">
+    <div class="am-fl am-cf">
+        <strong class="am-text-primary am-text-lg">访问日志</strong>
+        <small>日志列表</small>
     </div>
-
-    <div class="am-form-group">
-        <label for="content" class="am-u-sm-2 am-form-label">日志内容:</label>
-        <div class="am-u-sm-10">
-            <textarea rows="10" id="content" name="content" required minlength="1" placeholder="日志内容"></textarea>
-        </div>
-    </div>
-
-    <div class="am-form-group">
-        <label for="comment" class="am-u-sm-2 am-form-label">备注:</label>
-        <div class="am-u-sm-10">
-            <textarea rows="2" id="comment" name="comment" placeholder="备注"></textarea>
-        </div>
-    </div>
-
-    <div class="am-form-group">
-        <label for="category" class="am-u-sm-2 am-form-label">日志分类:</label>
-        <div class="am-u-sm-10">
-            <input type="text" id="category" name="category" placeholder="日志分类">
-        </div>
-    </div>
-
-    <div class="am-form-group">
-        <div class="am-u-sm-10 am-u-sm-offset-2">
-            <button type="submit" class="am-btn am-btn-primary">提交</button>
-        </div>
-    </div>
-</form>
-@stop
-
-@section('foot-assets')
-
-@stop
+</div>
+@include('admin.search-box') @include('admin.data-table') @stop @section('foot-assets') @stop

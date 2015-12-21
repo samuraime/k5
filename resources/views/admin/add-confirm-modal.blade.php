@@ -2,14 +2,13 @@
 <div class="am-modal am-modal-confirm" tabindex="-1" id="add-confirm-modal">
     <div class="am-modal-dialog">
         <div class="am-modal-hd"></div>
-        <div class="am-modal-bd">
+        <div class="am-modal-bd am-text-success">
             操作成功
         </div>
         <div class="am-modal-footer">
-            <a id="add-confirm-continue" class="am-btn">继续新增</a>
-            <a id="add-confirm-list" class="am-btn">返回列表</a>
-            <a id="add-confirm-view" data-id="" class="am-btn">返回查看</a>
-            <a id="add-confirm-edit" data-id="" class="am-btn">返回编辑</a>
+            <a id="add-confirm-continue" class="am-btn am-btn-secondary">继续新增</a>
+            <a id="add-confirm-list" class="am-btn am-btn-secondary">返回列表</a>
+            <a id="add-confirm-view" data-id="" class="am-btn am-btn-primary">返回查看</a>
         </div>
     </div>
 </div>
@@ -18,6 +17,10 @@
 function addConfirm(id) {
     $('#add-confirm-view').attr('data-id', id);
     $('#add-confirm-edit').attr('data-id', id);
+    var modal = $('#add-confirm-modal');
+    modal.modal({
+        closeViaDimmer: false,        
+    });
     $('#add-confirm-modal').modal('open');
 }
 
@@ -61,7 +64,8 @@ $(function() {
                         addConfirm(data.id);
                     },
                     error: function(data) {
-                        alert(data);
+                        console.log(data);
+                        alert('额...好像哪里出错了, 稍事休息, 重试一下');
                     }
                 });
 

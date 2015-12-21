@@ -1,6 +1,9 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Article;
+use HttpRequest;
+use Request;
+use App\Models\Message;
 
 class HomeController extends Controller {
 
@@ -34,8 +37,31 @@ class HomeController extends Controller {
 	{
 		$article = Article::where('show', 1)->first();
 
-		return view('home', [
+		return view('home.index', [
 			'article' => $article->toArray(),
+		]);
+	}
+
+	public function getMessage()
+	{
+		return view('home.message');
+	}
+
+	public function postMessage(HttpRequest $request) 
+	{
+		$this->validate($request, [
+			'title' => 'required',
+			'content' => 'required',
+			'type' => 'in:1,2,个人,企业',
+			'name' => 'required',
+			'mobile' => 'integer',
+			'email' => 'email',
+		]);
+
+		$message = Message::create(Request::all());
+
+		return view('home.message-success', [
+			'message' => $message
 		]);
 	}
 }

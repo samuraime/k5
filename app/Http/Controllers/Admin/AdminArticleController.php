@@ -51,9 +51,14 @@ class AdminArticleController extends AdminController
         $this->validate($request, [
             'title' => 'required',
             'content' => 'required',
+            'show' => 'in:on,off',
         ]);
 
         $article = Article::create(Request::all());
+        if (Request::get('show') == 'on') {
+            Article::where('show', 1)->update(['show' => 0]);
+            $article->show = 1;
+        }
         $article->author = Session::get('account.id');
         $article->editor = Session::get('account.id');
         $article->save();
@@ -65,10 +70,16 @@ class AdminArticleController extends AdminController
     {
         $this->validate($request, [
             'id' => 'required|exists:article,id',
+            'content' => 'required',
+            'show' => 'in:on,off',
         ]);
-
+        
         $inputs = Request::all();
         $article = Article::find($inputs['id']);
+        if (Request::get('show') == 'on') {
+            Article::where('show', 1)->update(['show' => 0]);
+            $article->show = 1;
+        }
         $article->update($inputs);
 
         return response()->json($article);

@@ -156,6 +156,7 @@ z-indent: 24px;
     -webkit-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+    overflow-y: hidden;
   }
   .admin-offcanvas-bar:after {
     content: none;
@@ -240,7 +241,7 @@ z-indent: 24px;
   padding: .5rem;
 }
 
-.table-main button {
+.table-main button, .table-main .am-btn {
   background: #fff;
 }
 
@@ -356,3 +357,16 @@ h3.yaheis{padding-left: 15px;font-size: 16px;}
 h3.yaheis span{color:#fff;background:#ff6600; font-size:14px;font-weight:normal;padding:0 10px;}
 h3.yaheis span.optional{background:#cccccc;}
 
+.am-selected-list {
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 300;
+}
+
+#pagination {
+    width: 100%;
+}
+
+#pagination-form {
+    margin-top: 10px;
+}

@@ -19,7 +19,7 @@ class AdminIndexController extends AdminController
 
     private function stat()
     {
-        $tables = ['personnel', 'enterprise', 'log', 'message'];
+        $tables = ['talent', 'enterprise', 'log', 'message'];
         $list = [];
         foreach ($tables as $table) {
             $model = 'App\\Models\\' . ucfirst($table);

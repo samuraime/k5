@@ -1,28 +1,21 @@
 @extends('admin.layout')
 
-@section('title', '新增文章')
+@section('title', '新增公告')
 
 @section('head-assets')
 
 @stop
 
 @section('nav-primary', $primaryNav)
-@section('nav-secondary', '新增文章')
+@section('nav-secondary', '新增公告')
 
 @section('content')
 @include('admin.add-confirm-modal')
 <form id="add-form" class="am-form am-form-horizontal" data-am-validator method="POST" action="/admin/article">
     <div class="am-form-group">
-        <label for="title" class="am-u-sm-2 am-form-label">文章标题:</label>
+        <label for="content" class="am-u-sm-2 am-form-label">公告内容:</label>
         <div class="am-u-sm-10">
-            <input type="text" id="title" name="title" required minlength="1" placeholder="文章标题">
-        </div>
-    </div>
-
-    <div class="am-form-group">
-        <label for="content" class="am-u-sm-2 am-form-label">文章内容:</label>
-        <div class="am-u-sm-10">
-            <textarea rows="10" id="content" name="content" required minlength="1" placeholder="文章内容"></textarea>
+            <textarea rows="10" id="content" name="content" required minlength="1" placeholder="公告内容"></textarea>
         </div>
     </div>
 
@@ -44,9 +37,4 @@
 @stop
 
 @section('foot-assets')
-<script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="/js/ueditor/ueditor.all.js"></script>
-<script type="text/javascript">
-    var ue = UE.getEditor('content');
-</script>
 @stop

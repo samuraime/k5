@@ -20,9 +20,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
         'index' => 'AdminIndexController',
         'log' => 'AdminLogController',
         'message' => 'AdminMessageController',
-        'personnel' => 'AdminPersonnelController',
         'session' => 'AdminSessionController',
         'summary' => 'AdminSummaryController',
+        'talent' => 'AdminTalentController',
         '/' => 'AdminIndexController'
     ]);
 });

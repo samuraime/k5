@@ -21,7 +21,7 @@ class AdminController extends Controller
         if (isset($inputs['searchKey']) && $inputs['searchKey'] && isset($inputs['searchValue']) && $inputs['searchValue']) {
             $query = $query->where($inputs['searchKey'], 'LIKE', "%{$inputs['searchValue']}%");
         }
-        $pagination = $query->paginate($perPage);
+        $pagination = $query->orderBy('id', 'DESC')->paginate($perPage);
         $pagination = $pagination->toArray();
         
         extract($pagination);

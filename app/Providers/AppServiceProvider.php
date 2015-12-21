@@ -1,6 +1,8 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Billboard;
+use View;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -11,7 +13,8 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+		$billboard = Billboard::where('show', 1)->first();
+		View::share('billboard', $billboard);
 	}
 
 	/**

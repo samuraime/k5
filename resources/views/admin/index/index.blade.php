@@ -7,10 +7,10 @@
 @section('content')
 <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
     <li>
-        <a href="/admin/personnel" class="am-text-success">
+        <a href="/admin/talent" class="am-text-success">
             <span class="am-icon-btn am-icon-file"></span>
             <br>人才信息
-            <br>{{ $stat['personnel'] }}
+            <br>{{ $stat['talent'] }}
         </a>
     </li>
     <li>
