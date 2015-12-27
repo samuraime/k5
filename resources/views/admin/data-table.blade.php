@@ -30,7 +30,7 @@ var renderDataTable = function(pagination) {
             link++;
             tr += link == 2 ? ('<td><a href="' + url + '/edit?id=' + item.id + '">' + item[i] + '</a></td>') : ('<td>' + item[i] + '</td>');
         }
-        tr += '<td><a class="am-btn am-btn-default am-btn-xs am-text-secondary data-table-edit" href="' + url + '/edit?id=' + item.id + '" target="_self"><span class="am-icon-pencil-square-o"></span>编辑</a><button class="am-btn am-btn-default am-btn-xs am-text-danger data-table-delete"><span class="am-icon-pencil-square-o"></span>删除</button></td></tr>';
+        tr += '<td><a class="am-btn am-btn-default am-btn-xs am-text-secondary data-table-edit" href="' + url + '/edit?id=' + item.id + '" target="_self"><span class="am-icon-fw am-icon-pencil-square-o"></span>编辑</a><button class="am-btn am-btn-default am-btn-xs am-text-danger data-table-delete"><span class="am-icon-fw am-icon-trash"></span>删除</button></td></tr>';
         tbody += tr;
         // $('#data-table tbody').append(tr);
     });

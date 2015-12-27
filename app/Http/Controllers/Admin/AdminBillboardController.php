@@ -24,7 +24,6 @@ class AdminBillboardController extends AdminController
 
         return view('admin.list', [
                 'fields' => $fields,
-                'primaryNav' => $this->primaryNav,
                 'secondaryNav' => '公告列表',
             ]
         );
@@ -59,6 +58,8 @@ class AdminBillboardController extends AdminController
         $billboard->editor = Session::get('account.id');
         $billboard->save();
 
+        $this->setOnlyShow($billboard);
+
         return response()->json($billboard);
     }
 
@@ -66,11 +67,14 @@ class AdminBillboardController extends AdminController
     {
         $this->validate($request, [
             'id' => 'required|exists:billboard,id',
+            'content' => 'required',
         ]);
 
         $inputs = Request::all();
+        $inputs['show'] = (int)(isset($inputs['show']) && $inputs['show'] == 'on');
         $billboard = Billboard::find($inputs['id']);
         $billboard->update($inputs);
+        $this->setOnlyShow($billboard);
 
         return response()->json($billboard);
     }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>K5 - @yield('title')</title>
+    <title>海创园人才管理 - @yield('title')</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -15,21 +15,20 @@
     <link rel="stylesheet" href="/css/admin.css">
     <script src="/js/jquery/jquery.min.js"></script>
     @yield('head-assets')
-    <!--[if lte IE 9]>
-    <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a> 以获得更好的体验！</p>
-    <![endif]-->
 </head>
 
 <body>
+    <!--[if lte IE 9]>
+    <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a> 以获得更好的体验！</p>
+    <![endif]-->
     <header class="am-topbar admin-header">
         <div class="am-topbar-brand">
-            <a href="/"><strong>人才交流中心</strong></a>
+            <a href="/"><strong>海创园人才管理</strong></a>
             <a href="/admin"><small>后台管理</small></a>
-            {{ var_dump(Session::get('errors')) }}
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}">
             <span class="am-sr-only">导航切换</span>
-            <span class="am-icon-bars"></span>
+            <span class="am-icon-fw am-icon-bars"></span>
         </button>
         <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
@@ -37,26 +36,26 @@
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                         <span class="am-icon-user"> {{ Session::get('account.name') }}</span>
-                        <span class="am-icon-caret-down"></span>
+                        <span class="am-icon-fw am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
                         <li>
                             <a onclick="$('#profile-modal').modal('open')">
-                                <span class="am-icon-user"></span> 个人资料</a>
+                                <span class="am-icon-fw am-icon-user"></span> 个人资料</a>
                         </li>
                         <li>
                             <a onclick="$('#password-modal').modal('open')">
-                                <span class="am-icon-cog"></span> 修改密码</a>
+                                <span class="am-icon-fw am-icon-cog"></span> 修改密码</a>
                         </li>
                         <li>
                             <a href="/auth/logout">
-                                <span class="am-icon-power-off"></span> 退出登录</a>
+                                <span class="am-icon-fw am-icon-power-off"></span> 退出登录</a>
                         </li>
                     </ul>
                 </li>
                 <li class="am-hide-sm-only">
                     <a href="javascript:;" id="admin-fullscreen">
-                        <span class="am-icon-arrows-alt"></span>
+                        <span class="am-icon-fw am-icon-arrows-alt"></span>
                         <span class="admin-fullText">开启全屏</span>
                     </a>
                 </li>
@@ -72,62 +71,62 @@
                         @if (in_array('summary', Session::get('account.permission')))
                         <li>
                             <a class="am-cf" href="/admin/summary">
-                                <span class="am-icon-area-chart"></span> 数据汇总
+                                <span class="am-icon-fw am-icon-area-chart"></span> 数据汇总
                                 <span class="am-fr am-margin-right"></span>
                             </a>
                         </li>
                         @endif @if (in_array('talent', Session::get('account.permission')))
                         <li>
                             <a href="/admin/talent">
-                                <span class="am-icon-file"></span> 人才信息</a>
+                                <span class="am-icon-fw am-icon-file"></span> 人才信息</a>
                         </li>
                         @endif @if (in_array('enterprise', Session::get('account.permission')))
                         <li>
                             <a href="/admin/enterprise" class="am-cf">
-                                <span class="am-icon-check am-icon-file-text"></span> 企业信息</a>
+                                <span class="am-icon-fw am-icon-check am-icon-fw am-icon-file-text"></span> 企业信息</a>
                         </li>
                         @endif @if (in_array('log', Session::get('account.permission')))
                         <li>
                             <a href="/admin/log">
-                                <span class="am-icon-calendar"></span> 访问日志</a>
+                                <span class="am-icon-fw am-icon-calendar"></span> 访问日志</a>
                         </li>
                         @endif @if (in_array('message', Session::get('account.permission')))
                         <li>
                             <a href="/admin/message">
-                                <span class="am-icon-pencil-square-o"></span> 留言记录</a>
+                                <span class="am-icon-fw am-icon-pencil-square-o"></span> 留言记录</a>
                         </li>
                         @endif @if (in_array('article', Session::get('account.permission')) || in_array('billboard', Session::get('account.permission')) || in_array('account', Session::get('account.permission')))
                         <li class="#">
                             <a data-am-collapse="{target: '#collapse-nav'}">
-                                <span class="am-icon-puzzle-piece"></span> 系统管理
-                                <span class="am-icon-angle-right am-fr am-margin-right"></span>
+                                <span class="am-icon-fw am-icon-puzzle-piece"></span> 系统管理
+                                <span class="am-icon-fw am-icon-angle-right am-fr am-margin-right"></span>
                             </a>
                             <ul class="am-list am-collapse admin-sidebar-sub{{ preg_match('/\/admin\/(article)|(account)|(billboard)/', $_SERVER['REQUEST_URI']) ? ' am-in' : '' }}" id="collapse-nav">
                                 @if (in_array('article', Session::get('account.permission')))
                                 <li>
                                     <a href="/admin/article">
-                                        <span class="am-icon-list-alt"></span> 前台文章</a>
+                                        <span class="am-icon-fw am-icon-list-alt"></span> 前台文章</a>
                                 </li>
                                 @endif @if (in_array('billboard', Session::get('account.permission')))
                                 <li>
                                     <a href="/admin/billboard">
-                                        <span class="am-icon-calendar-o"></span> 公告管理</a>
+                                        <span class="am-icon-fw am-icon-calendar-o"></span> 公告管理</a>
                                 </li>
                                 @endif @if (in_array('account', Session::get('account.permission')))
                                 <li>
                                     <a href="/admin/account">
-                                        <span class="am-icon-table"></span> 账号管理</a>
+                                        <span class="am-icon-fw am-icon-table"></span> 账号管理</a>
                                 </li>
                                 @endif
                             </ul>
                         </li>
                         @endif
                     </ul>
-                    @if ($billboard)
+                    @if ($globalBillboard)
                         <div class="am-panel am-panel-default admin-sidebar-panel">
                             <div class="am-panel-bd">
-                                <p><span class="am-icon-bookmark"></span> 公告</p>
-                                <p>{{ $billboard->content }}</p>
+                                <p><span class="am-icon-fw am-icon-bookmark"></span> 公告</p>
+                                <p>{{ $globalBillboard->content }}</p>
                             </div>
                         </div>
                     @endif

@@ -2,8 +2,8 @@
 
 use Eloquent;
 
-class Enterprise extends Eloquent
+class TalentRelation extends Eloquent
 {
-    protected $table = 'enterprise';
+    protected $table = 'talent_relation';
     protected $guarded = ['id', 'created_at', 'updated_at'];
 }

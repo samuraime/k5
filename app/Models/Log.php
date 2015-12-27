@@ -1,8 +1,8 @@
 <?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
-class Log extends Model
+class Log extends Eloquent
 {
     protected $table = 'log';
     protected $guarded = ['id', 'author', 'editor', 'created_at', 'updated_at'];

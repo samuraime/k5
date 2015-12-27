@@ -1,13 +1,13 @@
 @extends('admin.layout')
 
-@section('title', '新增人才')
+@section('title', '新增')
 
 @section('head-assets')
 
 @stop
 
 @section('nav-primary', $primaryNav)
-@section('nav-secondary', '新增人才')
+@section('nav-secondary', '新增')
 
 @section('content')
 <!-- 新增条目结果框 start -->
@@ -18,19 +18,34 @@
             操作成功
         </div>
         <div class="am-modal-footer">
-            <a id="add-confirm-continue" class="am-btn am-btn-danger">重新新增</a>
-            <a id="add-confirm-list" class="am-btn am-btn-danger">返回列表</a>
-            <a id="add-confirm-view" class="am-btn am-btn-primary">继续编辑</a>
+            <!-- <span id="add-confirm-list" class="am-modal-btn am-text-warning">返回列表</span> -->
+            <span id="add-confirm-new" class="am-modal-btn am-text-warning">重新新增</span>
+            <span id="add-confirm-edit" class="am-modal-btn am-text-primary">继续编辑</span>
         </div>
     </div>
 </div>
 <!-- 新增条目结果框 end -->
+
+<!-- 单条目删除模态框 start -->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="delete-confirm-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"></div>
+        <div class="am-modal-bd am-text-danger">
+            确定要删除此信息吗？
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<!-- 单条目删除模态框 end -->
 <script type="text/javascript">
 function addConfirm() {
     $('#add-confirm-modal').modal('open');
 }
 
-$('#add-confirm-continue').click(function(event) {
+$('#add-confirm-new').click(function(event) {
     event.preventDefault();
     window.location.reload();
 });
@@ -40,35 +55,49 @@ $('#add-confirm-list').click(function(event) {
     window.location.href = window.location.pathname.match(/^\/admin\/\w+\//i);
 });
 
-// $('#add-confirm-view').click(function(event) {
-//     event.preventDefault();
-//     if ($(this).attr('data-id')) {
-//         window.location.href = window.location.pathname.replace(/\/new/i, '/view?id=') + $(this).attr('data-id');
-//     }
-// });
-
 $('#add-confirm-edit').click(function(event) {
     $('#add-confirm-modal').modal('close');
 });
-</script>
 
-<script type="text/javascript">
+function setTid(id) {
+    console.log(id)
+    $('.tid').val(id);
+}
+
+function setId(form, id) {
+    $(form).find('.id').val(id);
+}
+
 $(function() {
-    $('#add-form').validator({
+    $('.talent-form').validator({
         submit: function() {
+            var form = this.$element[0];
+            var isMainForm = form.getAttribute('id').indexOf('talent-') == -1;
+            if (!(isMainForm || $(form).find('.tid').val())) {
+                alert('请先保存基本信息', 'warning');
+                return false;
+            }
+            var hasPrimaryKey = $(form).find('#id').val();
+            var formData = new FormData(form);
+            hasPrimaryKey && formData.append('_method', 'PUT');
+            var url = '/admin/talent' + (isMainForm ? '' : '/' + form.getAttribute('id').replace(/talent-/, ''));
             if (this.isFormValid()) {
                 $.ajax({
-                    url: window.location.pathname.match(/^\/admin\/\w+/i),
+                    url: url,
                     method: 'POST',
-                    data: new FormData(document.getElementById('add-form')),
+                    data: formData,
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        addConfirm(data.id);
+                        if (isMainForm) {
+                            setTid(data.id);
+                        }
+                        setId(form, data.id);
+                        addConfirm();
                     },
                     error: function(data) {
                         console.log(data);
-                        alert('额...好像哪里出错了, 稍事休息, 重试一下');
+                        alert('额...好像哪里出错了, 刷新重试一下', 'danger');
                     }
                 });
 
@@ -89,7 +118,8 @@ $(function() {
         </div>
         <div id="collapse-talent" class="am-panel-collapse am-collapse am-in">
             <div class="am-panel-bd">
-                <form class="am-form am-form-horizontal" data-am-validator>
+                <form id="main-form" class="am-form am-form-horizontal talent-form" data-am-validator>
+                    <input type="hidden" class="id" autocomplete="off" name="id" id="id" value="" />
                     <div class="am-form-group">
                         <label for="name" class="am-u-sm-2 am-form-label">姓名:</label>
                         <div class="am-u-sm-4">
@@ -97,21 +127,29 @@ $(function() {
                         </div>
                         <label for="gender" class="am-u-sm-2 am-form-label">性别:</label>
                         <div class="am-u-sm-4">
-                            <select id="gender" name="gender" required data-am-selected="{btnWidth: '100%'}">
-                                <option value="未知" selected>未知</option>
-                                <option value="男">男</option>
+                            <select id="gender" name="gender" minlength="1" data-am-selected="{btnWidth: '100%'}">
+                                <option value="男" selected>男</option>
                                 <option value="女">女</option>
+                                <!-- <option value="未知">未知</option> -->
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group">
                         <label for="nationality" class="am-u-sm-2 am-form-label">国籍:</label>
                         <div class="am-u-sm-4">
-                            <input type="text" id="nationality" name="nationality" placeholder="国籍">
+                            <select id="nationality" name="nationality" minlength="1" data-am-selected="{btnWidth: '100%'}">
+                                @foreach($countries as $country)
+                                <option value="{{ $country }}" @if($country == '中国') selected @endif>{{ $country }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <label for="nation" class="am-u-sm-2 am-form-label">民族:</label>
                         <div class="am-u-sm-4">
-                            <input type="text" id="nation" name="nation" maxlength="20" placeholder="民族">
+                            <select id="nation" name="nation" minlength="1" data-am-selected="{btnWidth: '100%'}">
+                                @foreach($nations as $nation)
+                                <option value="{{ $nation }}" @if($nation == '汉族') selected @endif>{{ $nation }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="am-form-group">
@@ -119,10 +157,10 @@ $(function() {
                         <div class="am-u-sm-4">
                             <input type="text" id="birth" name="birth" pattern="\d{4}-\d{2}" data-am-datepicker="{format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'}" placeholder="出生年月">
                         </div>
-                        <label for="martial" class="am-u-sm-2 am-form-label">婚姻状况:</label>
+                        <label for="marital" class="am-u-sm-2 am-form-label">婚姻状况:</label>
                         <div class="am-u-sm-4">
-                            <select id="martial" name="martial" data-am-selected="{btnWidth: '100%'}">
-                                <option value="单身" selected>单身</option>
+                            <select id="marital" name="marital" data-am-selected="{btnWidth: '100%'}">
+                                <option value="未婚" selected>未婚</option>
                                 <option value="已婚">已婚</option>
                                 <option value="离异">离异</option>
                             </select>
@@ -230,7 +268,10 @@ $(function() {
                     <div class="am-form-group">
                         <label for="returnee" class="am-u-sm-2 am-form-label">是否海归:</label>
                         <div class="am-u-sm-4">
-                            <input type="text" id="returnee" name="returnee" placeholder="是否海归">
+                            <select id="returnee" name="returnee" minlength="1" data-am-selected="{btnWidth: '100%'}">
+                                <option value="否" selected>否</option>
+                                <option value="是">是</option>
+                            </select>
                         </div>
                         <label for="foreignOffice" class="am-u-sm-2 am-form-label">归国前单位:</label>
                         <div class="am-u-sm-4">
@@ -262,22 +303,28 @@ $(function() {
 
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                            <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="am-panel am-panel-default">
+    <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="experience">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-experience'}">
                 经历信息
+                <span class="am-fr">
+                    <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
+                    <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
+                </span>
             </h4>
         </div>
         <div id="collapse-experience" class="am-panel-collapse am-collapse">
             <div class="am-panel-bd">
-                <form class="am-form am-form-horizontal" data-am-validator>
+                <form id="talent-experience" class="am-form am-form-horizontal talent-form" data-am-validator>
+                    <input type="hidden" class="id" autocomplete="off" name="id" id="id" value="" />
+                    <input type="hidden" class="tid" autocomplete="off" name="tid" id="tid" value="" />
                     <div class="am-form-group">
                         <label for="experience_type" class="am-u-sm-2 am-form-label">经历类型:</label>
                         <div class="am-u-sm-4">
@@ -308,22 +355,28 @@ $(function() {
 
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                            <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="am-panel am-panel-default">
+    <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="evaluation">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-evaluation'}">
                 评定信息
+                <span class="am-fr">
+                    <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
+                    <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
+                </span>
             </h4>
         </div>
         <div id="collapse-evaluation" class="am-panel-collapse am-collapse">
             <div class="am-panel-bd">
-                <form class="am-form am-form-horizontal" data-am-validator>
+                <form id="talent-evaluation" class="am-form am-form-horizontal talent-form" data-am-validator>
+                    <input type="hidden" class="id" autocomplete="off" name="id" id="id" value="" />
+                    <input type="hidden" class="tid" autocomplete="off" name="tid" id="tid" value="" />
                     <div class="am-form-group">
                         <label for="evaluation_date" class="am-u-sm-2 am-form-label">评定年月:</label>
                         <div class="am-u-sm-4">
@@ -356,22 +409,28 @@ $(function() {
 
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                            <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="am-panel am-panel-default">
+    <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="project">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-project'}">
                 项目信息
+                <span class="am-fr">
+                    <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
+                    <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
+                </span>
             </h4>
         </div>
         <div id="collapse-project" class="am-panel-collapse am-collapse">
             <div class="am-panel-bd">
-                <form class="am-form am-form-horizontal" data-am-validator>
+                <form id="talent-project" class="am-form am-form-horizontal talent-form" data-am-validator>
+                    <input type="hidden" class="id" autocomplete="off" name="id" id="id" value="" />
+                    <input type="hidden" class="tid" autocomplete="off" name="tid" id="tid" value="" />
                     <div class="am-form-group">
                         <label for="project_name" class="am-u-sm-2 am-form-label">项目名称:</label>
                         <div class="am-u-sm-4">
@@ -407,22 +466,28 @@ $(function() {
 
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                            <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="am-panel am-panel-default">
+    <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="office">
         <div class="am-panel-hd">
-            <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-enterprise'}">
+            <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-office'}">
                 工作单位信息
+                <span class="am-fr">
+                    <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
+                    <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
+                </span>
             </h4>
         </div>
-        <div id="collapse-enterprise" class="am-panel-collapse am-collapse">
+        <div id="collapse-office" class="am-panel-collapse am-collapse">
             <div class="am-panel-bd">
-                <form class="am-form am-form-horizontal" data-am-validator>
+                <form id="talent-office" class="am-form am-form-horizontal talent-form" data-am-validator>
+                    <input type="hidden" class="id" autocomplete="off" name="id" id="id" value="" />
+                    <input type="hidden" class="tid" autocomplete="off" name="tid" id="tid" value="" />
                     <div class="am-form-group">
                         <label for="office_office" class="am-u-sm-2 am-form-label">工作单位:</label>
                         <div class="am-u-sm-4">
@@ -447,22 +512,28 @@ $(function() {
 
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                            <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="am-panel am-panel-default">
+    <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="relation">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-relation'}">
                 联系人相关信息
+                <span class="am-fr">
+                    <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
+                    <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
+                </span>
             </h4>
         </div>
         <div id="collapse-relation" class="am-panel-collapse am-collapse">
             <div class="am-panel-bd">
-                <form class="am-form am-form-horizontal" data-am-validator>
+                <form id="talent-relation" class="am-form am-form-horizontal talent-form" data-am-validator>
+                    <input type="hidden" class="id" autocomplete="off" name="id" id="id" value="" />
+                    <input type="hidden" class="tid" autocomplete="off" name="tid" id="tid" value="" />
                     <div class="am-form-group">
                         <label for="relation_relation" class="am-u-sm-2 am-form-label">联系人关系:</label>
                         <div class="am-u-sm-4">
@@ -517,7 +588,7 @@ $(function() {
 
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                            <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
@@ -528,5 +599,66 @@ $(function() {
 @stop
 
 @section('foot-assets')
+<script type="text/javascript">
+/* 非基本信息的多条目添加删除 start */
+$('.duplicate-item').bind('click', function(e) {
+    e.stopPropagation();
+    var currentPanel = $(this).parents('.am-panel');
+    var newPanel = currentPanel.clone(true, true);
+    var table = newPanel.attr('data-table');
+    var newDataId;
+    var dataIds = [];
+    $('.duplicatable.am-panel[data-table=' + table + ']').each(function(index, item) {
+        dataIds.push($(item).attr('data-id'));
+    });
+    newDataId = Math.max.apply(null, dataIds) + 1;
+    newPanel.attr('data-id', newDataId);
 
+    var collapseTarget = 'collapse-' + table + newDataId;
+    newPanel.find('.am-panel-title').attr('data-am-collapse', "{parent: false, target: '#" + collapseTarget +"'}");
+    newPanel.find('.am-panel-collapse').attr('id', collapseTarget);
+    newPanel.find('label').each(function(i, ele) {
+        var labelFor = $(ele).attr('for');
+        $(ele).attr('for', labelFor.replace(/\d+/, '') + newDataId);
+    });
+    newPanel.find('label + div > *').each(function(i, ele) {
+        var id = $(ele).attr('id');
+        $(ele).attr('id', id.replace(/\d+/, '') + newDataId);
+        $(ele).val('');
+    });
+    currentPanel.after(newPanel);
+});
+
+$('.remove-item').on('click', function(e) {
+    e.stopPropagation();
+    $('#delete-confirm-modal').modal({
+        relatedTarget: this,
+        onConfirm: function() {
+            var panel = $(this.relatedTarget).parents('.am-panel');
+            var id = panel.find('#id').val();
+            id ? deleteInfo(panel, id) : panel.remove();
+        }, 
+    });
+});
+
+function deleteInfo(panel, id) {
+    var table = panel.attr('data-table');
+    $.ajax({
+        url: '/admin/talent/info',
+        type: 'DELETE',
+        data: {
+            table: table,
+            id: id,
+        },
+        success: function() {
+            panel.remove();
+        },
+        error: function() {
+            alert('删除失败', 'danger');
+        }
+    });
+}
+
+/* 非基本信息的多条目添加删除 end */
+</script>
 @stop

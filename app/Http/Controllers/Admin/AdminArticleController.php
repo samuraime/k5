@@ -24,7 +24,6 @@ class AdminArticleController extends AdminController
 
         return view('admin.list', [
                 'fields' => $fields,
-                'primaryNav' => $this->primaryNav,
                 'secondaryNav' => '文章列表',
             ]
         );
@@ -54,14 +53,13 @@ class AdminArticleController extends AdminController
             'show' => 'in:on,off',
         ]);
 
-        $article = Article::create(Request::all());
-        if (Request::get('show') == 'on') {
-            Article::where('show', 1)->update(['show' => 0]);
-            $article->show = 1;
-        }
+        $inputs = Request::all();
+        $article = Article::create($inputs);
+        $article->show = (int)(isset($inputs['show']) && $inputs['show'] == 'on');
         $article->author = Session::get('account.id');
         $article->editor = Session::get('account.id');
         $article->save();
+        $this->setOnlyShow($article);
 
         return response()->json($article);
     }
@@ -76,11 +74,10 @@ class AdminArticleController extends AdminController
         
         $inputs = Request::all();
         $article = Article::find($inputs['id']);
-        if (Request::get('show') == 'on') {
-            Article::where('show', 1)->update(['show' => 0]);
-            $article->show = 1;
-        }
         $article->update($inputs);
+        $article->show = (int)(isset($inputs['show']) && $inputs['show'] == 'on');
+        $article->save();
+        $this->setOnlyShow($article);
 
         return response()->json($article);
     }

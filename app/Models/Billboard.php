@@ -1,8 +1,8 @@
 <?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
-class Billboard extends Model
+class Billboard extends Eloquent
 {
     protected $table = 'billboard';
     protected $guarded = ['id', 'author', 'editor', 'created_at', 'updated_at'];

@@ -26,7 +26,7 @@ class AdminEnterpriseController extends AdminController
         4 => '100-500人',
         5 => '2000人以上',
     ];
-    public $operationScaleStaff = [
+    public $operationScaleMap = [
         1 => '100万以下',
         2 => '100-1000万',
         3 => '1000万-1亿',
@@ -54,7 +54,6 @@ class AdminEnterpriseController extends AdminController
 
         return view('admin.list', [
                 'fields' => $fields,
-                'primaryNav' => $this->primaryNav,
                 'secondaryNav' => '企业列表',
             ]
         );
@@ -75,10 +74,9 @@ class AdminEnterpriseController extends AdminController
     public function getNew()
     {
         return view('admin.' . $this->table . '.new', [
-            'primaryNav' => $this->primaryNav,
             'typeMap' => $this->typeMap,
             'staffScaleMap' => $this->staffScaleMap,
-            'operationScaleMap' => $this->operationScaleStaff,
+            'operationScaleMap' => $this->operationScaleMap,
         ]);
     }
 
@@ -86,8 +84,9 @@ class AdminEnterpriseController extends AdminController
     {
         $this->validate($request, [
             'name' => 'required',
-            'capital' => 'digits_between:0,12',
-            'area' => 'digits_between:0,10',
+            'capital' => 'max:12',
+            'area' => 'max:10',
+            'office_address' => 'max:100',
         ]);
 
         $enterprise = Enterprise::create(Request::all());
@@ -95,14 +94,31 @@ class AdminEnterpriseController extends AdminController
         return response()->json($enterprise);
     }
 
+    public function getEdit(HttpRequest $request)
+    {
+        $enterprise = $this->getOne($request);
+
+        return view('admin.enterprise.edit', [
+            'enterprise' => $enterprise,
+            'typeMap' => $this->typeMap,
+            'staffScaleMap' => $this->staffScaleMap,
+            'operationScaleMap' => $this->operationScaleMap,
+        ]);
+    }
+
     public function putIndex(HttpRequest $request)
     {
         $this->validate($request, [
             'id' => 'required|exists:enterprise,id',
+            'name' => 'required',
+            'capital' => 'max:12',
+            'area' => 'max:10',
+            'office_address' => 'max:100',
         ]);
 
+        $inputs = Request::all();
         $enterprise = Enterprise::find($inputs['id']);
-        $enterprise->update(Request::all());
+        $enterprise->update($inputs);
 
         return response()->json($enterprise);
     }

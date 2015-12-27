@@ -9,10 +9,18 @@ $(function() {
     });
 });
 
-var alert = function(message, title) {
+var alert = function(message, type) {
     var alertModal = $('#alert-modal');
-    $('#alert-modal .am-modal-hd').text(title);
+    // $('#alert-modal .am-modal-hd').text(title);
     $('#alert-modal .am-modal-bd').text(message);
+    type = type ? type : 'default';
+    $('#alert-modal .am-modal-hd, #alert-modal .am-modal-bd')
+        .removeClass('am-text-default')
+        .removeClass('am-text-warning')
+        .removeClass('am-text-danger')
+        .removeClass('am-text-primary')
+        .addClass('am-text-' + type);
+
     alertModal.modal('open');
 
     $(document).keypress(function(event) {

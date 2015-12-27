@@ -1,8 +1,8 @@
 <?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
-class Talent extends Model
+class Talent extends Eloquent
 {
     protected $table = 'talent';
     protected $guarded = ['id', 'created_at', 'updated_at'];

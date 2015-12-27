@@ -4,24 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>人才交流中心 @yield('title')</title>
+    <title>海创人才 @yield('title')</title>
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="/css/amazeui.min.css" />
     <link rel="stylesheet" href="/css/admin.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/amazeui/amazeui.min.js"></script>
     <script src="/js/app.js"></script>
 </head>
 <body>
+    <!--[if lte IE 9]>
+    <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a> 以获得更好的体验！</p>
+    <![endif]-->
     <header class="am-topbar admin-header">
         <div class="am-topbar-brand">
-            <a href="/"><strong>人才交流中心</strong></a>
+            <a href="/"><strong>海创园人才管理</strong></a>
         </div>
 
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-primary am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>

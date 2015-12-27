@@ -3,12 +3,20 @@
 use App\Http\Controllers\Controller;
 use HttpRequest;
 use Request;
+use View;
+use App\Models\Billboard;
 
 class AdminController extends Controller
 {
+    public $primaryNav;
+
     public function __construct()
     {
         $this->middleware('auth');
+
+        $billboard = Billboard::where('show', 1)->first();
+        View::share('globalBillboard', $billboard);
+        View::share('primaryNav', $this->primaryNav);
     }
 
     /**
@@ -61,14 +69,34 @@ class AdminController extends Controller
         return $pagination;
     }
 
-    public function getNew()
+    protected function postInfo($modelName, HttpRequest $request, $validator = [])
     {
-        return view('admin.' . $this->table . '.new', [
-            'primaryNav' => $this->primaryNav,
-        ]);
+        $this->validate($request, $validator);
+
+        $model = 'App\\Models\\' . $modelName;
+        $orm = $model::create(Request::all());
+
+        return response()->json($orm);
     }
 
-    private function getOne(HttpRequest $request, $action)
+    protected function putInfo($modelName, HttpRequest $request, $validator = [])
+    {
+        $this->validate($request, $validator);
+
+        $inputs = Request::all();
+        $model = 'App\\Models\\' . $modelName;
+        $orm = $model::find($inputs['id']);
+        $orm->update($inputs);
+
+        return response()->json($orm);
+    }
+
+    public function getNew()
+    {
+        return view('admin.' . $this->table . '.new');
+    }
+
+    protected function getOne(HttpRequest $request)
     {
         $this->validate($request, [
             'id' => 'required|exists:' . $this->table . ',id'
@@ -77,17 +105,19 @@ class AdminController extends Controller
         $model = 'App\\Models\\' . ucfirst($this->table);
         $orm = $model::find(Request::input('id'));
 
-        return view("admin.{$this->table}.{$action}", [$this->table => $orm->toArray()]);
+        return $orm;
     }
 
     public function getView(HttpRequest $request)
     {
-        return $this->getOne($request, 'view');
+        $orm = $this->getOne($request);
+        return view("admin.{$this->table}.view", [$this->table => $orm]);
     }
 
     public function getEdit(HttpRequest $request)
     {
-        return $this->getOne($request, 'edit');
+        $orm = $this->getOne($request);
+        return view("admin.{$this->table}.edit", [$this->table => $orm]);
     }
 
     public function deleteIndex(HttpRequest $request)
@@ -113,5 +143,15 @@ class AdminController extends Controller
         $affectedRows = $model::destroy($ids);
 
         return response()->json(['affectedRows' => $affectedRows]);
+    }
+
+    public function setOnlyShow($orm)
+    {
+        if ($orm->show) {
+            $model = 'App\\Models\\' . ucfirst($this->table);
+            return $model::where('id', '!=', $orm->id)->update(['show' => 0]);
+        } else {
+            return false;
+        }
     }
 }

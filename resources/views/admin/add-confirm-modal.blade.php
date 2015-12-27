@@ -6,16 +6,15 @@
             操作成功
         </div>
         <div class="am-modal-footer">
-            <a id="add-confirm-continue" class="am-btn am-btn-secondary">继续新增</a>
-            <a id="add-confirm-list" class="am-btn am-btn-secondary">返回列表</a>
-            <a id="add-confirm-view" data-id="" class="am-btn am-btn-primary">返回查看</a>
+            <!-- <span id="add-confirm-list" class="am-modal-btn am-text-secondary">返回列表</span> -->
+            <span id="add-confirm-new" class="am-modal-btn am-text-secondary">继续新增</span>
+            <span id="add-confirm-edit" class="am-modal-btn am-text-primary">返回查看</span>
         </div>
     </div>
 </div>
 <!-- 新增条目结果框 end -->
 <script type="text/javascript">
 function addConfirm(id) {
-    $('#add-confirm-view').attr('data-id', id);
     $('#add-confirm-edit').attr('data-id', id);
     var modal = $('#add-confirm-modal');
     modal.modal({
@@ -24,7 +23,7 @@ function addConfirm(id) {
     $('#add-confirm-modal').modal('open');
 }
 
-$('#add-confirm-continue').click(function(event) {
+$('#add-confirm-new').click(function(event) {
     event.preventDefault();
     window.location.reload();
 });
@@ -32,13 +31,6 @@ $('#add-confirm-continue').click(function(event) {
 $('#add-confirm-list').click(function(event) {
     event.preventDefault();
     window.location.href = window.location.pathname.match(/^\/admin\/\w+\//i);
-});
-
-$('#add-confirm-view').click(function(event) {
-    event.preventDefault();
-    if ($(this).attr('data-id')) {
-        window.location.href = window.location.pathname.replace(/\/new/i, '/view?id=') + $(this).attr('data-id');
-    }
 });
 
 $('#add-confirm-edit').click(function(event) {
@@ -65,7 +57,7 @@ $(function() {
                     },
                     error: function(data) {
                         console.log(data);
-                        alert('额...好像哪里出错了, 稍事休息, 重试一下');
+                        alert('额...好像哪里出错了, 刷新重试一下', 'danger');
                     }
                 });
 

@@ -12,7 +12,6 @@ class AdminIndexController extends AdminController
     {
         return view('admin.index.index', [
             'stat' => $this->stat(),
-            'primaryNav' => $this->primaryNav,
             'secondaryNav' => '数据概况',
         ]);
     }

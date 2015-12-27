@@ -1,8 +1,8 @@
 <?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
-class Message extends Model
+class Message extends Eloquent
 {
     protected $table = 'message';
     protected $fillable = ['title', 'content', 'type', 'name', 'mobile', 'email', 'content'];

@@ -1,13 +1,13 @@
 @extends('admin.layout')
 
-@section('title', '新增文章')
+@section('title', '新增')
 
 @section('head-assets')
 
 @stop
 
 @section('nav-primary', $primaryNav)
-@section('nav-secondary', '新增文章')
+@section('nav-secondary', '新增')
 
 @section('content')
 @include('admin.add-confirm-modal')
@@ -37,7 +37,7 @@
 
     <div class="am-form-group">
         <div class="am-u-sm-10 am-u-sm-offset-2">
-            <button type="submit" class="am-btn am-btn-primary">提交</button>
+            <button type="submit" class="am-btn am-btn-primary">保存</button>
         </div>
     </div>
 </form>

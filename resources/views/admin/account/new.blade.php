@@ -15,7 +15,7 @@
     <div class="am-form-group">
         <label for="name" class="am-u-sm-2 am-form-label">用户名:</label>
         <div class="am-u-sm-10">
-            <input type="text" id="name" name="name" required minlength="6" maxlength="20" placeholder="登录名">
+            <input type="text" id="name" name="name" required minlength="5" maxlength="20" placeholder="登录名">
         </div>
     </div>
 
@@ -60,7 +60,7 @@
 
     <div class="am-form-group">
         <div class="am-u-sm-10 am-u-sm-offset-2">
-            <button type="submit" class="am-btn am-btn-primary">提交</button>
+            <button type="submit" class="am-btn am-btn-primary">保存</button>
         </div>
     </div>
 </form>

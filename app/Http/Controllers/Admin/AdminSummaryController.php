@@ -169,7 +169,6 @@ class AdminSummaryController extends AdminController
         ];
         return view('admin.summary.index', [
             'chart' => $options,
-            'primaryNav' => $this->primaryNav,
             'secondaryNav' => '数据图表',
         ]);
     }

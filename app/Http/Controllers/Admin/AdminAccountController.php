@@ -11,7 +11,7 @@ class AdminAccountController extends AdminController
     public $permissions = [
         'index' => '首页', 
         'summary' => '数据汇总', 
-        'personnel' => '人才信息', 
+        'talent' => '人才信息', 
         'enterprise' => '企业信息', 
         'log' => '访问日志', 
         'message' => '留言记录', 
@@ -35,7 +35,6 @@ class AdminAccountController extends AdminController
 
         return view('admin.list', [
                 'fields' => $fields,
-                'primaryNav' => $this->primaryNav,
                 'secondaryNav' => '账号列表',
             ]
         );
@@ -54,7 +53,6 @@ class AdminAccountController extends AdminController
     public function getNew()
     {
         return view('admin.' . $this->table . '.new', [
-            'primaryNav' => $this->primaryNav,
             'permissions' => $this->permissions,
         ]);
     }
@@ -62,10 +60,10 @@ class AdminAccountController extends AdminController
     public function postIndex(HttpRequest $request)
     {
         $this->validate($request, [
-            'name' => ['required', 'regex:/^\S{6,20}$/', 'unique:account,name'],
+            'name' => ['required', 'regex:/^\S{5,20}$/', 'unique:account,name'],
             'email' => 'required|email|unique:account,email',
             'password' => ['required', 'regex:/^\S{6,20}$/', 'confirmed'],
-            'mobile' => 'integer',
+            'mobile' => 'required|integer',
             'permission' => 'required|array',
         ]);
 
@@ -81,38 +79,35 @@ class AdminAccountController extends AdminController
         return response()->json($account);
     }
 
+    public function getEdit(HttpRequest $request)
+    {
+        $account = $this->getOne($request);
+        $account->permission = json_decode($account->permission);
+
+        return view('admin.account.edit', [
+            'account' => $account,
+            'permissions' => $this->permissions,
+        ]);
+    }
+
     public function putIndex(HttpRequest $request)
     {
         $this->validate($request, [
             'id' => 'required|exists:account,id',
-            'name' => ['regex:/\S{6,20}/', 'unique:account,name'],
-            'nickname' => 'string|max:20',
-            'email' => 'email|unique:account,email',
-            'mobile' => 'string|max:20',
+            'name' => ['required', 'regex:/\S{5,20}/'],
+            'email' => 'required|email',
+            'mobile' => 'required|string|max:20',
             'password' => ['regex:/\S{6,20}/', 'confirmed'],
-            'permission' => 'string|max:200',
+            'permission' => 'required|array',
         ]);
 
         $inputs = Request::all();
         $account = Account::find($inputs['id']);
-        foreach (['name', 'nickname', 'email', 'mobile', 'password', 'permission'] as $field) {
-            isset($inputs[$field]) && $account->$field = $inputs[$field];
+        foreach (['name', 'email', 'mobile'] as $field) {
+            $account->$field = $inputs[$field];
         }
         isset($inputs['password']) && $account->password = password($inputs['password']);
-
-        $permission = ['summary', 'enterprise', 'personnel', 'session', 'article', 'log', 'index', 'account'];
-        $account->permission = json_encode($permission);
-        $account->save();
-        $account->permission = json_decode($account->permission);
-
-        return response()->json($account);
-    }
-
-    public function getPermisson()
-    {
-        $inputs = Request::all();
-        $account = Account::find($inputs['id']);
-        $permission = ['summary', 'enterprise', 'personnel', 'session', 'article', 'index', 'account', 'log', 'message'];
+        $permission = array_merge(['index', 'session'], $inputs['permission']);
         $account->permission = json_encode($permission);
         $account->save();
         $account->permission = json_decode($account->permission);

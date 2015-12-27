@@ -25,7 +25,6 @@ class AdminLogController extends AdminController
 
         return view('admin.list', [
                 'fields' => $fields,
-                'primaryNav' => $this->primaryNav,
                 'secondaryNav' => '日志列表',
             ]
         );

@@ -30,7 +30,7 @@
 
     <div class="am-form-group">
         <div class="am-u-sm-10 am-u-sm-offset-2">
-            <button type="submit" class="am-btn am-btn-primary">提交</button>
+            <button type="submit" class="am-btn am-btn-primary">保存</button>
         </div>
     </div>
 </form>

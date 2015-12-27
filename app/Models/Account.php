@@ -1,8 +1,8 @@
 <?php namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
-class Account extends Model
+class Account extends Eloquent
 {
     protected $table = 'account';
     protected $guarded = ['id', 'password', 'permission', 'created_at', 'updated_at'];

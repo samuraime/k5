@@ -13,8 +13,7 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$billboard = Billboard::where('show', 1)->first();
-		View::share('billboard', $billboard);
+
 	}
 
 	/**

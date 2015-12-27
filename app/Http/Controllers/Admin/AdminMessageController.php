@@ -25,7 +25,6 @@ class AdminMessageController extends AdminController
 
         return view('admin.list', [
                 'fields' => $fields,
-                'primaryNav' => $this->primaryNav,
                 'secondaryNav' => '留言列表',
             ]
         );
@@ -58,11 +57,18 @@ class AdminMessageController extends AdminController
     {
         $this->validate($request, [
             'id' => 'required|exists:message,id',
+            'title' => 'required',
+            'content' => 'required',
+            'type' => 'required',
+            'email' => 'email',
+            'checked' => 'required|in:未审核,已审核',
         ]);
 
         $inputs = Request::all();
         $message = Message::find($inputs['id']);
         $message->update($inputs);
+        $message->checked = $inputs['checked'];
+        $message->save();
 
         return response()->json($message);
     }
