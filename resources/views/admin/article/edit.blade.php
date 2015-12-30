@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', '编辑')
+@section('title', '编辑文章')
 
 @section('head-assets')
 

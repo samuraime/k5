@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', '新增')
+@section('title', '新增人才')
 
 @section('head-assets')
 
@@ -68,52 +68,53 @@ function setId(form, id) {
     $(form).find('.id').val(id);
 }
 
-$(function() {
-    $('.talent-form').validator({
-        submit: function() {
-            var form = this.$element[0];
-            var isMainForm = form.getAttribute('id').indexOf('talent-') == -1;
-            if (!(isMainForm || $(form).find('.tid').val())) {
-                alert('请先保存基本信息', 'warning');
-                return false;
-            }
-            var hasPrimaryKey = $(form).find('#id').val();
-            var formData = new FormData(form);
-            hasPrimaryKey && formData.append('_method', 'PUT');
-            var url = '/admin/talent' + (isMainForm ? '' : '/' + form.getAttribute('id').replace(/talent-/, ''));
-            if (this.isFormValid()) {
-                $.ajax({
-                    url: url,
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(data) {
-                        if (isMainForm) {
-                            setTid(data.id);
-                        }
-                        setId(form, data.id);
-                        addConfirm();
-                    },
-                    error: function(data) {
-                        console.log(data);
-                        alert('额...好像哪里出错了, 刷新重试一下', 'danger');
+var validator = {
+    submit: function() {
+        var form = this.$element[0];
+        var isMainForm = form.getAttribute('id').indexOf('talent-') == -1;
+        if (!(isMainForm || $(form).find('.tid').val())) {
+            alert('请先保存基本信息', 'warning');
+            return false;
+        }
+        var hasPrimaryKey = $(form).find('#id').val();
+        var formData = new FormData(form);
+        hasPrimaryKey && formData.append('_method', 'PUT');
+        var url = '/admin/talent' + (isMainForm ? '' : '/' + form.getAttribute('id').replace(/talent-/, ''));
+        if (this.isFormValid()) {
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (isMainForm) {
+                        setTid(data.id);
                     }
-                });
-
-                return false;
-            }
+                    setId(form, data.id);
+                    addConfirm();
+                },
+                error: function(data) {
+                    console.log(data);
+                    alert('额...好像哪里出错了, 刷新重试一下', 'danger');
+                }
+            });
 
             return false;
         }
-    });
+
+        return false;
+    }
+}
+$(function() {
+    $('.talent-form').validator(validator);
 });
 </script>
 <div class="am-panel-group" id="accordion">
     <div class="am-panel am-panel-default">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-talent'}">
-                基本信息
+                <span class="am-text-primary info-title">基本信息</span>
             </h4>
         </div>
         <div id="collapse-talent" class="am-panel-collapse am-collapse am-in">
@@ -313,7 +314,7 @@ $(function() {
     <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="experience">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-experience'}">
-                经历信息
+                <span class="am-text-primary info-title">经历信息</span>
                 <span class="am-fr">
                     <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
                     <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
@@ -365,7 +366,7 @@ $(function() {
     <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="evaluation">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-evaluation'}">
-                评定信息
+                <span class="am-text-primary info-title">评定信息</span>
                 <span class="am-fr">
                     <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
                     <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
@@ -419,7 +420,7 @@ $(function() {
     <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="project">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-project'}">
-                项目信息
+                <span class="am-text-primary info-title">项目信息</span>
                 <span class="am-fr">
                     <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
                     <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
@@ -476,7 +477,7 @@ $(function() {
     <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="office">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-office'}">
-                工作单位信息
+                <span class="am-text-primary info-title">工作单位信息</span>
                 <span class="am-fr">
                     <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
                     <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
@@ -522,7 +523,7 @@ $(function() {
     <div class="am-panel am-panel-default duplicatable" data-id="1" data-table="relation">
         <div class="am-panel-hd">
             <h4 class="am-panel-title" data-am-collapse="{parent: false, target: '#collapse-relation'}">
-                联系人相关信息
+                <span class="am-text-primary info-title">联系人相关信息</span>
                 <span class="am-fr">
                     <span class="am-text-danger am-icon-minus remove-item" title="删除一条"></span>
                     <span class="am-text-success am-icon-plus duplicate-item" title="增加一条"></span>
@@ -601,10 +602,10 @@ $(function() {
 @section('foot-assets')
 <script type="text/javascript">
 /* 非基本信息的多条目添加删除 start */
-$('.duplicate-item').bind('click', function(e) {
+var handleDuplicate = function(e) {
     e.stopPropagation();
     var currentPanel = $(this).parents('.am-panel');
-    var newPanel = currentPanel.clone(true, true);
+    var newPanel = currentPanel.clone(true, false);
     var table = newPanel.attr('data-table');
     var newDataId;
     var dataIds = [];
@@ -615,7 +616,7 @@ $('.duplicate-item').bind('click', function(e) {
     newPanel.attr('data-id', newDataId);
 
     var collapseTarget = 'collapse-' + table + newDataId;
-    newPanel.find('.am-panel-title').attr('data-am-collapse', "{parent: false, target: '#" + collapseTarget +"'}");
+    newPanel.find('.am-panel-title').attr('data-am-collapse', "{parent:false,target:'#" + collapseTarget +"'}");
     newPanel.find('.am-panel-collapse').attr('id', collapseTarget);
     newPanel.find('label').each(function(i, ele) {
         var labelFor = $(ele).attr('for');
@@ -626,10 +627,25 @@ $('.duplicate-item').bind('click', function(e) {
         $(ele).attr('id', id.replace(/\d+/, '') + newDataId);
         $(ele).val('');
     });
+    var title = newPanel.find('.info-title');
+    title.text(title.text().replace(/(\d*)$/, '') + newDataId);
+    newPanel.find('.duplicate-item').click(function(e) {
+        handleDuplicate.call(this, e);
+    });
+    newPanel.find('.remove-item').click(function(e) {
+        handleRemove.call(this, e);
+    });
+    newPanel.find('.talent-form').validator(validator);
+    newPanel.find('#id').val('');
+    newPanel.find('[data-am-datepicker]').each(function() {
+        var options = $(this).attr('data-am-datepicker');
+        var options = eval('(' + options + ')');
+        $(this).datepicker(options);
+    });
     currentPanel.after(newPanel);
-});
+}
 
-$('.remove-item').on('click', function(e) {
+var handleRemove = function(e) {
     e.stopPropagation();
     $('#delete-confirm-modal').modal({
         relatedTarget: this,
@@ -638,8 +654,17 @@ $('.remove-item').on('click', function(e) {
             var id = panel.find('#id').val();
             id ? deleteInfo(panel, id) : panel.remove();
         }, 
-    });
+    });    
+}
+
+$('.duplicate-item').on('click', function(e) {
+    handleDuplicate.call(this, e);
 });
+
+$('.remove-item').on('click', function(e) {
+    handleRemove.call(this, e);
+});
+
 
 function deleteInfo(panel, id) {
     var table = panel.attr('data-table');
