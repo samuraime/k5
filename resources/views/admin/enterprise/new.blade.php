@@ -69,7 +69,7 @@
     <div class="am-form-group">
         <label for="area" class="am-u-sm-2 am-form-label">占地面积:</label>
         <div class="am-u-sm-10">
-            <input type="text" id="area" name="area" pattern="^\d+$" placeholder="占地面积">
+            <input type="text" id="area" name="area" maxlength="20" placeholder="占地面积">
         </div>
     </div>
 

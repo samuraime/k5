@@ -5,10 +5,12 @@ use HttpRequest;
 use Request;
 use View;
 use App\Models\Billboard;
+use Excel;
 
 class AdminController extends Controller
 {
     public $primaryNav;
+    public $table;
 
     public function __construct()
     {
@@ -153,5 +155,46 @@ class AdminController extends Controller
         } else {
             return false;
         }
+    }
+
+    /**
+     * @param array $heading excel默认表头
+     * @param object $query 查询构造器
+     */
+    protected function exportExcel($heading = [], $query = null)
+    {
+        if (!$query) {
+            $model = 'App\\Models\\' . ucfirst($this->table);
+            $query = new $model;
+        }
+
+        $inputs = Request::all();
+        if (isset($inputs['start']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $inputs['start'])) {
+            $query = $query->where('created_at', '>=', $inputs['start'] . ' 00:00:00');
+        }
+        if (isset($inputs['end']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $inputs['start'])) {
+            $query = $query->where('created_at', '<=', $inputs['end'] . ' 00:00:00');
+        }
+        $result = $query->get();
+        // var_dump($result);
+        // die;
+
+        Excel::create($this->primaryNav, function($excel) use($result, $heading) {
+            $excel->setTitle($this->primaryNav);
+                $excel->sheet($this->primaryNav, function($sheet) use($result, $heading) {
+                if (count($heading)) {
+                    $sheet->fromModel($result, null, 'A2', false, false);
+                    $sheet->row(1, $heading);
+                } else {
+                    $sheet->fromModel($result, null, 'A1', false);
+                }
+            });
+
+        })->download('xls');
+    }
+
+    public function getExport()
+    {
+        return $this->exportExcel($this->fields);
     }
 }

@@ -157,7 +157,7 @@ $(function() {
                     <div class="am-form-group">
                         <label for="birth" class="am-u-sm-2 am-form-label">出生年月:</label>
                         <div class="am-u-sm-4">
-                            <input type="text" id="birth" name="birth" pattern="\d{4}-\d{2}" data-am-datepicker="{format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'}" placeholder="出生年月" value="{{ $talent->birth }}" />
+                            <input type="text" id="birth" name="birth" pattern="\d{4}-\d{2}" data-am-datepicker="{format: 'yyyy-mm'}" placeholder="出生年月" value="{{ $talent->birth }}" />
                         </div>
                         <label for="marital" class="am-u-sm-2 am-form-label">婚姻状况:</label>
                         <div class="am-u-sm-4">
@@ -437,7 +437,7 @@ $(function() {
                         <div class="am-form-group">
                             <label for="evaluation_date" class="am-u-sm-2 am-form-label">评定年月:</label>
                             <div class="am-u-sm-4">
-                                <input type="text" id="evaluation_date" name="date" required pattern="\d{4}-\d{2}" data-am-datepicker="{format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'}" placeholder="评定年月" value="{{ $evaluations[$i]->date }}" />
+                                <input type="text" id="evaluation_date" name="date" required pattern="\d{4}-\d{2}" data-am-datepicker="{format: 'yyyy-mm'}" placeholder="评定年月" value="{{ $evaluations[$i]->date }}" />
                             </div>
                             <label for="evaluation_batch" class="am-u-sm-2 am-form-label">批次:</label>
                             <div class="am-u-sm-4">

@@ -29,7 +29,7 @@
 
             <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list" >
                 @if (Session::get('account'))
-                <li class="am-dropdown"><a href="/admin">管理后台</a></li>
+                <li class="am-dropdown"><a class="am-text-primary" href="/admin">管理后台</a></li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                         <span class="am-icon-user"> {{ Session::get('account.name') }}</span>

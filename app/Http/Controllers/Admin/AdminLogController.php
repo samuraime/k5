@@ -10,18 +10,23 @@ class AdminLogController extends AdminController
 {
     public $table = 'log';
     public $primaryNav = '访问日志';
+    public $fields = [
+        'id' => '编号',
+        'title' => '日志主题',
+        'category' => '日志分类',
+        'content' => '内容',
+        'comment' => '备注',
+        'author' => '发布者',
+        'editor' => '最后编辑',
+        'created_at' => '创建日期',
+        'updated_at' => '修改日期',
+    ];
 
     public function getIndex(HttpRequest $request)
     {
-        $fields = [
-            'id' => '编号',
-            'title' => '日志主题',
-            'category' => '日志分类',
-            'author' => '发布者',
-            'editor' => '最后编辑',
-            'created_at' => '创建日期',
-            'updated_at' => '修改日期',
-        ];
+        $fields = $this->fields;
+        unset($fields['content']);
+        unset($fields['comment']);
 
         return view('admin.list', [
                 'fields' => $fields,
@@ -73,5 +78,14 @@ class AdminLogController extends AdminController
         $log->update($inputs);
 
         return response()->json($log);
+    }
+
+    public function getExport()
+    {
+        $query = Log::select(DB::raw('log.*, a.name author, e.name editor'))
+            ->leftJoin('account AS a', 'log.author', '=', 'a.id')
+            ->leftJoin('account AS e', 'log.editor', '=', 'e.id');
+
+        return $this->exportExcel($this->fields, $query);
     }
 }

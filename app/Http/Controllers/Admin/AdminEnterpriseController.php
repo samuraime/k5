@@ -34,26 +34,23 @@ class AdminEnterpriseController extends AdminController
         5 => '10亿以上',
     ];
 
+    public $fields = [
+        'id' => '编号',
+        'name' => '企业名',
+        'type' => '类型',
+        'capital' => '注册资本',
+        'office_address' => '办公地址',
+        'area' => '占地面积',
+        'staff_scale' => '员工规模',
+        'operation_scale' => '经营规模',
+        'created_at' => '创建日期',
+        'updated_at' => '修改日期',
+    ];
 
     public function getIndex(HttpRequest $request)
     {
-        $fields = [
-            'id' => '编号',
-            'name' => '企业名',
-            'type' => '类型',
-            // 'representative' => '法人',
-            'capital' => '注册资本',
-            'office_address' => '办公地址',
-            'area' => '占地面积',
-            'staff_scale' => '员工规模',
-            'operation_scale' => '经营规模',
-            // 'registration_number' => '注册号',
-            // 'registration_date' => '注册日期',
-            // 'registration_address' => '注册地址',
-        ];
-
         return view('admin.list', [
-                'fields' => $fields,
+                'fields' => $this->fields,
                 'secondaryNav' => '企业列表',
             ]
         );

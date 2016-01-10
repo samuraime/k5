@@ -138,6 +138,7 @@
                 <div class="am-cf am-padding border-bottom">
                     <div class="am-fl am-cf">
                         <strong class="am-text-primary am-text-lg">@yield('nav-primary')</strong>
+                        /
                         <small>@yield('nav-secondary')</small>
                     </div>
                 </div>
@@ -250,14 +251,14 @@
                         },
                         success: function(data) {
                             $('#profile-modal').modal('close');
-                            alert('修改成功');
+                            alert('修改成功', 'success');
                             $('#alert-modal').on('closed.modal.amui', function() {
                                 window.location.reload();
                             });
                         },
                         error: function() {
                             $('#profile-modal').modal('close');
-                            alert('遇到了什么错误, 请稍后再试');
+                            alert('遇到了什么错误, 请稍后再试', 'danger');
                         }
                     });
                 }
@@ -266,30 +267,30 @@
             }
         });
         $('#user-password-form').validator({
-            validate: function(validity) {
-                if ($(validity.field).is('#user-old-password')) {
-                    var password = $('#user-old-password').val();
+            // validate: function(validity) {
+            //     if ($(validity.field).is('#user-old-password')) {
+            //         var password = $('#user-old-password').val();
 
-                    if (/^\S{6,20}$/.test(password)) {
-                        return $.ajax({
-                            method: 'POST',
-                            url: '/admin/session/check-password',
-                            data: {
-                                password: password,
-                            },
-                        }).then(function() {
-                            validity.valid = true;
-                            return validity;
-                        }, function() {
-                            validity.valid = false;
-                            return validity;
-                        });
-                    } else {
-                        validity.valid = false;
-                        return validity;
-                    }
-                }
-            },
+            //         if (/^\S{6,20}$/.test(password)) {
+            //             return $.ajax({
+            //                 method: 'POST',
+            //                 url: '/admin/session/check-password',
+            //                 data: {
+            //                     password: password,
+            //                 },
+            //             }).then(function() {
+            //                 validity.valid = true;
+            //                 return validity;
+            //             }, function() {
+            //                 validity.valid = false;
+            //                 return validity;
+            //             });
+            //         } else {
+            //             validity.valid = false;
+            //             return validity;
+            //         }
+            //     }
+            // },
             submit: function() {
                 var validity = this.isFormValid();
                 $.when(validity).then(function() {
@@ -303,14 +304,14 @@
                         },
                         success: function(data) {
                             $('#password-modal').modal('close');
-                            alert('修改成功');
+                            alert('修改成功', 'success');
                             $('#alert-modal').on('closed.modal.amui', function() {
                                 window.location.reload();
                             });
                         },
                         error: function() {
                             $('#password-modal').modal('close');
-                            alert('修改失败, 请确认原密码是否正确');
+                            alert('修改失败, 请确认原密码是否正确', 'danger');
                         }
                     });
                 }, function() {

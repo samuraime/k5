@@ -36,9 +36,16 @@ class HomeController extends Controller {
 	public function getIndex()
 	{
 		$article = Article::where('show', 1)->first();
+		if (!$article) {
+			$article = [
+				'title' => '海创园人才',
+				'updated_at' => '2015-01-01',
+				'content' => '<p style="text-align:center">请移步后台<a href="/admin/article/new">系统管理-前台文章</a>部分设置此处内容<p>',
+			];
+		}
 
 		return view('home.index', [
-			'article' => $article->toArray(),
+			'article' => is_array($article) ? $article : $article->toArray(),
 		]);
 	}
 
