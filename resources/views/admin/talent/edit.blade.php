@@ -163,7 +163,7 @@ $(function() {
                         <div class="am-u-sm-4">
                             <select id="marital" name="marital" data-am-selected="{btnWidth: '100%'}">
                             @foreach($maritals as $marital)
-                                <option value="{{$marital}}" @if($marital == $talent->marital) selected @endif>未婚</option>
+                                <option value="{{$marital}}" @if($marital == $talent->marital) selected @endif>{{$marital}}</option>
                             @endforeach
                             </select>
                         </div>

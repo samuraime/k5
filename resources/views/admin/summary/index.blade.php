@@ -5,6 +5,37 @@
 @section('nav-secondary', $secondaryNav)
 
 @section('content')
+<ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
+    <li>
+        <a href="/admin/talent" class="am-text-success">
+            <span class="am-icon-btn am-icon-file"></span>
+            <br>人才信息
+            <br>{{ $stat['talent'] }}
+        </a>
+    </li>
+    <li>
+        <a href="/admin/enterprise" class="am-text-warning">
+            <span class="am-icon-btn am-icon-file-text"></span>
+            <br>企业信息
+            <br>{{ $stat['enterprise'] }}
+        </a>
+    </li>
+    <li>
+        <a href="/admin/log" class="am-text-danger">
+            <span class="am-icon-btn am-icon-calendar"></span>
+            <br>访问日志
+            <br>{{ $stat['log'] }}
+        </a>
+    </li>
+    <li>
+        <a href="/admin/message" class="am-text-secondary">
+            <span class="am-icon-btn am-icon-pencil-square-o"></span>
+            <br>留言记录
+            <br>{{ $stat['message'] }}
+        </a>
+    </li>
+</ul>
+<hr/>
 <div class="am-g">
     <div id="chart-container" class="am-u-sm-12">
     </div>
@@ -73,6 +104,22 @@
         <div class="am-u-sm-3">
             <label>Y轴标题：</label>
             <input type="text" id="chart-ytitle" placeholder="Y轴标题" class="am-u-sm-12"/>
+        </div>
+    </div>
+    <div class="am-form-group">
+        <div class="am-u-sm-3">
+            <label>系列名称：</label>
+            <input type="text" id="chart-series-name" placeholder="系列名称" class="am-u-sm-12" value="信息"/>
+        </div>
+        <div class="am-u-sm-3">
+            <label>提示前缀：</label>
+            <input type="text" id="chart-tooltip-prefix" placeholder="提示前缀" class="am-u-sm-12" value="" />
+        </div>
+        <div class="am-u-sm-3">
+            <label>提示后缀：</label>
+            <input type="text" id="chart-tooltip-suffix" placeholder="提示后缀" class="am-u-sm-12" value="个" />
+        </div>
+        <div class="am-u-sm-3">
         </div>
     </div>
     <div class="am-form-group">

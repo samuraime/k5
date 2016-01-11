@@ -52,6 +52,11 @@ $(function() {
         chartOptions.subtitle = $('#chart-subtitle').val(),
         chartOptions.xTitle = $('#chart-xtitle').val(),
         chartOptions.yTitle = $('#chart-ytitle').val();
+        chartOptions.seriesName = $('#chart-series-name').val();
+        chartOptions.tooltip = {
+            valuePrefix: $('#chart-tooltip-prefix').val(),
+            valueSuffix: $('#chart-tooltip-suffix').val(),
+        }
         chartOptions['3d'] = $('#chart-3d')[0].checked;
 
         var chartFn = chartOptions.type + 'Chart';
@@ -81,11 +86,10 @@ $(function() {
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }]
+                }],
+                allowDecimals: false,
             },
-            tooltip: {
-                valueSuffix: '',
-            },
+            tooltip: options.tooltip,
             legend: {
                 layout: 'vertical',
                 align: 'right',
@@ -93,7 +97,7 @@ $(function() {
                 borderWidth: 0
             },
             series: [{
-                name: '',
+                name: options.seriesName,
                 data: data.data,
             }]
         }
@@ -114,7 +118,7 @@ $(function() {
                 categories: data.categories,
                 title: {
                     text: options.xTitle,
-                }
+                },
             },
             yAxis: {
                 min: 0,
@@ -124,11 +128,10 @@ $(function() {
                 },
                 labels: {
                     overflow: 'justify'
-                }
+                },
+                allowDecimals: false,
             },
-            tooltip: {
-                valueSuffix: '',
-            },
+            tooltip: options.tooltip,
             plotOptions: {
                 bar: {
                     dataLabels: {
@@ -151,7 +154,7 @@ $(function() {
                 enabled: false
             },
             series: [{
-                name: '',
+                name: options.seriesName,
                 data: data.data,
             }]
         }
@@ -176,10 +179,10 @@ $(function() {
                 min: 0,
                 title: {
                     text: options.yTitle,
-                }
+                },
+                allowDecimals: false,
             },
-            tooltip: {
-            },
+            tooltip: options.tooltip,
             plotOptions: {
                 column: {
                     pointPadding: 0.2,
@@ -187,7 +190,7 @@ $(function() {
                 }
             },
             series: [{
-                name: '',
+                name: options.seriesName,
                 data: data.data,
             }]
         }
@@ -242,7 +245,7 @@ $(function() {
             config.chart.options3d = {
                 enabled: true,
                 alpha: 45,
-                beta: 0
+                beta: 30
             }
         }
 

@@ -10,10 +10,11 @@ class AdminIndexController extends AdminController
 
     public function getIndex()
     {
-        return view('admin.index.index', [
-            'stat' => $this->stat(),
-            'secondaryNav' => '数据概况',
-        ]);
+        return redirect('/admin/summary');
+        // return view('admin.index.index', [
+        //     'stat' => $this->stat(),
+        //     'secondaryNav' => '数据概况',
+        // ]);
     }
 
     private function stat()
