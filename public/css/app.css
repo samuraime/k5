@@ -1,1 +1,5 @@
 /* Write your styles */
+.article-content > p > img {
+    max-width: 100% !important;
+    height: auto !important;
+}

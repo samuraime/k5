@@ -7,7 +7,7 @@
         <hr>
     </div>
     <!--存放客户文章内容 -->
-    <div>
+    <div class="article-content">
         {!! $article['content'] !!}
     </div>
     <!--存放客户文章内容 -->
